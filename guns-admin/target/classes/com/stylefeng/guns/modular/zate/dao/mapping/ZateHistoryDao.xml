@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.zate.dao.ZateHistoryDao">
+
+    <select id="selectHisDetail" resultType="com.stylefeng.guns.common.persistence.model.ZateHistory" parameterType="java.lang.Integer">
+        SELECT
+        his.id,
+        his.field,
+        CASE
+        WHEN locate("00:00:00", his.content) > 0
+        AND his.field = "fillTime" THEN
+        REPLACE (his.content, "00:00:00", "")
+        ELSE
+        his.content
+        END content,
+        his.zateId,
+        his.type,
+        his.address,
+        his.userId,
+        his.userName,
+        his.createTime,
+        his.pid,
+        his.currentTime
+        FROM
+        zate_history his
+        WHERE
+        pid = #{hisId}
+    </select>
+</mapper>

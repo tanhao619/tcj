@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.oa.dao.WorkflowConfigDao">
+    <select id="selectWconfigByTD" resultType="com.stylefeng.guns.common.persistence.model.WorkflowConfig">
+        SELECT * FROM
+        workflow_config
+        WHERE FIND_IN_SET(#{parms.type},type) > 0
+        AND duty = #{parms.duty}
+    </select>
+</mapper>

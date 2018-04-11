@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.myplatform.dao.MyPlatformDao">
+    <select id="pendingList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select * from (
+            (SELECT concat(1,p.id) as id,p.name,group_concat(i.name) as category,group_concat(DISTINCT c.liable) as liable,1 as isBigPro,p.folType,p.createTime,p.id as jump
+                FROM normal_project p LEFT JOIN unit_liable c on p.id = c.proId LEFT JOIN pro_industryType i on p.id = i.proId
+                WHERE p.id in ( SELECT proId from follow_project WHERE deptId = #{deptId})
+                AND  p.folType = 1
+                GROUP BY p.id
+            )
+            UNION
+            (SELECT concat(2,p.id) as id,p.name,group_concat(i.name) as category,group_concat(DISTINCT c.liable) as liable,2 as isBigPro,p.folType,p.createTime,p.id as jump
+                FROM big_project p LEFT JOIN unit_liable c on p.id = c.proId LEFT JOIN pro_industryType i on p.id = i.proId
+                WHERE p.id in (  SELECT proId from follow_project WHERE  deptId = #{deptId} )
+                AND  p.folType = 1
+                GROUP BY p.id
+            )
+        ) as t_table
+        ORDER by t_table.createTime DESC
+    </select>
+
+    <select id="updateList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select * from (
+            (SELECT concat(1,p.id) as id,p.name,p.createTime,group_concat(DISTINCT c.liable) as liable,0 as isBigPro,p.status,p.updateTime
+                FROM normal_project p LEFT JOIN unit_liable c on p.id = c.proId and c.folType = 1
+                WHERE p.id in (
+                SELECT proId from follow_project WHERE deptId in
+                <foreach collection="ids" item="zid" open="(" close=")" separator=",">#{zid}
+                </foreach>
+                <!--and folType = 2-->
+                <!--add by lgg-->
+                and folType = 1
+                )
+                AND <![CDATA[ TIMESTAMPDIFF(DAY,p.updateTime,SYSDATE())<= 2 ]]>
+                GROUP BY p.id
+            )
+            UNION
+            (SELECT concat(2,p.id) as id,p.name,p.createTime,group_concat(DISTINCT c.liable) as liable,1 as isBigPro,p.status,p.updateTime
+                FROM big_project p LEFT JOIN unit_liable c on p.id = c.proId and c.folType = 2
+                WHERE p.id in (
+                SELECT proId from follow_project WHERE deptId in
+                <foreach collection="ids" item="zid" open="(" close=")" separator=",">#{zid}
+                </foreach>
+                and folType = 2
+                )
+                AND <![CDATA[ TIMESTAMPDIFF(DAY,p.updateTime,SYSDATE())<= 2 ]]>
+                GROUP BY p.id
+            )
+        ) as t_table
+        ORDER BY t_table.updateTime DESC
+    </select>
+
+    <select id="noUpdateList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select * from (
+            (SELECT concat(1,p.id) as id,p.name,p.createTime,group_concat(DISTINCT c.liable) as liable,0 as isBigPro,p.status,p.updateTime
+                FROM normal_project p LEFT JOIN unit_liable c on p.id = c.proId and c.folType = 1
+                WHERE p.id in (
+                SELECT proId from follow_project WHERE deptId in
+                <foreach collection="ids" item="zid" open="(" close=")" separator=",">
+                    #{zid}
+                </foreach>
+                and folType = 2
+                )
+                AND <![CDATA[ TIMESTAMPDIFF(DAY,p.updateTime,SYSDATE())>= 30 ]]>
+                GROUP BY p.id
+            )
+            UNION
+                (SELECT concat(2,p.id) as id,p.name,p.createTime,group_concat(DISTINCT c.liable) as liable,1 as isBigPro,p.status,p.updateTime
+                FROM big_project p LEFT JOIN unit_liable c on p.id = c.proId and c.folType = 2
+                WHERE p.id in (
+                SELECT proId from follow_project WHERE deptId in
+                <foreach collection="ids" item="zid" open="(" close=")" separator=",">
+                    #{zid}
+                </foreach>
+                and folType = 2
+                )
+                AND <![CDATA[ TIMESTAMPDIFF(DAY,p.updateTime,SYSDATE()) >= 30 ]]>
+                GROUP BY p.id
+            )
+        ) as t_table
+        ORDER BY t_table.updateTime DESC
+    </select>
+</mapper>

@@ -1,0 +1,18 @@
+package ${service.packageName}.impl;
+
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.stylefeng.guns.common.persistence.model.${context.entityName};
+<% for(import in service.serviceImplImports!){ %>
+import ${import};
+<% } %>
+
+/**
+ * ${context.bizChName}Service
+ *
+ * @author ${context.author}
+ * @Date ${tool.currentTime()}
+ */
+@Service
+public class ${context.bizEnBigName}ServiceImpl extends ServiceImpl<BaseMapper<${context.entityName}>,${context.entityName}> implements I${context.bizEnBigName}Service {
+}

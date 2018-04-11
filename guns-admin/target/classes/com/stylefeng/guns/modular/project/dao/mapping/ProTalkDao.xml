@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.project.dao.ProTalkDao">
+
+    <select id="searchList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select id,proId,progress,question,nextStep,isVisit,visitLv,userName,updateTime,createTime
+          from pro_talk
+         where isDelete=0
+           and proId = #{params.proId}
+         order by updateTime desc
+    </select>
+    <select id="selecteProTalkIds" resultType="Integer" parameterType="Integer">
+    select id
+    from pro_talk
+    where proId = #{proId}
+    order by id desc limit 0,1
+</select>
+</mapper>

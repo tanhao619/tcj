@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.project.dao.ProAreaDao">
+
+
+    <insert id="batchInsert" parameterType="java.util.List" >
+        <selectKey resultType="java.lang.Long" keyProperty="id" >
+            <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+        </selectKey>
+        insert into pro_area (proId, userId,userName, addr, useType, useArea ,currentTime, folType)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.proId},#{item.userId},#{item.userName},#{item.addr}, #{item.useType}, #{item.useArea},#{item.currentTime},#{item.folType})
+        </foreach>
+    </insert>
+
+    <update id="updateProArea" parameterType="com.stylefeng.guns.common.persistence.model.ProArea" >
+        update pro_area
+        <set>
+            <if test="proId != null" >
+                proId = #{proId},
+            </if>
+            <if test="userId != null" >
+                userId = #{userId},
+            </if>
+            <if test="userName != null" >
+                userName = #{userName},
+            </if>
+            <if test="addr != null" >
+                addr = #{addr},
+            </if>
+            <if test="useType != null" >
+                useType = #{useType},
+            </if>
+            <if test="useArea != null" >
+                useArea = #{useArea},
+            </if>
+            <if test="currentTime != null" >
+                currentTime = #{currentTime},
+            </if>
+            updateTime = now()
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteProAreaByProId" parameterType="java.util.List">
+        delete from pro_area where proId = #{proId}
+        <if test="list.size > 0">
+            and id not in (
+            <foreach collection="list" item="item" index="index" separator="," >
+                #{item}
+            </foreach>
+            )
+        </if>
+    </delete>
+
+    <delete id="updateCurrentTimeByProId" parameterType="java.util.List">
+        update pro_area set currentTime = #{currentTime}  , userId = #{userId} , userName = #{userName} where proId = #{proId}
+        <if test="list.size > 0">
+            and id not in (
+            <foreach collection="list" item="item" index="index" separator="," >
+                #{item}
+            </foreach>
+            )
+        </if>
+    </delete>
+</mapper>

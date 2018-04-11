@@ -1,0 +1,158 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <!--<div class="ibox-content">-->
+        <div class="form-horizontal faqiModal">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <div class="col-sm-6">
+                        <!--//1.请假审批;2.销假审批;3.出差审批;4.接待审批;5.公务用车审批;6.驻点人员请假审批;7.发文审批;8.收文审批-->
+                        <label><img src="/static/img/icon_must1.png"> 审批类型&nbsp;<span id="error1" style="font-weight: 200"></span></label>
+                        <br>
+                        <select id="typeFQ" class="form-control" name="审批类型"  >
+                            <option value="">审批类型</option>
+                            <option value="1">请假审批</option>
+                            <option value="3">出差审批</option>
+                            <option value="4">接待审批</option>
+                            <option value="5">公务用车审批</option>
+                            <option value="6">驻点人员请假审批</option>
+                            <!--只有投促局下的 科员 才有发文审批发起权限-->
+                            @if(shiro.hasRole("-100TCJKeYuan")){
+                            <option value="7">发文审批</option>
+                            @}
+                            <!--只有办公室下的特定科员 收文/归档科员swgd 才有收文审批发起权限-->
+                            @if(shiro.hasRole("-100isSWGD")){
+                            <option value="8">收文审批</option>
+                            @}
+                        </select>
+                    </div>
+
+                    <br>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6" style="margin-top: 10px;">
+                        <div id="shouwen">
+                            <label><img src="/static/img/icon_must1.png"> 收文编号&nbsp;<span id="error5" style="font-weight: 200"></span></label>
+                            <br>
+                            <input id="ordnumSW" name="" class="form-control" placeholder="最多十位纯数字，且不能重复" onkeyup="WorkflowInfoDlg.validateSW($(this))"/>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12" id="shenpiMan">
+                    <span><img src="/static/img/icon_must1.png"> 审批人&nbsp;<span id="error2"></span></span>
+                    <div id="roles">
+                        <ul id="rolesUl">
+                    @for(apprUser in apprRoles){
+                           <li class="radioItems" onclick="radioItemClick(this)"> <input type="radio" value="${apprUser.id}" name="shenpiRole" class="role">${apprUser.name}</li>
+                    @}
+                        </ul>
+                    </div>
+
+                </div>
+
+              <div id="qjTime" class=" col-sm-12" style="margin-left: 16px;">
+                <p><img src="/static/img/icon_must1.png">请假时间&nbsp;<span id="error4"></span></p>
+
+                <div class="col-sm-6" style="padding-left: 0px;">
+                            <div class="input-group">
+                                <div class="input-group-btn" >
+                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                            type="button">开始时间
+                                    </button>
+                                </div>
+                                <!--<div class="form-control create  createTime">-->
+                                <div id="chooseCreateTime1" class="chooseCreateTime1">
+                                    <input class="form-control " id="qjTimeB" name="开始时间" placeholder="开始时间" readonly>
+                                    <select id="qjAMPMB" onchange="WorkflowInfoDlg.qjAMPM(),qjDays()">
+                                        <option id="AMB">上午</option>
+                                        <option id="PMB">下午</option>
+                                    </select>
+                                </div>
+                                <!--</div>-->
+                        </div>
+                        <!--<#TimeCon id="qjTimeB" name="请假开始时间" isTime="false" pattern="YYYY-MM-DD" blurFun="WorkflowInfoDlg.qjDays()"/>-->
+                            <!--<div class="col-sm-9 inputWidth">-->
+                                <!--<input class="form-control  wicon" id="qjTimeB" name="开始时间" placeholder="开始时间" readonly>-->
+                            <!--</div>-->
+
+                        <!--<select id="qjAMPMB" onchange="WorkflowInfoDlg.qjAMPM(),qjDays()">-->
+                            <!--<option id="AMB">上午</option>-->
+                            <!--<option id="PMB">下午</option>-->
+
+                </div>
+                <div class="col-sm-6" >
+                            <div class="input-group">
+                                <div class="input-group-btn" >
+                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                            type="button">结束时间
+                                    </button>
+                                </div>
+                                <!--<div class="form-control create  createTime">-->
+                                <div id="chooseCreateTime2" class="chooseCreateTime1">
+                                    <input class="form-control " id="qjTimeE" name="结束时间" placeholder="结束时间" readonly>
+                                    <select id="qjAMPME" onchange="WorkflowInfoDlg.qjAMPM(),qjDays()">
+                                        <option id="AME">上午</option>
+                                        <option id="PME">下午</option>
+                                    </select>
+                                </div>
+                                <!--</div>-->
+                            </div>
+                        <!--<#TimeCon id="qjTimeE" name="请假结束时间" isTime="false" pattern="YYYY-MM-DD" blurFun="WorkflowInfoDlg.qjDays()"/>-->
+                        <!--<div class="col-sm-9 inputWidth">-->
+                            <!--<input class="form-control  wicon" id="qjTimeE" name="结束时间" placeholder="结束时间" readonly>-->
+                        <!--</div>-->
+                        <!--<select id="qjAMPME" onchange="WorkflowInfoDlg.qjAMPM(),qjDays()">-->
+                            <!--<option id="AME">上午</option>-->
+                            <!--<option id="PME">下午</option>-->
+                        <!--</select>-->
+                </div>
+
+                  <div class="col-sm-6" style="margin-top: 15px;padding-left: 0px; margin-bottom: 10px;">
+                      <div class="input-group normalCreateTime">
+                          <div class="input-group-btn" >
+                              <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                      type="button">总计(天)
+                              </button>
+                          </div>
+                          <input class="form-control" type="text" id="qjTotalDays" readonly>
+                          <!--<div class="form-control create  createTime">-->
+                          <!--</div>-->
+                      </div>
+
+                  </div>
+              </div>
+                <!--上传-->
+                <div class="col-sm-12 shenpiFJ">
+                <div id="uploader" class="wu-example">
+                    <div class="title">
+                        <span><img src="/static/img/icon_must1.png"> 审批附件</span>
+                        <span class="fj">最多5个附件，每个附件大小不能超过4M</span>
+                        <span id="error3"></span>
+                        <div class="uploadBtns">
+                            <div id="picker">选择文件<img src="/static/img/uploader.png" alt=""></div>
+                        </div>
+                    </div>
+                    <!--用来存放文件信息-->
+                    <div id="thelist" class="uploader-list"></div>
+                </div>
+                </div>
+
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-12 addBtn">
+                    <#button btnCss="info" name="提交" id="ensure" icon="" clickFun="WorkflowInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="" clickFun="WorkflowInfoDlg.close()" style="margin-left:20px;"/>
+                </div>
+            </div>
+        </div>
+
+    <!--</div>-->
+</div>
+<link href="${ctxPath}/static/css/page/faqi_add.css" rel="stylesheet">
+<script src="${ctxPath}/static/modular/api/oa/faqi/faqi_info.js"></script>
+@}

@@ -1,0 +1,120 @@
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="nav-close"><i class="fa fa-times-circle"></i>
+    </div>
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span></span>
+                    <!--<a data-toggle="dropdown" class="dropdown-toggle" href="#">-->
+                        <!--<span class="clear">-->
+                       <!--<span class="block m-t-xs"><strong class="font-bold">${shiro.getUser().name}</strong></span>-->
+                        <!--<span class="text-muted text-xs block">${shiro.getUser().roleNames[0]}<b class="caret"></b></span>-->
+                        <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu animated fadeInRight m-t-xs">-->
+                        <!--<li><a class="J_menuItem" href="${ctxPath}/mgr/user_info">个人资料</a></li>-->
+                        <!--<li><a class="J_menuItem" href="${ctxPath}/mgr/user_chpwd">修改密码</a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a href="${ctxPath}/logout">安全退出</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                </div>
+                <div class="logo-element">GS
+                </div>
+            </li>
+            <li class="navItem">
+                    <div class="item">
+                        <a class="J_menuItem childItem active" href="${ctxPath}/myPlatform">
+                            <img src="${ctxPath}/static/img/icon_work-1.png" class="old">
+                            <img src="${ctxPath}/static/img/icon_work.png" class="new">
+                            <p>我的工作台</p>
+                        </a>
+                    </div>
+            </li>
+            <li class="navItem">
+                <div class="item">
+                    <a class="J_menuItem childItem" href="${ctxPath}/normalProject">
+                        <img src="${ctxPath}/static/img/icon_project-1.png" class="old">
+                        <img src="${ctxPath}/static/img/icon_project.png" class="new">
+                        <p>项目管理</p>
+                    </a>
+                </div>
+            </li>
+            <li class="navItem">
+                <div class="item">
+                    <a class="J_menuItem childItem" href="${ctxPath}/zate">
+                    <!--<a >-->
+                        <img src="${ctxPath}/static/img/icon_source-1.png" class="old">
+                        <img src="${ctxPath}/static/img/icon_source.png" class="new">
+                        <p>载体资源管理</p>
+                    </a>
+                </div>
+            </li>
+            <!--只有超级管理员 和 拥有任一投促局科室的登录账号(包括局长，因为局长分配在投促局下的局长办公室)才能看到OA管理-->
+            @if(shiro.hasRole("-100Administrator") || shiro.hasRole("-100ContainAnyTCJKeShi")){
+            <li class="navItem">
+                <div class="item">
+                    <a class="J_menuItem childItem" href="${ctxPath}/workflow">
+                        <img src="${ctxPath}/static/img/icon_OA-1.png" class="old">
+                        <img src="${ctxPath}/static/img/icon_OA.png" class="new">
+                        <p>OA管理</p>
+                    </a>
+                </div>
+            </li>
+            @}
+            @if(shiro.hasRole("-100Administrator")){
+            <li class="navItem">
+                <div class="item">
+                    <a class="J_menuItem childItem" href="${ctxPath}/mgr">
+                        <img src="${ctxPath}/static/img/icon_systemMag_sel.png" class="new">
+                        <img src="${ctxPath}/static/img/icon_systemMag_unsel.png" class="old">
+                        <p>系统管理</p>
+                    </a>
+                </div>
+            </li>
+            @}
+            @for(title in titles){
+                @if(tool.isEmpty(title.children)){
+                    <!--<li>-->
+                        <!--<a class="J_menuItem" href="${ctxPath}${title.url}" name="tabMenuItem">-->
+                            <!--<i class="fa ${title.icon}"></i>-->
+                            <!--<span class="nav-label">${title.name}</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                @}else{
+                    <li>
+                        <!--<a href="#">-->
+                            <!--<i class="fa ${title.icon}"></i>-->
+                            <!--<span class="nav-label">${title.name}</span>-->
+                            <!--<span class="fa arrow"></span>-->
+                        <!--</a>-->
+                        <ul class="nav nav-second-level">
+                            @for(subTitle in title.children){
+                                @if(tool.isEmpty(subTitle.children)){
+                                    <!--<li>-->
+                                        <!--<a class="J_menuItem" href="${ctxPath}${subTitle.url}" name="tabMenuItem">${subTitle.name}</a>-->
+                                    <!--</li>-->
+                                @}else{
+                                    <li>
+                                        <a href="#">${subTitle.name} <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            @for(thirdTitle in subTitle.children){
+                                            <li>
+                                                <a class="J_menuItem" href="${ctxPath}${thirdTitle.url}" name="tabMenuItem">${thirdTitle.name}</a>
+                                            </li>
+                                            @}
+                                        </ul>
+                                    </li>
+                                @}
+                            @}
+                        </ul>
+                    <!--</li>-->
+                @}
+            @}
+        </ul>
+    </div>
+</nav>
+
+

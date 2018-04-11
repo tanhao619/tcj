@@ -1,0 +1,22 @@
+@layout("/common/_container.html"){
+<div class="excel ibox float-e-margins" xmlns="http://www.w3.org/1999/html">
+	<div class="ibox-content">
+		<div class="form-horizontal" id="userInfoForm">
+			<div class="row">
+				<div class="b-r">
+					<input checked type="radio" name="exp" flag="false" value="${params.zateType}" order="${params.order}" sort="${params.sort}" names="${params.name}" address="${params.address}" status="${params.status}" types="${params.type}">导出当前列表(<span>${exportNum}</span>条)</input>
+				</div>
+				<div class="b-r" style="margin-top: 10px">
+					<input type="radio" name="exp" flag="true" value="${params.zateType}" order="${params.order}" sort="${params.sort}" names="${params.name}" address="${params.address}" status="${params.status}" types="${params.type}">导出全部列表</input>
+				</div>
+				<div class="btns">
+					<a id="excelExp"><button class="confirmationBtn" onclick="Zate.exportExcel($('input:checked').attr('flag'),$('input:checked').val(),$('input:checked').attr('order'),$('input:checked').attr('sort'),$('input:checked').attr('names'),$('input:checked').attr('address'),$('input:checked').attr('status'),$('input:checked').attr('types'))">确定</button></a>
+					<button class="cancelBtn" onclick="Zate.close()">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<link href="${ctxPath}/static/css/page/zate_excel.css" rel="stylesheet">
+<script src="${ctxPath}/static/modular/api/zate/zate.js"></script>
+@}

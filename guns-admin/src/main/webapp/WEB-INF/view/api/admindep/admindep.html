@@ -1,0 +1,53 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>部门信息管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="name"  name="名称" />
+
+                            </div>
+                            <div class="col-sm-3">
+                               <!-- <#NameCon id="descript" name="描述" />-->
+                                <#NameCon id="admindepId" name="部门标识" />
+
+                            </div>
+                            <div class="col-lg-4 col-sm-3">
+
+                                <#TimeCon id="beginTime" name="创建开始时间" isTime="false" pattern="YYYY-MM-DD"/>
+                            </div>
+                            <div class="col-lg-4 col-sm-3">
+                                <#TimeCon id="endTime" name="创建结束时间" isTime="false" pattern="YYYY-MM-DD"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <#SelectCon id="isDeleted" name="是否删除" >
+                                    <option value="">全部</option>
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Admindep.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="Admindep.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="AdmindepTableToolbar" role="group">
+
+                            <#button name="添加" icon="fa-plus" clickFun="Admindep.openAddAdmindep()"/>
+                            <button class='btn btn-danger'  onclick='Admindep.delete()'><i class='fa fa-trash-o'></i> 删除</button>
+                        </div>
+                        <#table id="AdmindepTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/api/admindep/admindep.js"></script>
+@}

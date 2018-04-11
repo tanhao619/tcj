@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.project.dao.ProCompanyDao">
+
+    <select id="getCompaniesByProId" parameterType="Integer" resultType="com.stylefeng.guns.common.persistence.model.ProCompany">
+        SELECT id,name as comName,addr,author,tel,content,comType from pro_company WHERE proId = #{id}
+    </select>
+
+    <insert id="batchInsert" parameterType="java.util.List" >
+        <selectKey resultType="java.lang.Long" keyProperty="id" >
+            <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+        </selectKey>
+        insert into pro_company (proId, userId,userName, name, addr, author, tel, comType, content,currentTime,folType)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.proId},#{item.userId},#{item.userName},#{item.comName}, #{item.addr}, #{item.author}, #{item.tel}, #{item.comType}, #{item.content},#{item.currentTime},#{item.folType})
+        </foreach>
+    </insert>
+
+    <update id="updateProCompany" parameterType="com.stylefeng.guns.common.persistence.model.ProCompany" >
+        update pro_company
+        <set>
+            <if test="proId != null" >
+                proId = #{proId},
+            </if>
+            <if test="userId != null" >
+                userId = #{userId},
+            </if>
+            <if test="userName != null" >
+                userName = #{userName},
+            </if>
+            <if test="comName != null" >
+                name = #{comName},
+            </if>
+            <if test="addr != null" >
+                addr = #{addr},
+            </if>
+            <if test="author != null" >
+                author = #{author},
+            </if>
+            <if test="tel != null" >
+                tel = #{tel},
+            </if>
+            <if test="comType != null" >
+                comType = #{comType},
+            </if>
+            <if test="content != null" >
+                content = #{content},
+            </if>
+            <if test="currentTime != null" >
+                currentTime = #{currentTime},
+            </if>
+            updateTime = now()
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteProCompanyByProId" parameterType="java.util.List">
+        delete from pro_company  where proId = #{proId}
+        <if test="list.size > 0">
+            and id not in (
+            <foreach collection="list" item="item" index="index" separator="," >
+                #{item}
+            </foreach>
+            )
+        </if>
+    </delete>
+
+    <delete id="updateCurrentTimeByProId" parameterType="java.util.List">
+        update pro_company set currentTime = #{currentTime}  , userId = #{userId} , userName = #{userName} where proId = #{proId}
+        <if test="list.size > 0">
+            and id not in (
+            <foreach collection="list" item="item" index="index" separator="," >
+                #{item}
+            </foreach>
+            )
+        </if>
+    </delete>
+</mapper>

@@ -1,0 +1,24 @@
+@layout("/common/_container.html"){
+<style>
+    .my-wrapper{
+        background: #fff;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <input type="hidden" id="id" value="${operationLogId}"/>
+                        <div class="row">
+                            <div class="col-sm-12 operationLogDetail">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/api/normalProject/operationLog.js"></script>
+@}

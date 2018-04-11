@@ -1,0 +1,415 @@
+@layout("/common/_container.html"){
+<link href="${ctxPath}/static/css/page/bigProject.css" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div id="RelevantNotice">
+                <div class="breadcrumbNav">
+                    <h3>项目管理总页</h3>
+                    <span>PROJECT MANAGEMENT</span>
+                    <!--超级管理员 与 只有信息中心的账号没有申报项目权限-->
+                    @if(!shiro.hasRole("-100OnlyXXZX") && !shiro.hasRole("-100Administrator")){
+                    <div class="declarProjects">
+                        <button type="button" class="declar">申报项目
+                            <span class="arrow"></span>
+                        </button>
+                        <div class="content">
+                            <ul>
+                                <li onclick="NormalProject.toAddNormalProject('1')" class="addPro">常规投资项目</li>
+                                <li onclick="NormalProject.toAddNormalProject('2')" class="addPro">重大包装项目</li>
+                            </ul>
+                        </div>
+                    </div>
+                    @}
+                </div>
+
+                <ul class="nav nav-tabs normalProjectTab" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#track" class="trackTab " aria-controls="track" role="tab" data-toggle="tab">
+                            常规投资项目
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#noUpdate" class="noUpdateTab " aria-controls="noUpdate" role="tab" data-toggle="tab">
+                            重大包装项目
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="track">
+                        <div class="ibox-content myTable">
+                            <div class="row row-lg normalProjectColor">
+                                <div class=" col-lg-12 col-md-12 ">
+                                <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                    <#NameCon id="name" name="项目名称" />
+                                </div>
+                               <!-- <div class="col-lg-3 col-md-6">
+                                    <div class="row">
+                                        <div class="col-sm-12 input-group ">
+                                            <div class="" style="padding-right: 0px;width: 20%">
+                                                <div class="input-group-btn" >
+                                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                            type="button">创建时间
+                                                    </button>
+                                                </div>
+                                                &lt;!&ndash;<input type="text" class="form form-control" id="createTimeB" placeholder="开始时间" readonly/>&ndash;&gt;
+                                                &lt;!&ndash;<span style="color:#333;">至</span>&ndash;&gt;
+                                                &lt;!&ndash;<input type="text" class="form form-control" id="createTimeE" placeholder="结束时间" readonly/>&ndash;&gt;
+                                            </div>
+                                            <div class="create  createTime" style="width: 80%">
+                                                <div class="" id="chooseCreateTime">
+                                                    <input type="text" class="form" id="createTimeB" placeholder="开始时间" readonly/>
+                                                    <span style="color:#333;">至</span>
+                                                    <input type="text" class="form" id="createTimeE" placeholder="结束时间" readonly/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                    <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                        <div class="input-group normalCreateTime">
+                                            <div class="input-group-btn" >
+                                                <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                        type="button">创建时间
+                                                </button>
+                                            </div>
+                                            <!--<div class="form-control create  createTime">-->
+                                                <div id="chooseCreateTime1" class="chooseCreateTime1">
+                                                    <input type="text" class="form form-control" id="createTimeB" placeholder="开始时间" readonly/>
+                                                    <span style="color:#333;">至</span>
+                                                    <input type="text" class="form form-control" id="createTimeE" placeholder="结束时间" readonly/>
+                                                </div>
+                                            <!--</div>-->
+                                        </div>
+                                    </div>
+                                <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                    <#SelectCon id="category" name="产业分类" >
+                                        <option value="">产业分类</option>
+                                        <option value="1">一产</option>
+                                        <option value="2">二产</option>
+                                        <option value="3">三产</option>
+                                    </#SelectCon>
+                                </div>
+                                <div class="col-lg-3 col-sm-6  changeNormalWidth">
+                                    <#SelectCon id="status" name="项目阶段" >
+                                        <option value="">所有状态</option>
+                                        <option value="1">申报储备</option>
+                                        <option value="2">跟踪在谈</option>
+                                        <option value="3">拟签约</option>
+                                        <option value="4">已签约</option>
+                                        <option value="5">履约</option>
+                                        <option value="0">已取消</option>
+                                    </#SelectCon>
+                                </div>
+                                </div>
+                                <div class="col-lg-12  col-sm-12">
+                                    <div class="line "></div>
+                                    <div class="hideShow ">
+                                        <img src="${ctxPath}/static/img/icon_hide.png" class="showContent">
+                                        <img src="${ctxPath}/static/img/icon_more.png" class="hideContent">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="needShow">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12" style="margin-bottom: 10px;">
+                                                <!--<div class="col-lg-3 col-sm-6">-->
+                                                    <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                                        <div class="input-group normalCreateTime">
+                                                            <div class="input-group-btn" >
+                                                                <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                                        type="button">修改时间
+                                                                </button>
+                                                            </div>
+                                                            <!--<div class="form-control create  createTime">-->
+                                                            <div id="chooseCreateTime2" class="chooseCreateTime1">
+                                                                <input type="text" class="form form-control" style="" id="updateTimeB" placeholder="开始时间" readonly/>
+                                                                <span style="color:#333;">至</span>
+                                                                <input type="text" class="form form-control" style="" id="updateTimeE" placeholder="结束时间" readonly/>
+                                                            </div>
+                                                            <!--</div>-->
+                                                        </div>
+                                                    <!--</div>-->
+                                                    <!--<div class="row">-->
+                                                        <!--<div class="col-sm-12 input-group ">-->
+                                                            <!--<div class="col-sm-3" style="padding-right: 0px;">-->
+                                                                <!--<div class="input-group-btn" >-->
+                                                                    <!--<button data-toggle="dropdown" class="btn btn-white dropdown-toggle"-->
+                                                                            <!--type="button">修改时间-->
+                                                                    <!--</button>-->
+                                                                <!--</div>-->
+
+                                                            <!--</div>-->
+                                                            <!--<div class="col-sm-9 create  createTime">-->
+                                                                <!--<div class="" id="chooseUpdateTime">-->
+                                                                    <!--&lt;!&ndash;<input type="text" class="form" style="clear:both;" id="updateTimeB" placeholder="开始时间" readonly/>&ndash;&gt;-->
+                                                                    <!--&lt;!&ndash;<span style="color:#333;">至</span>&ndash;&gt;-->
+                                                                    <!--&lt;!&ndash;<input type="text" class="form" style="clear:both;" id="updateTimeE" placeholder="结束时间" readonly/>&ndash;&gt;-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                </div>
+                                                <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                                    <#SelectCon id="fromArea" name="投资来源地归属" >
+                                                        <option value="">投资来源地归属</option>
+                                                        <option value="1">市内</option>
+                                                        <option value="2">市外</option>
+                                                    </#SelectCon>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 changeNormalWidth investMoneyBetw">
+                                                    <div class="input-group">
+                                                        <div class="input-group-btn">
+                                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+                                                                载体使用类型及面积
+                                                            </button>
+                                                        </div>
+                                                        <select class="form-control" id="useType" onchange="allDisabled(this.options[this.options.selectedIndex].value)" style="width:60%;">
+                                                            <option value="">全部类型</option>
+                                                            <option value="1">土地类资源（亩）</option>
+                                                            <option value="2">楼宇类资源（平方米）</option>
+                                                            <option value="3">厂房类资源（平方米）</option>
+                                                        </select>
+                                                        <!--<div class="area col-sm-4">-->
+                                                            <input type="text" id="useAreaB" class="form-control">
+                                                            <span>至</span>
+                                                            <input type="text" id="useAreaE" class="form-control">
+                                                        <!--</div>-->
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                     <div class="row">
+                                             <div class="col-lg-12 col-sm-12">
+                                                 <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                                     <#SelectCon id="investType" name="投资类型" >
+                                                         <option value="">投资类型</option>
+                                                         <option value="1">外资</option>
+                                                         <option value="2">内资</option>
+                                                         <option value="3">合资</option>
+                                                     </#SelectCon>
+                                                 </div>
+                                                 <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                                     <!--<div class="row">-->
+                                                         <div class=" input-group">
+                                                             <!--<div class="col-sm-4">-->
+                                                                 <div class="input-group-btn">
+                                                                     <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                                             type="button">投资额（亿元）
+                                                                     </button>
+                                                                 <!--</div>-->
+                                                             </div>
+                                                             <div class="create investment" style="margin-right: 0px;">
+                                                                     <input type="text" class="" id="investRmbB" placeholder="" />
+                                                                     <span style="color:#333;">至</span>
+                                                                     <input type="text" class="" id="investRmbE" placeholder="" />
+                                                             </div>
+                                                         </div>
+                                                     <!--</div>-->
+
+                                                 </div>
+                                                 <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                                     <#SelectCon id="contractType" name="合同类型" >
+                                                         <option value="">合同类型</option>
+                                                         <option value="1">框架协议</option>
+                                                         <option value="2">投资协议</option>
+                                                         <option value="3">PPP协议</option>
+                                                         <option value="4">双创协议</option>
+                                                         <option value="5">政校银企合作协议</option>
+                                                         <option value="6">解除协议</option>
+                                                         <option value="7">其它协议</option>
+                                                     </#SelectCon>
+                                                 </div>
+                                                 <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                                     <#SelectCon id="isVisit" name="是否需要拜访" >
+                                                         <option value="">是否需要拜访</option>
+                                                         <option value="1">是</option>
+                                                         <option value="0">否</option>
+                                                     </#SelectCon>
+                                                 </div>
+                                             </div>
+                                     </div>
+
+
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="operate">
+                                        <span onclick="NormalProject.reset()">恢复默认值</span>
+                                        <button onclick="NormalProject.search()">搜 索 <img src="${ctxPath}/static/img/icon_search.png"></button>
+                                        <button><a href="${ctxPath}/exportConfig">导 出 <img src="${ctxPath}/static/img/icon_export.png"></a></button>
+                                    </div>
+                                </div>
+                                <#table id="NormalProjectTable"/>
+                            </div>
+                            </div>
+                        </div>
+                    <div style="clear: both"></div>
+                    <div role="tabpanel" class="tab-pane" id="noUpdate">
+                        <div class="ibox-content myTable">
+                            <div class="row row-lg normalProjectColor">
+                                <div class="col-lg-12 col-sm-12 firstLine">
+                                    <div class=" col-lg-3 col-sm-6 changeNormalWidth" style="padding-left: 0px;">
+                                        <#NameCon id="bigName" name="项目名称" />
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                            <div class="input-group normalCreateTime">
+                                                    <div class="input-group-btn">
+                                                        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                                type="button">创建时间
+                                                        </button>
+                                                    </div>
+                                                    <div  id="chooseCreateTime" class="chooseCreateTime1">
+                                                        <input type="text" class="form form-control" id="bigCreateTimeB" placeholder="开始时间" />
+                                                        <span style="color:#333;">至</span>
+                                                        <input type="text" class="form form-control" id="bigCreateTimeE" placeholder="结束时间" />
+                                                    </div>
+
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6 changeNormalWidth" id="categoryLeft">
+                                        <#SelectCon id="bigCategory" name="产业分类" >
+                                            <option value="">产业分类</option>
+                                            <option value="1">一产</option>
+                                            <option value="2">二产</option>
+                                            <option value="3">三产</option>
+                                        </#SelectCon>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                        <#SelectCon id="bigStatus" name="项目阶段" >
+                                            <option value="">所有状态</option>
+                                            <option value="1">申报储备</option>
+                                            <option value="2">跟踪在谈</option>
+                                            <option value="3">拟签约</option>
+                                            <option value="4">已签约</option>
+                                            <option value="5">履约</option>
+                                            <option value="0">已取消</option>
+                                        </#SelectCon>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class=" col-sm-12" style="margin-top: 20px;">
+                                        <div class="line col-sm-10"></div>
+                                        <div class="hideShow">
+                                            <img src="${ctxPath}/static/img/icon_hide.png" class="showContent">
+                                            <img src="${ctxPath}/static/img/icon_more.png" class="hideContent">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                   <div class="row needShow">
+                                       <div class="col-lg-12 col-sm-12">
+                                               <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                                       <div class="input-group normalCreateTime">
+                                                               <div class="input-group-btn">
+                                                                   <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                                           type="button">修改时间
+                                                                   </button>
+                                                               </div>
+                                                           <!--<div class="col-sm-9 create updateTime">-->
+                                                               <div id="chooseUpdateTime" class="chooseCreateTime1">
+                                                                   <input type="text" class="form form-control"  id="bigUpdateTimeB" placeholder="开始时间" />
+                                                                   <span style="color:#333;">至</span>
+                                                                   <input type="text" class="form form-control"  id="bigUpdateTimeE" placeholder="结束时间" />
+                                                               </div>
+                                                           <!--</div>-->
+                                                       </div>
+                                               </div>
+                                               <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                                       <div class="input-group normalCreateTime">
+                                                               <div class="input-group-btn">
+                                                                   <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                                           type="button">开工时间
+                                                                   </button>
+                                                               </div>
+                                                           <!--<div class="col-sm-9 create updateTime">-->
+                                                               <div class="chooseCreateTime1" id="chooseUpdateTime">
+                                                                   <input type="text" class="form form-control"  id="planStartTimeB" placeholder="开始时间" />
+                                                                   <span style="color:#333;">至</span>
+                                                                   <input type="text" class="form form-control"  id="planStartTimeE" placeholder="结束时间" />
+                                                               </div>
+                                                           <!--</div>-->
+                                                       </div>
+                                                   </div>
+                                               <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                                       <div class="input-group normalCreateTime">
+                                                               <div class="input-group-btn">
+                                                                   <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                                           type="button">竣工时间
+                                                                   </button>
+                                                               </div>
+                                                           <!--<div class="col-sm-9 create updateTime">-->
+                                                               <div class="chooseCreateTime1" id="chooseUpdateTime">
+                                                                   <input type="text" class="form form-control"  id="planEndTimeB" placeholder="开始时间" />
+                                                                   <span style="color:#333;">至</span>
+                                                                   <input type="text" class="form form-control"  id="planEndTimeE" placeholder="结束时间" />
+                                                               </div>
+                                                           <!--</div>-->
+                                                       </div>
+                                                   </div>
+                                               <div class="col-lg-3 col-sm-6 changeNormalWidth">
+                                                   <div class=" input-group normalCreateTime">
+                                                               <div class="input-group-btn">
+                                                                   <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                                           type="button">匡算总投资<span>(亿元)</span>
+                                                                   </button>
+                                                               </div>
+                                                           <!--<div class="col-sm-7 create totalBigInvest">-->
+                                                               <div class="chooseCreateTime1 " id="chooseUpdateTime">
+                                                                   <input type="text" class="form form-control" id="bigInvestRmbB" placeholder=""  />
+                                                                   <span style="color:#333;">至</span>
+                                                                   <input type="text" class="form form-control" id="bigInvestRmbE"  placeholder="" />
+                                                               </div>
+                                                           <!--</div>-->
+                                                       </div>
+                                               </div>
+                                       </div>
+                                       <div class="col-sm-12 bigPlanPos" style="margin-top: 10px;">
+                                           <div class="col-sm-6">
+                                               <div class="input-group">
+                                                   <div class="input-group-btn">
+                                                       <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                               type="button">策划包装定位
+                                                       </button>
+                                                   </div>
+                                                   <div class="create packPositionInput" id="chooseUpdateTime">
+                                                       <input type="checkbox" name="packPosition" value="1" class="form"/> <span>"五中心一枢纽"功能</span>
+                                                       <input type="checkbox" name="packPosition" value="2" class="form"/> <span>"十字方针"战略</span>
+                                                       <input type="checkbox" name="packPosition" value="3" class="form"/> <span>产业生态圈培养</span>
+                                                       <input type="checkbox" name="packPosition" value="4" class="form"/> <span>其他</span>
+
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                 <div class="row">
+                                 </div>
+                                    <div class="col-sm-12">
+                                        <div class="operate">
+                                            <span onclick="BigProject.reset()">恢复默认值</span>
+                                            <button onclick="BigProject.search()">搜 索 <img src="${ctxPath}/static/img/icon_search.png"></button>
+                                            <button><a href="${ctxPath}/bigProject/bigExportExcel">导 出 <img src="${ctxPath}/static/img/icon_export.png"></a></button>
+                                            <!--<button><a href="${ctxPath}/exportConfig">导 出 <img src="${ctxPath}/static/img/icon_export.png"></a></button>-->
+                                            <!--<button><a href="${ctxPath}/bigProject/bigProject_update/1">修改 <img src="${ctxPath}/static/img/icon_export.png"></a></button>-->
+                                        </div>
+                                        <!--<#button name="搜索" icon="fa-search" clickFun="NormalProject.search()"/>-->
+                                    </div>
+                                    <#table id="BigProjectTable"/>
+                                </div>
+                            </div>
+                        </div>
+                    <div style="clear:both;"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/api/normalProject/normalProject.js"></script>
+<script src="${ctxPath}/static/modular/api/bigProject/bigProject.js"></script>
+@}

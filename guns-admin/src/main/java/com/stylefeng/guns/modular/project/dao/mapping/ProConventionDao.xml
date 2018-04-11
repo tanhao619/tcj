@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.project.dao.ProConventionDao">
+    <select id="searchList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select id,proId,proConventionInfo,nextAdvise,userName,updateTime,createTime,isBack
+          from pro_convention
+         where isDelete=0
+           and proId = #{params.proId}
+         order by createTime desc
+    </select>
+
+    <select id="selectMaxId" resultType="Integer" parameterType="Integer">
+        select id
+        from pro_convention
+        where proId = #{proId}
+        order by id desc limit 0,1
+    </select>
+</mapper>

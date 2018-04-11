@@ -1,0 +1,362 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="myList ibox-content zateAdd">
+        <!--<div class="form-horizontal" id="zateInfoForm">-->
+            <input type="hidden" id="id" value="">
+            <div class="ibox-title">
+                <h3>载体资源总页/新建载体资源</h3>
+                <span>CARRIER RESOURCES / NEW CARRIER RESOURCES</span>
+            </div>
+            <div id="RelevantNotice">
+                <ul class="nav nav-tabs zateAdd" role="tablist" style="margin-top: -35px">
+                    <li role="presentation" class="active"><a href="#track" class="trackTab" aria-controls="track" role="tab" data-toggle="tab" onclick="initForm()" style="color:#A7B1C2;">土地类资源</a></li>
+                    <li role="presentation"><a href="#noUpdate" class="noUpdateTab" aria-controls="noUpdate" role="tab" data-toggle="tab" onclick="initForm()">楼宇或标准厂房类</a></li>
+                </ul>
+                <div class="tab-content zateDetail">
+                    <div role="tabpanel" class="tab-pane active" id="track">
+                        <div class="form-horizontal" id="zateLandInfoForm">
+                        <div class="row">
+                            <div class="col-sm-12 b-r">
+                                <div class="l-r clearfix">
+                                    <div class="left">
+                                        <!--id与实体属性相同-->
+                                        <#input id="name" name="载体资源名称" placeholder="请输入资源名称"/>
+                                        <div class="group divide">
+                                            <#input id="address" name="资源地点" placeholder="请填写详细地址"/>
+                                            <#input id="area" name="资源面积(亩)" placeholder="输入数字"/>
+                                        </div>
+                                        <div class="divide">
+                                            <#select id="status" name="资源状态">
+                                                <option value="1" >未使用</option>
+                                                <option value="2">已使用</option>
+                                                <option value="3">已停用</option>
+                                            </#select>
+                                      <!--      <#select id="property" name="用地性质">
+                                                <option value="1">国有土地</option>
+                                                <option value="2">农用地</option>
+                                                <option value="3">建设用地</option>
+                                            </#select>-->
+                                        </div>
+
+                                        <div class="settledIndustry ">
+                                            <p>用地性质</p>
+                                            <div class="content">
+                                                <ul>
+                                                    <li class="radioItem">
+                                                        <input type="checkbox" value="1" name="landProperty" class="landProperty"/>
+                                                        <span>国有土地</span>
+                                                        <img src="${ctxPath}/static/img/icon_help.png"  class="helpImg">
+                                                    </li>
+                                                    <li class="radioItem">
+                                                        <input type="checkbox" value="2" name="landProperty" class="landProperty"/>
+                                                        <span>农用地</span>
+                                                        <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                    </li>
+                                                    <li class="radioItem">
+                                                        <input type="checkbox" value="3" name="landProperty" class="landProperty"/>
+                                                        <span>建设用地</span>
+                                                        <img src="${ctxPath}/static/img/icon_help.png"  class="helpImg">
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+
+                                        <!--上传-->
+                                        <div id="uploader" class="wu-example">
+                                            <div class="title">
+                                                <span>土地点位图</span>
+                                                <span>上传CAD红线图和JPG图</span>
+                                                <div class="btns" id="zateUpload">
+                                                    <div id="picker">上传<img src="/static/img/uploader.png" alt=""></div>
+                                                </div>
+                                            </div>
+                                            <!--用来存放文件信息-->
+                                            <div id="thelist" class="uploader-list"></div>
+                                        </div>
+                                        <div class="personInfo divide">
+                                            <p>填报单位及填报人信息</p>
+                                            <div class="row">
+                                                <div class="info col-sm-12">
+                                                    <div class="form-group positionSite col-sm-12">
+                                                        <label class="col-sm-3 control-label inputBr">填报单位</label>
+                                                        <br>
+                                                        <div class="col-sm-9 inputWidth">
+                                                            <input class="form-control" id="unit" name="填报单位" placeholder="输入单位全称">
+                                                        </div>
+                                                    </div>
+                                                    <!--<#input id="unit" name="填报单位" placeholder="输入单位全称"/>-->
+                                                    <div class="form-group positionSite col-sm-12" style="margin-bottom: 12px;">
+                                                        <label class="col-sm-3 control-label inputBr"><img src="/static/img/icon_must1.png">填报时间</label>
+                                                        <br>
+                                                        <div class="col-sm-9 inputWidth">
+                                                            <input class="form-control  wicon" id="fillTime" name="填报时间" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="form-control fillTime">-->
+                                                    <!--<span>填报时间</span>-->
+                                                    <!--<input class="datainp wicon " id="fillTime" type="text" readonly >-->
+                                                    <!--</div>-->
+                                                    <div class="form-group positionSite col-sm-12">
+                                                        <label class="col-sm-3 control-label inputBr">填报人姓名</label>
+                                                        <br>
+                                                        <div class="col-sm-9 inputWidth">
+                                                            <input class="form-control" id="fillContacter" name="填报人姓名" placeholder="输入填报人姓名">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group positionSite col-sm-12">
+                                                        <label class="col-sm-3 control-label inputBr">填报人电话</label>
+                                                        <br>
+                                                        <div class="col-sm-9 inputWidth">
+                                                            <input class="form-control" id="fillTel" name="填报人电话" placeholder="输入填报人电话">
+                                                        </div>
+                                                    </div>
+                                                    <!--<#input id="fillContacter" name="填报人姓名" placeholder="输入填报人姓名"/>-->
+                                                    <!--<#input id="fillTel" name="填报人电话"  placeholder="输入填报人电话"/>-->
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="right">
+                                     <div class="textareaContent divide">
+                                         <span>规划产业定位</span>
+                                         <br>
+                                         <textarea id="induPosition" placeholder="可输入文本100字以内" name="induPosition"></textarea>
+                                         <div id="induPosition_error"></div>
+                                     </div>
+                                     <div class="textareaContent divide">
+                                         <span>地块现状</span>
+                                         <br>
+                                         <textarea id="situation" placeholder="可输入文本200字以内" name="situation"></textarea>
+                                         <div id="situation_error"></div>
+                                     </div>
+                                     <div class="textareaContent divide">
+                                         <span>规划设计条件</span>
+                                         <br>
+                                         <textarea id="condition" placeholder="可输入文本200字以内" name="condition"></textarea>
+                                         <div id="condition_error"></div>
+                                     </div>
+                                 </div>
+                                </div>
+                                <div class="remark divide">
+                                    <span>备注</span>
+                                    <br>
+                                    <textarea id="remark" placeholder="可输入文本100字以内" name="remark"></textarea>
+                                    <div id="remark_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row  btn-group-m-t divide">
+                            <div class="col-sm-12 addBtn">
+                                <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ZateInfoDlg.addLandSubmit()"/>
+                                <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ZateInfoDlg.close()"/>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane zateDetail" id="noUpdate">
+                        <div class="form-horizontal" id="zateBuildingInfoForm">
+                        <div class="row">
+                            <div class="col-sm-12 b-r">
+                                <div class="l-r clearfix">
+                                    <div class="left">
+                                        <#input id="name2" name="载体资源名称"  placeholder="请输入资源名称"/>
+                                        <div class="divide">
+                                            <#input id="address2" name="资源具体地址" placeholder="请填写详细地址"/>
+                                            <#input id="area2" name="建筑面积 (平方米)" placeholder="输入数字"/>
+                                        </div>
+                                        <div class="divide">
+                                            <#select id="status2" name="资源状态">
+                                                <option value="1">未使用</option>
+                                                <option value="2">已使用</option>
+                                                <option value="3">已停用</option>
+                                            </#select>
+                                            <#select id="property2" name="产权性质">
+                                                <option value="1">出租</option>
+                                                <option value="2">出售</option>
+                                                <option value="3">租售一体</option>
+                                            </#select>
+                                        </div>
+                                        <div class="settledIndustry ">
+                                            <p>入驻产业类别</p>
+                                            <div class="content">
+                                                <ul>
+                                                    <li class="radioItem">
+                                                        <input type="checkbox" value="1" name="induType" class="induType"/>
+                                                        <span>第一产业</span>
+                                                        <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                        <img src="${ctxPath}/static/img/icon_help.png"  class="helpImg">
+                                                        <div class="building" style="display: none">
+                                                            <h3>第一产业类型</h3>
+                                                            <ul>
+                                                                <li>设施产业</li>
+                                                                <li>规模化种养殖</li>
+                                                                <li>农业加工</li>
+                                                                <li>农业物流</li>
+                                                                <li>新农村建设</li>
+                                                                <li>其他</li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="radioItem">
+                                                        <input type="checkbox" value="2" name="induType" class="induType"/>
+                                                        <span> 第二产业</span>
+                                                        <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                        <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                        <div class="building secondBuildiing" style="display: none">
+                                                            <h3>第二产业类型</h3>
+                                                            <ul>
+                                                                <li>电子信息</li>
+                                                                <li>物联网</li>
+                                                                <li>电子信息配套</li>
+                                                                <li>食品饮料</li>
+                                                                <li>节能环保</li>
+                                                                <li>生物医药</li>
+                                                                <li>冶金建材</li>
+                                                                <li>航空航天</li>
+                                                                <li>机械</li>
+                                                                <li>新能源</li>
+                                                                <li>印务包装</li>
+                                                                <li>新材料</li>
+                                                                <li>其他</li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="radioItem">
+                                                        <input type="checkbox" value="3" name="induType" class="induType"/>
+                                                        <span>第三产业</span>
+                                                        <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                        <img src="${ctxPath}/static/img/icon_help.png"  class="helpImg">
+                                                        <div class="building secondBuildiing" style="display: none">
+                                                            <h3>第三产业类型</h3>
+                                                            <ul>
+                                                                <li>研发设计</li>
+                                                                <li>地产</li>
+                                                                <li>总部</li>
+                                                                <li>信息服务</li>
+                                                                <li>软件业务</li>
+                                                                <li>旅游</li>
+                                                                <li>生物医药</li>
+                                                                <li>冶金建材</li>
+                                                                <li>物流</li>
+                                                                <li>创业孵化</li>
+                                                                <li>金融</li>
+                                                                <li>商贸</li>
+                                                                <li>基础设施</li>
+                                                                <li>工业设计</li>
+                                                                <li>文化创意</li>
+                                                                <li>教育</li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                        <div class="personInfo divide">
+                                            <p>权属及权属联系人信息</p>
+                                              <div class="info col-sm-12">
+                                                  <div class="form-group positionSite col-sm-12">
+                                                      <label class="col-sm-3 control-label inputBr">权属</label>
+                                                      <br>
+                                                      <div class="col-sm-9 inputWidth">
+                                                          <input class="form-control " id="owne2" name="输入权属" placeholder="输入权属">
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group positionSite col-sm-12">
+                                                      <label class="col-sm-3 control-label inputBr">权属联系人</label>
+                                                      <br>
+                                                      <div class="col-sm-9 inputWidth">
+                                                          <input class="form-control " id="owneContacter2" name="权属联系人" placeholder="输入姓名">
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group positionSite col-sm-12">
+                                                      <label class="col-sm-3 control-label inputBr">权属联系人电话</label>
+                                                      <br>
+                                                      <div class="col-sm-9 inputWidth">
+                                                          <input class="form-control " id="owneTel2" name="权属联系人电话" placeholder="输入11位数字">
+                                                      </div>
+                                                  </div>
+                                                <!--<#input id="owne2" name="权属" placeholder="输入权属"/>-->
+                                                <!--<#input id="owneContacter2" name="权属联系人" placeholder="输入姓名"/>-->
+                                                <!--<#input id="owneTel2" name="权属联系人电话" placeholder="输入11位数字"/>-->
+                                              </div>
+                                            </div>
+                                        </div>
+                                    <div class="right">
+                                        <div class="textareaContent divide">
+                                            <span>入驻条件</span>
+                                            <textarea id="condition2" placeholder="可输入文本500字以内" name="condition2"></textarea>
+                                            <div id="condition2_error"></div>
+                                        </div>
+                                        <div class="personInfo divide">
+                                            <p>填报单位及填报人信息</p>
+                                            <div class="info col-sm-12">
+                                                <div class="form-group positionSite col-sm-12">
+                                                    <label class="col-sm-3 control-label inputBr">填报单位</label>
+                                                    <br>
+                                                    <div class="col-sm-9 inputWidth">
+                                                        <input class="form-control " id="unit2" name="填报单位"  placeholder="输入单位全称"  >
+                                                    </div>
+                                                </div>
+                                                <!--<#input id="unit2" name="填报单位" placeholder="输入单位全称"/>-->
+                                                <div class="form-group positionSite col-sm-12" style="margin-bottom: 12px;">
+                                                    <label class="col-sm-3 control-label inputBr"><img src="/static/img/icon_must1.png">填报时间</label>
+                                                    <br>
+                                                    <div class="col-sm-9 inputWidth">
+                                                        <input class="form-control wicon" id="fillTime2" name="填报时间"   readonly>
+                                                    </div>
+                                                </div>
+                                                <!--<div class="form-control fillTime">-->
+                                                    <!--<span>填报时间</span>-->
+                                                    <!--<input class="datainp wicon" id="fillTime2" type="text" readonly >-->
+                                                <!--</div>-->
+                                                <div class="form-group positionSite col-sm-12">
+                                                    <label class="col-sm-3 control-label inputBr">填报人姓名</label>
+                                                    <br>
+                                                    <div class="col-sm-9 inputWidth">
+                                                        <input class="form-control" id="fillContacter2" name="填报人姓名"  placeholder="输入联系人姓名"  >
+                                                    </div>
+                                                </div>
+                                                <div class="form-group positionSite col-sm-12">
+                                                    <label class="col-sm-3 control-label inputBr">填报人电话</label>
+                                                    <br>
+                                                    <div class="col-sm-9 inputWidth">
+                                                        <input class="form-control" id="fillTel2" name="填报人电话"  placeholder="输入联系人电话"  >
+                                                    </div>
+                                                </div>
+                                                <!--<#input id="fillContacter2" name="填报联系人姓名" placeholder="输入联系人姓名"/>-->
+                                                <!--<#input id="fillTel2" name="填报联系人电话" placeholder="输入联系人电话"/>-->
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="remark divide">
+                                    <span>备注</span>
+                                    <br>
+                                    <textarea id="remark2" placeholder="可输入文本100字以内" name="remark2"></textarea>
+                                    <div id="remark2_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row  btn-group-m-t divide">
+                            <div class="col-sm-12 addBtn">
+                                <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ZateInfoDlg.addBuildingSubmit()"/>
+                                <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ZateInfoDlg.close()"/>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+            </div>
+            <!--</div>-->
+
+    </div>
+</div>
+<link href="${ctxPath}/static/css/page/zate_common.css" rel="stylesheet">
+<link href="${ctxPath}/static/css/page/zateAdd.css" rel="stylesheet">
+<script src="${ctxPath}/static/modular/api/zate/zate_info.js"></script>
+@}

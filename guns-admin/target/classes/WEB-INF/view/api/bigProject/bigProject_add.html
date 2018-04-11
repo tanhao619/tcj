@@ -1,0 +1,405 @@
+@layout("/common/_container.html"){
+<link href="${ctxPath}/static/css/page/bigProject.css" rel="stylesheet">
+<div class="ibox float-e-margins">
+    <div class="breadcrumbNav" id="returnTop">
+        <div class="firstTitle">
+            <a href="">重大包装项目</a>
+        </div>
+        <div class="secondTitle">
+            <span>MAJOR PROJECTS</span>
+        </div>
+    </div>
+    <div class="ibox-content myList weightBig" id="weightBig">
+        <div class="form-horizontal" id="bigProjectAddForm">
+            <input type="hidden" id="id" value="">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="normalProjectAdd ">
+                        <div class="col-sm-6 left" style="padding-right: 75px">
+                            <div class="form-group positionSite has-feedback" id="investName" style="margin-left: 2px;">
+                                <label class=" control-label inputBr bigProjectName" style="margin-left: 57px;"><img src="${ctxPath}/static/img/icon_must1.png"> 投资项目名称</label>
+                                <br>
+                                <div class="inputWidth tipsWidth weightWidth" id="weightWidth">
+                                    <input class="form-control" id="name" name="name" type="text">
+                                    <div class="tips" id="nameTip" style="right: 20%;white-space: nowrap;">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group positionSite" id="ownProduct" style="margin-left: 0px;">
+                                <label class="control-label industry" style="margin-left: 57px;"><img src="${ctxPath}/static/img/icon_must1.png"> 归属产业：</label>
+                                <div class="settledIndustry tipsWidth">
+                                    <div class="content GSContent">
+                                        <ul class="title bigGS">
+                                            <li class="radioItem">
+                                                <input name="category" value="1" type="radio">
+                                                <span>第一产业</span>
+                                                <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                <div class="building" style="display: none">
+                                                    <h3>第一产业类型</h3>
+                                                    <ul>
+                                                        <li>设施产业</li>
+                                                        <li>规模化种养殖</li>
+                                                        <li>农业加工</li>
+                                                        <li>农业物流</li>
+                                                        <li>新农村建设</li>
+                                                        <li>其他</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="radioItem">
+                                                <input name="category" value="2" type="radio">
+                                                <span> 第二产业</span>
+                                                <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                <div class="building secondBuildiing" style="display: none">
+                                                    <h3>第二产业类型</h3>
+                                                    <ul>
+                                                        <li>电子信息</li>
+                                                        <li>物联网</li>
+                                                        <li>电子信息配套</li>
+                                                        <li>食品饮料</li>
+                                                        <li>节能环保</li>
+                                                        <li>生物医药</li>
+                                                        <li>冶金建材</li>
+                                                        <li>航空航天</li>
+                                                        <li>机械</li>
+                                                        <li>新能源</li>
+                                                        <li>印务包装</li>
+                                                        <li>新材料</li>
+                                                        <li>其他</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="radioItem">
+                                                <input name="category" value="3" type="radio">
+                                                <span> 第三产业</span>
+                                                <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                <div class="building secondBuildiing" style="display: none">
+                                                    <h3>第三产业类型</h3>
+                                                    <ul>
+                                                        <li>研发设计</li>
+                                                        <li>地产</li>
+                                                        <li>总部</li>
+                                                        <li>信息服务</li>
+                                                        <li>软件业务</li>
+                                                        <li>旅游</li>
+                                                        <li>生物医药</li>
+                                                        <li>冶金建材</li>
+                                                        <li>物流</li>
+                                                        <li>创业孵化</li>
+                                                        <li>金融</li>
+                                                        <li>商贸</li>
+                                                        <li>基础设施</li>
+                                                        <li>工业设计</li>
+                                                        <li>文化创意</li>
+                                                        <li>教育</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tips" id="categoryTip" style="right:15%;">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group positionSite detailService" id="cateForm">
+                                <label class="control-label detailServiceLabel" style="margin-left: 70px;"><img src="${ctxPath}/static/img/icon_must1.png"> 具体行业分类</label>
+                                <div class="add"  onclick="BigProjectAdd.addChildForm(1)">
+                                    <img src="${ctxPath}/static/img/icon_adding_common2.png">
+                                </div>
+                                <div class="tipsWidth">
+                                    <input class="form-control" id="hyCount" name="hyCount" type="hidden" value="0">
+                                    <div class="content" id="hyForms">
+                                        <div class="industryName hyForm">
+                                            <input type="text" name="cateName" class="form-control" placeholder="输入具体行业名称">
+                                            <span onclick="BigProjectAdd.delChildForm(this, 1)"><img src="${ctxPath}/static/img/icon_delete_common1.png"></span>
+                                        </div>
+                                    </div>
+                                    <div class="tips" id="hyFormTip" style="top:-56px;right:13%;">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group positionSite packPosition" id="planPosition">
+                                <label class=" control-label detailServiceLabel " style="margin-left: 70px;"><img src="${ctxPath}/static/img/icon_must1.png"> 策划包装定位</label>
+                                <div class="tipsWidth">
+                                    <div class="content">
+                                        <ul class="checkboxChoice">
+                                            <li name="message1" class="">
+                                                <input name="packName" value="1" type="checkbox">"五中心-枢纽"功能
+                                            </li>
+                                            <li name="message1" class="">
+                                                <input name="packName" value="2" type="checkbox">“十字方针”战略
+                                            </li>
+                                            <li name="message1" class="">
+                                                <input name="packName" value="3" type="checkbox">产业生态圈培育
+                                            </li>
+                                            <li name="message1" class="">
+                                                <input name="packName" value="4" type="checkbox">其他
+                                            </li>
+                                        </ul>
+                                        <div class="tips" id="packTip" style="right:14%;">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group positionSite baseInfo" id="zrForms">
+                                <label class="control-label inputBr "><img src="${ctxPath}/static/img/icon_must1.png">责任单位及相关责任人信息：</label>
+                                <div class="addUnit formCtrl" onclick="BigProjectAdd.addChildForm(2)" style="cursor: pointer">
+                                    <img src="${ctxPath}/static/img/icon_adding_common2.png">
+                                </div>
+                                <input class="form-control" id="zrCount" name="zrCount" type="hidden" value="0">
+
+                                <div class="addZr commonStyle zrForm tipsWidth">
+
+                                    <div class="delete formCtrl" onclick="BigProjectAdd.delChildForm(this, 2)">
+                                        <img src="${ctxPath}/static/img/icon_delete_common1.png">
+                                    </div>
+                                    <input type="hidden" name="unitLiableId" value="">
+                                    <div class="firstLine">
+                                        <label>
+                                            责任单位
+                                        </label>
+                                        <input name="unitLiable" value="" class="first">
+                                    </div>
+                                    <div class="firstLine">
+                                        <label>责任人姓名</label>
+                                        <input name="unitName" value="">
+                                    </div>
+                                    <div class="firstLine">
+                                        <label>责任人电话</label>
+                                        <input name="unitTel" value=""/>
+                                    </div>
+
+                                </div>
+                                <div class="tips" id="zrFormTip" style="position: absolute;top: -24px;white-space: nowrap;right: 0%;">
+
+                                </div>
+                            </div>
+                            <div class="form-group positionSite packPosition" id="jyssfs">
+                                <label class="control-label singlePosition">建议实施方式</label>
+                                <div class="tipsWidth">
+                                    <div class="content">
+                                        <ul class="checkboxChoice">
+                                            <li name="message1" class="">
+                                                <input name="adviseName" value="1" type="checkbox">招商引资
+                                            </li>
+                                            <li name="message1" class="">
+                                                <input name="adviseName" value="2" type="checkbox">基本建设
+                                            </li>
+                                            <li name="message1" class="">
+                                                <input name="adviseName" value="3" type="checkbox">融资
+                                            </li>
+                                            <li name="message1" class="">
+                                                <input name="adviseName" value="4" type="checkbox">PPP
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="plan form-group positionSite">
+                                <div class="detail" id="planStart">
+                                    <label class="control-label singlePosition ">计划开工日期</label><br/>
+                                    <div class="content">
+                                        <input class="datainp wicon" id="planStartTime" name="planStartTime" type="text" placeholder="请选择时间"  readonly>
+                                    </div>
+                                </div>
+                                <div class="detail" id="planEnd">
+                                    <label class="control-label singlePosition">计划竣工日期</label><br/>
+                                    <div class="content">
+                                        <input class="datainp wicon" id="planEndTime" name="planEndTime" type="text" placeholder="请选择时间"  readonly>
+                                    </div>
+                                </div>
+                                <div class="detail" id="workProcesses">
+                                    <label class="control-label singlePosition" >建议年底拟达到的工作进度</label><br/>
+                                    <div class="content">
+                                        <input class="form-control" id="planProcess" name="planProcess" type="text" placeholder="请输入工作进度" >
+                                    </div>
+                                </div>
+                                <div class="detail" id="leader1">
+                                    <label class="control-label singlePosition">分管区领导</label><br/>
+                                    <div class="content">
+                                        <input class="form-control" id="leader" name="leader" type="text" placeholder="请输入领导姓名" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 right">
+                            <div class="form-group positionSite has-feedback investRmb" id="investRmbTotal">
+                                <label class=" control-label inputBr"><img src="${ctxPath}/static/img/icon_must1.png">匡算总投资额：</label>
+                                <br>
+                                <div class=" inputWidth tipsWidth" >
+                                    <div class="detail">
+                                        <label>人民币（亿元）</label>
+                                        <input type="text" id="investRmb" name="investRmb" placeholder="请输入人民币投资额" >
+                                    </div>
+                                    <div class="detail" style="margin-left:45px;">
+                                        <label>拆迁费人民币（亿元）</label>
+                                        <input type="text" id="investMvRmb" name="investMvRmb" placeholder="点击输入"  >
+                                    </div>
+                                    <div class="detail">
+                                        <label>美元（万元)</label>
+                                        <input type="text" style="height:35px;margin-left: 24px;cursor: pointer" id="investDollar" name="investDollar" placeholder="点击输入" onfocus="BigProjectAdd.openCalculateInvest()" readonly>
+                                    </div>
+                                    <div class="underLine">
+                                        <p></p>
+                                    </div>
+                                    <div class="detail">
+                                        <label>人民币总算（亿元）</label>
+                                        <input type="text" id="invest" name="invest" value="0" placeholder="" readonly >
+                                    </div>
+                                    <div class="cal_wrap" id="cal_wrap" style="">
+                                        <div class="title">
+                                            <h3>换算</h3>
+                                            <img src="${ctxPath}/static/img/bg_popup.png" onclick="BigProjectAdd.closeCalculateModel()">
+                                        </div>
+                                        <div class="content">
+                                            <div class="firstLine">
+                                                <p><span>美元（万元）</span>
+                                                    <input type="text" name="investDollar1" id="investDollar1">
+                                                </p>
+                                                <p>
+                                                    <span>* 汇率</span>
+                                                    <input id="investRatio" name="investRatio" type="text" >
+                                                </p>
+                                            </div>
+                                            <div class="line">
+                                                <p></p>
+                                            </div>
+                                            <div class="secondeLine">
+                                                <span>人民币（亿元）</span>
+                                                <input id="investRmb2" type="text" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tips" id="investTip">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group positionSite detailService" id="setPlace">
+                                <label class="control-label "> 拟建设地点</label>
+                                <div class="add" onclick="BigProjectAdd.addChildForm(3)">
+                                    <img src="${ctxPath}/static/img/icon_adding_common2.png">
+                                </div>
+                                <div class="tipsWidth">
+                                    <div class="content placeContent" id="jsForms">
+                                        <div class="industryName jsForm">
+                                            <input type="text" name="buildPlaceName" class="form-control" placeholder="输入拟建设地点名称">
+                                            <span onclick="BigProjectAdd.delChildForm(this, 3)"><img src="${ctxPath}/static/img/icon_delete_common1.png"></span>
+                                        </div>
+                                        <div class="tips" id="jsFormTip">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group positionSite has-feedback setContent" id="usePlaceSize">
+                                <label class=" control-label inputBr">拟建设内容和用地规模</label>
+                                <br>
+                                <div class="contentSize tipsWidth" >
+                                    <div class="content">
+                                        <label>建设内容</label>
+                                        <textarea id="content" name="content"></textarea>
+                                    </div>
+                                    <div class="usePlace">
+                                        <label>用地情况</label>
+                                        <div class="detail">
+                                            <div style="margin-bottom:10px;">
+                                                <#NameCon type="text" name="国有建设用地（亩)" id="govArea" placeholder="请输入用地亩数" style="margin-bottom:10px;"/>
+                                            </div>
+                                            <div style="margin-bottom:10px;">
+                                                <#NameCon type="text" name="集体建设用地（亩）" id="collectArea" placeholder="请输入用地亩数"/>
+                                            </div>
+                                            <div style="margin-bottom:10px;">
+                                                <#NameCon type="text" name="农用地（亩)" id="farmArea" placeholder="请输入用地亩数"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tips" id="njsFormTip"></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <div class="bottomContent clearfix" id="currentWorkProcess">
+                                <div class="addQt addQtButton"  id="addQt">
+                                    <label class="control-label inputBr">目前工作进度</label>
+                                    <input type="hidden" id="isMerge" value="0"/>
+                                    <div class="allSiuation" style="position: relative">
+                                        <div class="form-group positionSite has-feedback">
+                                            <div class="row">
+                                                <div  class="col-sm-12">
+                                                    <div class="inputWidth rightGap">
+                                                        <textarea class="form-control" id="workProcess" name="workProcess"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="tips" id="workProcessTip" style="position: absolute;top: -28px; right: 0%;"></div>
+                                    </div>
+
+                                </div>
+                                <div class="contractPlatform" id="mask">
+                                    <label class="control-label inputBr">备注</label>
+                                    <br>
+                                    <div class=" inputWidth" style="position: relative">
+                                        <textarea id="infoDesc" name="infoDesc"></textarea>
+                                        <div class="tips" id="infoDescTip" style="position: absolute;right: 0;top: -29px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row btn-group-m-t btnSubmit">
+                <div class="col-sm-12 addBtn" align="center">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="BigProjectAdd.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="BigProjectAdd.addCancel()"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="anchorSkip1" class="anchorSkip">
+    <ul>
+        <li><a href="#investName">投资项目名称</a></li>
+        <li><a href="#ownProduct">归属产业</a></li>
+        <li><a href="#planPosition">策划包装定位</a></li>
+        <li><a href="#zrForms">责任单位及相关负责人信息</a></li>
+        <li><a href="#investRmbTotal">匡算总投资额</a></li>
+        <li><a href="#setPlace">拟建设地点</a></li>
+        <li><a href="#usePlaceSize">拟建设内容和用地规模</a></li>
+        <li><a href="#jyssfs">建议实施方式</a></li>
+        <li><a href="#planStart">计划开工日期</a></li>
+        <li><a href="#planEnd">计划竣工时间</a></li>
+        <li><a href="#workProcesses">建议年底拟达到的工作进度</a></li>
+        <li><a href="#leader1">分管区领导</a></li>
+        <li><a href="#currentWorkProcess">目前工作进度</a></li>
+        <!--<li><a href="#followPlatform">负责跟踪平台</a></li>-->
+        <li><a href="#mask">备注</a></li>
+        <li class="last"><a href="#returnTop"><img src="${ctxPath}/static/img/icon_return.png"><br>返回顶部</a></li>
+    </ul>
+</div>
+<script src="${ctxPath}/static/modular/api/bigProject/bigProject_add.js"></script>
+<script>
+    //锚点选中后的效果
+    $("#anchorSkip1 ul li").click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+    });
+</script>
+@}

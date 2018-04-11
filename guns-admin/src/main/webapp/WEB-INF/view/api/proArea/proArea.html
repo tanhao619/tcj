@@ -1,0 +1,32 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>项目地址及用地</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="condition" name="名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="ProArea.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="ProAreaTableToolbar" role="group">
+                                <#button name="添加" icon="fa-plus" clickFun="ProArea.openAddProArea()"/>
+                                <!--<#button name="删除" icon="fa-plus" clickFun="ProArea.delete()" space="true"/>-->
+                                <button class='btn btn-danger'  onclick='ProArea.delete()'><i class='fa fa-trash-o'></i> 删除</button>
+                        </div>
+                        <#table id="ProAreaTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/api/proArea/proArea.js"></script>
+@}

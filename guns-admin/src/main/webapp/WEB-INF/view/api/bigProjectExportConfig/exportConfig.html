@@ -1,0 +1,134 @@
+@layout("/common/_container.html"){
+<link href="${ctxPath}/static/css/page/exportConfig.css" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="breadcrumbNav">
+                    <div class="firstTitle">
+                        <a href="">项目导出页</a>
+                        <span>/</span>
+                        <span>重大包装项目</span>
+                    </div>
+                    <div class="secondTitle">
+                        <span>PROJECT EXPORT</span>
+                        <span>/</span>
+                        <span>MAJOR PACKAGING PROJECT</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content bigProjectExport">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div>
+                            <div class="head">
+                                <h3><input type="checkbox" class="allCheckbox">全选</h3>
+                            </div>
+                            <h3 style="display: none"><input type="checkbox" name="big_project.id" checked>序号id</h3>
+                            <div class="content bigExportContent">
+                                <div class="topContent clearfix">
+                                    <div class="baseInfo">
+                                        <div class="info">
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.name"> 投资项目名称</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.status"> 项目阶段</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.category"> 归属产业</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="pro_packPosition.name"> 策划包装定位</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="pro_categary.name"> 具体行业分类</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.investRmb"> 匡算总投资额（亿元）</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.investMvRmb"> 拆迁费（亿元）</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="pro_buildPlace.name">拟建设地点</h3>
+                                            </div>
+                                        </div>
+                                        <div class="info">
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.planStartTime">计划开工时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.planEndTime"> 计划竣工时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.leader"> 分管区领导</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.content,big_project.govArea,big_project.collectArea,big_project.farmArea">
+                                                    拟建设内容和用地规模</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="pro_workProcess.workProcess"> 目前工作进度</h3>
+                                                <div class="exportDate">
+                                                    <div class="filter filter2">
+                                                        <label>时间:</label>
+                                                        <div class="create" style="width:232px;">
+                                                            <input type="text" class="form" id="inpstart" placeholder="开始时间" />
+                                                            <span style="color:#333;">至</span>
+                                                            <input type="text" class="form" id="inpend" placeholder="结束时间" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="selfDefine selfDefine2">
+                                                        <label>时间：</label>
+                                                        <select id="workProcessTime" onchange="ExportConfig.changeDate2(this.options[this.options.selectedIndex].value)">
+                                                            <option value="7">最近7天</option>
+                                                            <option value="15">最近15天</option>
+                                                            <option value="30">最近30天</option>
+                                                            <option value="4">自定义时间段</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.planProcess"> 建议年底拟达到工作进度</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="pro_adviseOpeType.name"> 建议实施方式</h3>
+                                            </div>
+                                        </div>
+                                        <div class="info">
+                                            <div class="detail">
+                                                <h3><input type="checkbox"> 责任单位及相关责任人信息</h3>
+                                                <div class="con">
+                                                    <p><input type="checkbox" name="unit_liable.liable"> 责任单位</p>
+                                                    <p><input type="checkbox" name="unit_liable.name,unit_liable.tel"> 责任人姓名及电话</p>
+                                                </div>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="big_project.infoDesc"> 备注</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btnGroup">
+                <!--<button>导出</button>-->
+                <!--clickFun="ExportConfig.search()-->
+                <a id="excelBigExp">
+                    <#button name="导出" icon="fa-check" clickFun="ExportConfig.sureExport()"/>
+                </a>
+                <a href="${ctxPath}/normalProject"><#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser"/></a>
+                <!--<button>取消</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/api/bigProjectExportConfig/exportConfig.js"></script>
+<script src="${ctxPath}/static/js/plugins/layer/laydate/laydate.js"></script>
+@}

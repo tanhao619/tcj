@@ -1,0 +1,86 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <div id="shouwen">
+                    <#input id="ordnumSW" name="收文编号"/>
+                        <span id="error5"></span>
+                    </div>
+                    <!--//1.请假审批;2.销假审批;3.出差审批;4.接待审批;5.公务用车审批;6.驻点人员请假审批;7.发文审批;8.收文审批-->
+                    <#SelectCon id="typeFQ" name="审批类型"  >
+                        <option value="">审批类型</option>
+                        <option value="1">请假审批</option>
+                        <option value="3">出差审批</option>
+                        <option value="4">接待审批</option>
+                        <option value="5">公务用车审批</option>
+                        <option value="6">驻点人员请假审批</option>
+                        @if(shiro.hasRole("-100TCJKeYuan")){
+                        <option value="7">发文审批</option>
+                        @}
+                        @if(shiro.hasRole("-100BGShiKeYuan")){
+                        <option value="8">收文审批</option>
+                        @}
+                    </#SelectCon>
+                    <span id="error1"></span>
+                </div>
+                <div class="col-sm-12" id="shenpiMan">
+                    <span>审批人：</span>
+                    <span id="roles">
+                    @for(apprUser in apprRoles){
+                        <input type="radio" value="${apprUser.id}" name="shenpiRole" class="role">${apprUser.name}
+                    @}
+                    </span>
+                    <span id="error2"></span>
+                </div>
+
+              <div id="qjTime">
+                <p>请假时间：</p>
+                <div class="col-sm-6">
+                    <div class="col-lg-3 col-Bsm-1">
+                        <#TimeCon id="qjStart" name="请假开始时间" isTime="false" pattern="YYYY-MM-DD hh:mm:ss"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="col-lg-3 col-Bsm-1">
+                        <#TimeCon id="qjEnd" name="请假结束时间" isTime="false" pattern="YYYY-MM-DD hh:mm:ss"/>
+                    </div>
+                </div>
+                  <span id="error4"></span>
+              </div>
+
+                <!--上传-->
+                <div class="col-sm-12">
+                <div id="uploader" class="wu-example">
+                    <div class="title">
+                        <span>审批附件：</span>
+                        <div class="btns">
+                            <div id="picker">选择文件<img src="/static/img/uploader.png" alt=""></div>
+                        </div>
+                        <div id="error3"></div>
+                        <span>最多5个附件，每个附件大小不能超过4M</span>
+                    </div>
+                    <!--用来存放文件信息-->
+                    <div id="thelist" class="uploader-list"></div>
+                </div>
+                </div>
+
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="WorkflowInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="WorkflowInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<link href="${ctxPath}/static/css/page/faqi_add.css" rel="stylesheet">
+<script src="${ctxPath}/static/modular/api/oa/faqi/faqi_info.js"></script>
+@}

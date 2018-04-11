@@ -1,0 +1,79 @@
+@layout("/common/_container.html"){
+<link href="${ctxPath}/static/css/page/exportConfig.css" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>OA导出配置</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div>
+                            <div class="head">
+                                <h3><input type="checkbox" class="allCheckbox">全选</h3>
+                            </div>
+                            <h3 style="display: none"><input type="checkbox" name="normal_project.id as id" checked>序号id</h3>
+                            <div class="content normalExportContent">
+                                <div class="topContent clearfix">
+                                    <div class="baseInfo">
+                                        <div class="detailHead">
+                                            <h3><input type="checkbox"  class="chkAll"> 项目基本信息</h3>
+                                        </div>
+                                        <div class="info">
+                                            <div class="detail">
+                                                <h3><input type="checkbox" class="selcted"> 投资方公司信息</h3>
+                                                <div class="con">
+                                                    <p><input type="checkbox" name="pro_company.name as comName"> 公司名称</p>
+                                                    <p><input type="checkbox" name="pro_company.addr as comAddr"> 公司地址</p>
+                                                    <p><input type="checkbox" name="pro_company.content as comContent"> 公司简介</p>
+                                                    <p><input type="checkbox" name="pro_company.comType as comComType"> 公司情况</p>
+                                                    <p><input type="checkbox" name="pro_company.author as comAuthor,pro_company.tel as comTel"> 投资方联系人姓名及电话</p>
+
+                                                </div>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.name as norName"> 投资项目名称</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.content as norContent"> 项目建设内容</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.fromArea as norFromArea"> 投资来源地归属</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.investType as norInvestType"> 投资类型</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.category as norCategory"> 项目归属产业</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.leadCategory as norLeadCategory">是否主导产业</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.enterOfferName as norEnterOfferName,normal_project.enterOfferTel as norEnterOfferTel"> 企业联系者姓名及联系电话</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.author as norAuthor,normal_project.tel as norTel"> 信息提供者姓名及联系电话</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btnGroup">
+                <!--<button>导出</button>-->
+                <!--clickFun="ExportConfig.search()-->
+                <a id="excelExp"><#button name="导出" icon="fa-check" clickFun="ExportConfig.sureExport()"/></a>
+                <a href="${ctxPath}/normalProject"><#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser"/></a>
+                <!--<button>取消</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/api/exportConfig/exportConfig.js"></script>
+<script src="${ctxPath}/static/js/plugins/layer/laydate/laydate.js"></script>
+@}

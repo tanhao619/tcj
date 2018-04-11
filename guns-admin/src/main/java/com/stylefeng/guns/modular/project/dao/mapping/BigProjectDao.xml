@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.project.dao.BigProjectDao">
+    <insert id="insertProject" parameterType="java.util.HashMap">
+        <selectKey resultType="java.lang.Long" keyProperty="newId" >
+            <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+        </selectKey>
+        insert into big_project (updateTime,createUserId
+        <if test="name != null">,name</if>
+        <if test="category != null">,category</if>
+        <if test="countRmb != null">,countRmb</if>
+        <if test="investRmb != null">,investRmb</if>
+        <if test="investMvRmb != null">,investMvRmb</if>
+        <if test="investDollar != null">,investDollar</if>
+        <if test="investRatio != null">,investRatio</if>
+        <if test="content != null">,content</if>
+        <if test="govArea != null">,govArea</if>
+        <if test="collectArea != null">,collectArea</if>
+        <if test="farmArea != null">,farmArea</if>
+        <if test="planStartTime != null">,planStartTime</if>
+        <if test="planEndTime != null">,planEndTime</if>
+        <if test="planProcess != null">,planProcess</if>
+        <if test="leader != null">,leader</if>
+        <if test="workProcess != null">,workProcess</if>
+        <if test="infoDesc != null">,infoDesc</if>
+        <if test="status != null">,status</if>
+        <if test="currentTime != null">,currentTime</if>
+        <if test="folType != null">,folType</if>
+        <if test="isMerge != null">,isMerge</if>
+        <if test="isBack != null">,isBack</if>
+        )  values(now(),#{userId}
+        <if test="name != null">,#{name}</if>
+        <if test="category != null">,#{category}</if>
+        <if test="countRmb != null">,#{countRmb}</if>
+        <if test="investRmb != null">,#{investRmb}</if>
+        <if test="investMvRmb != null">,#{investMvRmb}</if>
+        <if test="investDollar != null">,#{investDollar}</if>
+        <if test="investRatio != null">,#{investRatio}</if>
+        <if test="content != null">,#{content}</if>
+        <if test="govArea != null">,#{govArea}</if>
+        <if test="collectArea != null">,#{collectArea}</if>
+        <if test="farmArea != null">,#{farmArea}</if>
+        <if test="planStartTime != null">,#{planStartTime}</if>
+        <if test="planEndTime != null">,#{planEndTime}</if>
+        <if test="planProcess != null">,#{planProcess}</if>
+        <if test="leader != null">,#{leader}</if>
+        <if test="workProcess != null">,#{workProcess}</if>
+        <if test="infoDesc != null">,#{infoDesc}</if>
+        <if test="status != null">,#{status}</if>
+        <if test="currentTime != null">,#{currentTime}</if>
+        <if test="folType != null">,#{folType}</if>
+        <if test="isMerge != null">,#{isMerge}</if>
+        <if test="isBack != null">,#{isBack}</if>
+        )
+    </insert>
+
+
+    <update id="updateProject" parameterType="java.util.HashMap">
+        update big_project
+        <set>
+            <if test="name != null" >
+                name = #{name},
+            </if>
+            <if test="followUserId != null" >
+                followUserId = #{followUserId},
+            </if>
+
+            <if test="category != null" >
+                category = #{category},
+            </if>
+
+            <if test="status != null" >
+                status = #{status},
+            </if>
+            <if test="countRmb != null" >
+                countRmb = #{countRmb},
+            </if>
+            <if test="investRmb != null" >
+                investRmb = #{investRmb},
+            </if>
+            <if test="investDollar != null" >
+                investDollar = #{investDollar},
+            </if>
+            <if test="investRatio != null" >
+                investRatio = #{investRatio},
+            </if>
+            <if test="investMvRmb != null" >
+                investMvRmb = #{investMvRmb},
+            </if>
+
+            <if test="followTel != null" >
+                followTel = #{followTel},
+            </if>
+            <if test="followName != null" >
+                followName = #{followName},
+            </if>
+            <if test="currentTime != null" >
+                currentTime = #{currentTime},
+            </if>
+            <if test="folType != null" >
+                folType = #{folType},
+            </if>
+            <if test="isMerge != null" >
+                isMerge = #{isMerge},
+            </if>
+            <if test="isBack != null" >
+                isBack = #{isBack},
+            </if>
+            planStartTime = #{planStartTime},
+            planEndTime = #{planEndTime},
+            planProcess = #{planProcess},
+            leader = #{leader},
+            workProcess = #{workProcess},
+            content = #{content},
+            govArea = #{govArea},
+            collectArea = #{collectArea},
+            farmArea = #{farmArea},
+            infoDesc = #{infoDesc}, updateTime = now() ,updateWorkTime = now(), updateUserId = #{userId}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="list" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select p.id,p.name,p.createTime,
+        group_concat(DISTINCT pp.name) AS packPosition,
+        group_concat(DISTINCT pc.name) AS categary,
+        group_concat(DISTINCT pa.name) AS adviseOpeType,
+        p.updateTime,
+        p.followUserId as Follow_User_Id,
+        2 as FOLLOW_TYPE
+        FROM big_project p
+        left outer join pro_packPosition pp ON p.id = pp.proId
+        left outer join pro_categary pc ON p.id = pc.proId
+        left outer join pro_adviseOpeType pa ON pa.folType = 2 AND p.id = pa.proId
+        WHERE 1=1
+        <if test="params.name !=null ">
+            AND p.name like CONCAT("%",#{params.name},"%")
+        </if>
+        <if test="params.createTimeB !=null || params.createTimeE !=null">
+            AND p.createTime BETWEEN #{params.createTimeB} AND DATE_ADD(#{params.createTimeE},INTERVAL 1 day)
+        </if>
+        <if test="params.category !=null ">
+            <!-- AND p.category = #{params.category}-->
+            <!--update by lgg-->
+            AND p.id IN (
+            SELECT DISTINCT indus.proId FROM pro_industryType indus, big_project pro
+            WHERE indus.proId = pro.id  AND indus.name = #{params.category} AND indus.folType = 2
+            )
+        </if>
+        <if test="params.status !=null ">
+            AND p.status = #{params.status}
+        </if>
+        <if test="params.updateTimeB !=null || params.updateTimeE !=null">
+            AND p.updateTime BETWEEN #{params.updateTimeB} AND DATE_ADD(#{params.updateTimeE},INTERVAL 1 day)
+
+        </if>
+        <if test="params.planStartTimeB !=null || params.planStartTimeE !=null">
+            AND p.planStartTime BETWEEN #{params.planStartTimeB} AND #{params.planStartTimeE}
+
+        </if>
+        <if test="params.planEndTimeB !=null || params.planEndTimeE !=null">
+            AND p.planEndTime BETWEEN #{params.planEndTimeB}  AND #{params.planEndTimeE}
+
+        </if>
+        <if test="params.investRmbB !=null || params.investRmbE !=null">
+            AND p.investRmb BETWEEN cast(#{params.investRmbB} as DECIMAL(12,3)) AND cast(#{params.investRmbE} as DECIMAL(12,3))
+        </if>
+        <if test="params.packPosition !=null">
+            AND pp.name IN
+            <foreach item="item" index="index" collection="params.packPosition" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <!-- add by lgg-->
+        <!--添加项目地址搜索-->
+        <if test="params.bigAddr != null">
+            AND  p.id in(
+            SELECT DISTINCT place.proId FROM big_project bigPro, pro_buildPlace place
+            WHERE bigPro.id = place.proId AND
+            place.folType = 2 AND place.name like concat("%",#{params.bigAddr},"%")
+            )
+        </if>
+        GROUP BY p.id
+        order by p.createTime desc
+    </select>
+
+    <select id="getIndustryTypeByProId" resultType="Map">
+        SELECT id,name FROM pro_categary WHERE folType = 2 AND proId = #{proId}
+    </select>
+
+    <select id="getPackPositionByProId" resultType="Map">
+        SELECT id,name FROM pro_packPosition WHERE folType = 2 and proId = #{proId}
+    </select>
+
+    <select id="getUniliableByProId" resultType="Map">
+        SELECT id,liable,name,tel FROM unit_liable WHERE folType = 2 AND proId = #{proId}
+    </select>
+
+    <select id="getAdviseOpeTypeByProId" resultType="Map">
+        SELECT id,name FROM pro_adviseOpeType WHERE folType = 2 AND proId = #{proId}
+    </select>
+
+    <select id="getFollowPlatByProId" resultType="Map">
+        SELECT id,deptId FROM follow_project WHERE folType = 2 AND proId = #{proId}
+    </select>
+
+    <select id="getBuildPlaceByProId" resultType="Map">
+        SELECT id,name FROM pro_buildPlace WHERE folType = 2 AND proId = #{proId}
+    </select>
+
+    <select id="getBigProExcelList" resultType="com.stylefeng.guns.modular.project.dto.BigExcelExportDTO">
+        SELECT * FROM bv_pro v
+        WHERE v.id in
+        (SELECT proId FROM follow_project WHERE deptId in(
+        <foreach collection="deptIds" item="deptId" separator=",">
+            ${deptId}
+        </foreach>
+        ))
+        ORDER BY v.id
+    </select>
+
+    <select id="getBigProExcelListAdmin" resultType="com.stylefeng.guns.modular.project.dto.BigExcelExportDTO">
+        SELECT * FROM bv_pro v ORDER BY v.id
+    </select>
+
+    <select id="getWorkProcessListByTime" resultType="String">
+        SELECT
+        GROUP_CONCAT(workProcess SEPARATOR '##') AS workProcess
+        FROM
+        pro_workProcess_backup
+        WHERE	proId = #{proid}
+        <if test="startTime!=null and startTime!=''">
+            and date(createTime)>=#{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            <![CDATA[and date(createTime)<=#{endTime}]]>
+        </if>
+        <if test="workProcessTime!=null and workProcessTime!=''">
+            AND <![CDATA[ TIMESTAMPDIFF(DAY,createTime,SYSDATE()) < #{workProcessTime} ]]>
+        </if>
+    </select>
+
+
+    <update id="updateFolType" parameterType="java.util.HashMap">
+        UPDATE big_project
+        set folType = #{folType},
+        updateTime = now() ,
+        currentTime = #{currentTime},
+        updateUserId = #{userId},
+        followUserId = null,
+        followName = null,
+        followTel = null
+        where id = #{proId}
+    </update>
+
+    <update id="updateBigProject" parameterType="java.util.HashMap">
+        update big_project
+        <set>
+            <if test="followUserId != null" >
+                followUserId = #{followUserId},
+            </if>
+            <if test="followName != null" >
+                followName = #{followName},
+            </if>
+            <if test="followTel != null" >
+                followTel = #{followTel},
+            </if>
+            <if test="currentTime != null" >
+                currentTime = #{currentTime},
+            </if>
+            updateTime = now(),updateUserId = #{updateUserId}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="checkBigProject" resultType="java.lang.Integer">
+        SELECT count(1) FROM big_project where name = #{name}
+        <if test="proId != null">
+            <![CDATA[
+                and id <> #{proId}
+          ]]>
+        </if>
+    </select>
+</mapper>

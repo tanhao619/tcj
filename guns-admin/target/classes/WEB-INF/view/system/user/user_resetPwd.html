@@ -1,0 +1,49 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+	<!--<div class="ibox-content">-->
+		<div class="form-horizontal systemInput" id="userInfoForm">
+
+			<input type="hidden" id="id" value="${userId}">
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="col-sm-6 b-r">
+						<div class="item">
+							<label>密码</label>
+							<div>
+								<input id="password" name="密码"  type="password" placeholder="请输入密码">
+							</div>
+						</div>
+
+					</div>
+					<div class="col-sm-6">
+						<div id="driverInfoContent">
+							<div class="item">
+								<label>确认密码</label>
+								<div>
+									<input id="rePassword" name="确认密码" type="password" placeholder="请再次确认密码">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- 这是部门选择的下拉框 -->
+			<div id="menuContent" class="menuContent"
+				style="display: none; position: absolute; z-index: 200;">
+				<ul id="treeDemo" class="ztree tree-box" style="width: 249px !important;"></ul>
+			</div>
+
+			<div class="row btn-group-m-t">
+				<div class="col-sm-5 addBtn" >
+					<button  name="提交" id="ensure"  onclick="UserInfoDlg.resetPwdSubmit()">提交</button>
+					<button  name="取消" id="cancel"  onclick="UserInfoDlg.close()" style="margin-left: 10px;">取消</button>
+				</div>
+			</div>
+		</div>
+
+	<!--</div>-->
+</div>
+<script src="${ctxPath}/static/modular/system/user/user_info.js"></script>
+@}

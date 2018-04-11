@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.project.dao.ProHistoryDao">
+
+    <select id="searchList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select h.id,replace(h.content,'00:00:00','') content,u.name,h.createTime,h.pid,h.folType,h.proId
+          from pro_history h, user u
+         where h.userId = u.id
+        <if test="params.proId != null">
+           and h.proId = #{params.proId}
+        </if>
+        <if test="params.folType != null">
+           and h.folType = #{params.folType}
+        </if>
+        <choose>
+            <when test="params.id != null">
+                and  pid = #{params.id}
+            </when>
+            <otherwise>
+                and  pid = 0
+            </otherwise>
+        </choose>
+        order by h.createTime desc
+    </select>
+
+</mapper>

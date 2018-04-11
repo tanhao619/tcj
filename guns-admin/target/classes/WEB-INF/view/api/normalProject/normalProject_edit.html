@@ -1,0 +1,1056 @@
+@layout("/common/_container.html"){
+<style>
+
+
+</style>
+<link href="${ctxPath}/static/css/page/normalProjectTab.css" rel="stylesheet">
+<script src="${ctxPath}/static/modular/api/normalProject/normalProject_info.js"></script>
+<div class="ibox float-e-margins updateProjectBig" id="returnTop">
+    <div class="breadcrumbNav">
+        <div class="firstTitle">
+            <a href="">常规投资项目</a>
+            <span>/</span>
+            <span>申报信息情况</span>
+        </div>
+        <div class="secondTitle">
+            <span>CONVENTIONAL INVESTMENT</span>
+            <span>/</span>
+            <span>BASIC INFORMATION OF THE PROJECT</span>
+        </div>
+    </div>
+    <div class="updateOpearte">
+        <div class="col-sm-12 btnSubmit" align="right">
+            @if(shiro.hasRole("-100ContainXXZX")||shiro.hasRole("-100OnlyXXZX")){
+            <#button btnCss="info" name="更改跟踪科室" id="editFollow" icon="fa-eraser" clickFun="NormalProjectInfo.openFollowOfficeAndPlat(1)"/>
+            @}
+            @if(opearUpdateBtn){
+            <#button btnCss="info" name="修改" id="edit" icon="fa-check" clickFun="NormalProjectInfo.edit()"/>
+            @}
+            <#button btnCss="info" name="确定" id="submit" icon="fa-eraser" clickFun="NormalProjectInfo.editSubmit()"/>
+
+        </div>
+    </div>
+    <div class=" myNormalEditDisabled">
+        <div class="form-horizontal" id="normalProjectEditForm">
+            <input type="hidden" id="id" value="${proDetail.id}"/>
+            <input type="hidden" id="from" value="1"/>
+            <input type="hidden" id="folType" value="${proDetail.folType}"/>
+            <input type="hidden" id="opearUpdateBtn" value="${opearUpdateBtn}">
+            <input type="hidden" id="officeIds" value="${proDetail.followOffice}"/>
+            @for(office in proDetail.followOffice){
+            <input type="hidden" name="officeDeptId" value="${office.deptId}">
+            <input type="hidden" name="officeId" value="${office.id}">
+            @}
+            <div class="row">
+                <div class="col-sm-12 b-r baseUpdateInfo">
+                    <div class="projectGroress">
+                        <div class="form-group positionSite has-feedback">
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                            type="button">项目阶段
+                                    </button>
+                                </div>
+                                <input type="hidden" name="status" value="${proDetail.status}"/>
+                                <select id="status" name="status">
+                                    <option value="1">申报储备</option>
+                                    <option value="2">跟踪在谈</option>
+                                    <option value="3">拟签约</option>
+                                    <option value="4">已签约</option>
+                                    <option value="5">履约</option>
+                                    <option value="0">已取消</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group positionSite has-feedback newAddCreatePerson" style="width:383px">
+                            <div class="input-group followUserModal">
+                                <div class="input-group-btn">
+                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">跟踪人员信息</button>
+                                </div>
+                                <input type="text" class="form-control" name="followName"  readonly value="${proDetail.followName}" title="${proDetail.followName}"/>
+                                <input type="text" class="form-control" name="followTel"  readonly value="${proDetail.followTel}" title="${proDetail.followTel}"/>
+                                @if(proDetail.folType == '2'){
+                                @if(opearFollowUserBtn){
+                                <img id="followUserBtn" src="${ctxPath}/static/img/btn_add.png" onclick="NormalProjectInfo.openFollowUser()">
+                                @}
+                                @}
+                            </div>
+                        </div>
+                        <div class="form-group positionSite has-feedback newAddCreatePerson">
+                            <div class="input-group followUserModal">
+                                <div class="input-group-btn">
+                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">创建人信息</button>
+                                </div>
+                                <input type="text" class="form-control" name="createUserName"  readonly value="${proDetail.createUserName}" title="${proDetail.createUserName}"/>
+                                <input type="text" class="form-control" name="createAccount"  readonly value="${proDetail.createAccount}" title="${proDetail.createAccount}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="investProjectName" id="projectName">
+                        <label><img src="${ctxPath}/static/img/icon_must1.png"> 投资项目名称</label>
+                        <div class="">
+                            <input type="text" id="name" name="name" value="${proDetail.name}" placeholder="请输入投资项目名称">
+                            <div class="tips" id="nameTip"></div>
+                        </div>
+                    </div>
+
+                    <div class="investmentCompanyInfo" id="tzfCompanyInfo" style="margin-left: -20px;">
+                        <label class="addUnderline"><img src="${ctxPath}/static/img/icon_must1.png"> 投资方公司信息</label>
+                        <div class="continueAdd formCtrl" id="ensure" onclick="NormalProjectInfo.addTzfTable()" style="right: 337px;">
+                            <span>添加</span>
+                            <img src="${ctxPath}/static/img/icon_adding_common1.png">
+                        </div>
+                        <input class="form-control" id="comCount" name="comCount" type="hidden" value="0">
+                        <div class="tips" id="comTip">
+
+                        </div>
+                        <div class="detail addTzf" style="margin-top: 0px;">
+                            <div class="deleteInfo formCtrl" onclick="NormalProjectInfo.delTzfTable(this)">
+                                <img src="${ctxPath}/static/img/icon_delete_common1.png">
+                            </div>
+                            <div class="firstLine">
+                                <p class="detailInfo rightGap">
+                                    <input type="hidden" name="comId" value=""/>
+                                    <span>公司名称</span>
+                                    <input class="" name="comName" type="text" data-bv-field="comName" value="">
+                                </p>
+                                <p class="detailInfo" style="text-align: right">
+                                    <input type="hidden" name="comId" value=""/>
+                                    <span>公司联系人</span>
+                                    <input class="" name="comAuthor" type="text" data-bv-field="comAuthor" value="">
+                                    <i class="form-control-feedback" data-bv-icon-for="comAuthor" style="display: none;"></i>
+                                </p>
+                            </div>
+                            <div class=" firstLine">
+                                <p class="detailInfo rightGap">
+                                    <span>公司地址</span>
+                                    <input class="" name="comAddr" type="text" data-bv-field="comAddr" value="">
+                                    <i class="form-control-feedback" data-bv-icon-for="comAddr" style="display: none;"></i>
+                                </p>
+                                <p class="detailInfo" style="text-align: right">
+                                <span>联系人电话</span>
+                                <input class="" name="comTel" type="text" data-bv-field="comTel" value="" >
+                                </p>
+
+                            </div>
+                            <div class="secondLine">
+                                <p>
+                                    <span>企业情况</span>
+                                    <select id="comType" name="comType">
+                                        <option value="0">不属于任何类</option>
+                                        <option value="1">世界500强企业</option>
+                                        <option value="2">中国500强企业</option>
+                                        <option value="3">中国服务业企业500强</option>
+                                        <option value="4">中国民营500强企业</option>
+                                        <option value="5">美国500强企业</option>
+                                        <option value="6">独角兽估值300强</option>
+                                    </select>
+                                    <i class="form-control-feedback" data-bv-icon-for="comTel" style="display: none;"></i>
+                                </p>
+                            </div>
+                            <div class="lastLine">
+                                <span>公司简介</span>
+                                <textarea class="" name="comContent" data-bv-field="comContent"></textarea>
+                            </div>
+                        </div>
+                        @for(company in proDetail.companies){
+                        <div class="detail addTzf" style="margin-top: 0px;">
+                            <div class="deleteInfo formCtrl" onclick="NormalProjectInfo.delTzfTable(this)">
+                                <img src="${ctxPath}/static/img/icon_delete_common1.png">
+                            </div>
+                            <div class="firstLine">
+                                <p class="detailInfo rightGap">
+                                    <span>公司名称</span>
+                                    <input type="hidden" name="comId" value="${company.id}"/>
+                                    <input class="" name="comName" type="text" data-bv-field="comName" value="${company.comName}">
+                                </p>
+                                <p class="detailInfo">
+
+                                        <span>公司联系人</span>
+                                        <input class="" name="comAuthor" type="text" data-bv-field="comAuthor" value="${company.author}">
+                                </p>
+                            </div>
+                            <div class="firstLine">
+                                <p class="detailInfo rightGap">
+                                    <span>公司地址</span>
+                                    <input class="" name="comAddr" type="text" data-bv-field="comAddr" value="${company.addr}">
+                                </p>
+                                <p class="detailInfo">
+                                    <span >联系人电话</span>
+                                    <input class="" name="comTel" type="text" data-bv-field="comTel" value="${company.tel}">
+                                </p>
+
+                            </div>
+                            <div class="secondLine">
+                                <p>
+                                    <span>企业情况</span>
+                                    <input type="hidden" name="comType" value="${company.comType}"/>
+                                    <select id="comType" name="comType">
+                                        <option value="">不属于任何类</option>
+                                        <option value="1">世界500强企业</option>
+                                        <option value="2">中国500强企业</option>
+                                        <option value="3">中国服务业企业500强</option>
+                                        <option value="4">中国民营500强企业</option>
+                                        <option value="5">美国500强企业</option>
+                                        <option value="6">独角兽估值300强</option>
+                                    </select>
+                                    <i class="form-control-feedback" data-bv-icon-for="comTel" style="display: none;"></i>
+                                </p>
+                            </div>
+                            <div class="lastLine">
+                                <span>公司简介</span>
+                                <textarea class="" name="comContent" data-bv-field="comContent">${company.content}</textarea>
+                                <i class="form-control-feedback" data-bv-icon-for="comContent" style="display: none;"></i>
+                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="comContent" data-bv-result="NOT_VALIDATED" style="display: none;">投资建设内容不能为空</small></div>
+                            </div>
+
+                        @}
+                    </div>
+
+                    <div class="form-group positionSite has-feedback updateProjectTextarea" id="mask">
+                        <label class=" control-label inputBr">备注：</label>
+                        <br>
+                        <div class="inputWidth">
+                            <textarea class="form-control" name="infoDesc" style="">${proDetail.infoDesc}</textarea>
+                            <div class="tips" id="infoDescTip"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row normalProjectEdit">
+                <ul class="nav nav-tabs normalProjectTab" role="tablist">
+                    <li role="presentation" class="active" id="projectBase1">
+                        <a href="#track" class="trackTab " aria-controls="track" role="tab" data-toggle="tab">
+                            项目基本信息情况
+                        </a>
+                    </li>
+                    <li role="presentation" id="uploadCreate" class="uploadCreate">
+                        <a href="#protalk" class="noUpdateTab " aria-controls="protalk" role="tab" data-toggle="tab">
+                           项目跟踪洽谈情况
+                        </a>
+                    </li>
+                    <li role="presentation" id="projectBase2">
+                        <a href="#proconvention" class="noUpdateTab " aria-controls="proconvention" role="tab" data-toggle="tab">
+                            项目履约情况
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="padding-left: 110px;background: #dde4ec;">
+                    <div role="tabpanel" class="tab-pane  active baseList clearfix" id="track">
+                        <div class="ibox-content">
+                            <div class="row row-lg col-sm-12">
+
+                                <div class="form-group positionSite has-feedback tzContent" id="tzContent">
+                                    <label class="col-sm-3 control-label inputBr">投资建设内容：</label>
+                                    <br>
+                                    <div class="col-sm-9 inputWidth formGrouptop">
+                                        <textarea class="form-control" id="content" name="content">${proDetail.content}</textarea>
+                                        <div class="tips" id="contentTip"></div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="fromArea" value="${proDetail.fromArea}"/>
+
+                                <div class="investmentArea">
+                                    <div class="form-group positionSite has-feedback" id="tzfFromPlace">
+                                        <label class="control-label inputBr"><img src="${ctxPath}/static/img/icon_must1.png"> 投资来源地归属：</label>
+                                        <div class="settledIndustry singleArea">
+                                            <div class="content" style="clear:both;">
+                                                <ul>
+                                                    <li class="radioItem">
+                                                        <input name="fromArea" value="1" type="radio" data-bv-field="fromArea">
+                                                        <span>市内</span>
+                                                    </li>
+                                                    <li class="radioItem">
+                                                        <input name="fromArea" value="2" type="radio" data-bv-field="fromArea">
+                                                        <span> 市外</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group positionSite has-feedback" id="tzfType">
+                                        <label class="control-label inputBr"><img src="${ctxPath}/static/img/icon_must1.png"> 投资类型：</label>
+                                        <div class="settledIndustry">
+                                            <div class="content" style="clear:both;">
+                                                <ul>
+                                                    <li class="radioItem">
+                                                        <input name="investType" value="1" type="radio" data-bv-field="investType">
+                                                        <span>外资</span>
+                                                    </li>
+                                                    <li class="radioItem">
+                                                        <input name="investType" value="2" type="radio" data-bv-field="investType">
+                                                        <span> 内资</span>
+                                                    </li>
+                                                    <li class="radioItem">
+                                                        <input name="investType" value="3" type="radio" data-bv-field="investType">
+                                                        <span> 合资</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group positionSite has-feedback" id="belongProduct">
+                                        <label class="col-sm-3 control-label inputBr" style="padding-left: 1px;margin-bottom: 10px;"><img src="${ctxPath}/static/img/icon_must1.png"> 归属产业：</label>
+                                        <div class="settledIndustry">
+                                            <div class="content">
+                                                <ul>
+                                                    <li class="radioItem">
+                                                        <input name="category" value="1" type="radio" data-bv-field="category">
+                                                        <span>第一产业</span>
+                                                        <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                        <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                        <div class="building" style="display: none">
+                                                            <h3>第一产业类型</h3>
+                                                            <ul>
+                                                                <li>设施产业</li>
+                                                                <li>规模化种养殖</li>
+                                                                <li>农业加工</li>
+                                                                <li>农业物流</li>
+                                                                <li>新农村建设</li>
+                                                                <li>其他</li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="radioItem">
+                                                        <input name="category" value="2" type="radio" data-bv-field="category">
+                                                        <span> 第二产业</span>
+                                                        <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                        <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                        <div class="building secondBuildiing" style="display: none">
+                                                            <h3>第二产业类型</h3>
+                                                            <ul>
+                                                                <li>电子信息</li>
+                                                                <li>物联网</li>
+                                                                <li>电子信息配套</li>
+                                                                <li>食品饮料</li>
+                                                                <li>节能环保</li>
+                                                                <li>生物医药</li>
+                                                                <li>冶金建材</li>
+                                                                <li>航空航天</li>
+                                                                <li>机械</li>
+                                                                <li>新能源</li>
+                                                                <li>印务包装</li>
+                                                                <li>新材料</li>
+                                                                <li>其他</li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="radioItem">
+                                                        <input name="category" value="3" type="radio" data-bv-field="category">
+                                                        <span> 第三产业</span>
+                                                        <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                        <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                        <div class="building secondBuildiing" style="display: none">
+                                                            <h3>第三产业类型</h3>
+                                                            <ul>
+                                                                <li>研发设计</li>
+                                                                <li>地产</li>
+                                                                <li>总部</li>
+                                                                <li>信息服务</li>
+                                                                <li>软件业务</li>
+                                                                <li>旅游</li>
+                                                                <li>生物医药</li>
+                                                                <li>冶金建材</li>
+                                                                <li>物流</li>
+                                                                <li>创业孵化</li>
+                                                                <li>金融</li>
+                                                                <li>商贸</li>
+                                                                <li>基础设施</li>
+                                                                <li>工业设计</li>
+                                                                <li>文化创意</li>
+                                                                <li>教育</li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group positionSite has-feedback" id="isLeader">
+                                        <label class="col-sm-3 control-label inputBr" style="margin-bottom: 10px;" >是否主导产业：</label>
+                                        <input type="hidden" name="leadCategory" value="${proDetail.leadCategory}">
+                                        <div class="settledIndustry singleArea">
+                                            <div class="content">
+                                                <ul>
+                                                    <li class="radioItem">
+                                                        <input name="leadCategory" value="1" type="radio" data-bv-field="leadCategory">
+                                                        <span>是</span>
+                                                    </li>
+                                                    <li class="radioItem">
+                                                        <input name="leadCategory" value="0" type="radio" data-bv-field="leadCategory" checked>
+                                                        <span> 否</span>
+                                                    </li>
+                                                    <i class="form-control-feedback" data-bv-icon-for="fromArea" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="fromArea" data-bv-result="NOT_VALIDATED" style="display: none;">请选择投资来源地归属</small>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="investType" value="${proDetail.investType}"/>
+                                <!--信息提供者-->
+                                <div class="infoProviderBig">
+                                    <div class="infoProvider" id="infoProdiver">
+                                        <label>信息提供者</label>
+                                        <div class="detail">
+                                            <p>
+                                                <span>姓名</span>
+                                                <input type="text" name="姓名" id="author" value="${proDetail.author}">
+                                            </p>
+                                            <p>
+                                                <span>电话</span>
+                                                <input type="text" name="tel" id="tel" value="${proDetail.tel}">
+                                            </p>
+                                            <div class="tips" id="infoProviderTip"></div>
+                                        </div>
+                                    </div>
+                                    <div class="infoProvider" id="enterProvider">
+                                        <label><img src="${ctxPath}/static/img/icon_must1.png">企业联系者</label>
+                                        <div class="detail">
+                                            <p>
+                                                <span>姓名</span>
+                                                <input type="text" name="enterOfferName" id="enterOfferName"  value="${proDetail.enterOfferName}">
+                                            </p>
+                                            <p>
+                                                <span>电话</span>
+                                                <input type="text" name="enterOfferTel" id="enterOfferTel"  value="${proDetail.enterOfferTel}">
+                                            </p>
+                                            <div class="tips" id="entProviderTip"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="category" value="${proDetail.category}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane totalInvestmentMoney clearfix" id="protalk">
+                        <!--<div class="ibox-content">-->
+                            <div class="row col-sm-12">
+                              <div class="left">
+                                  <div class="form-group positionSite has-feedback investRmb">
+                                      <label class=" control-label inputBr" style="font-size: 14px; margin-bottom: 10px;">  总投资额</label>
+                                      <br>
+                                      <div class=" inputWidth" style="padding-left: 14px">
+                                          <div class="detail">
+                                              <label>人民币（亿元）</label>
+                                              <input type="text" id="investRmb" placeholder="请输入人民币投资额" value="${protalk.investRmb}">
+                                          </div>
+                                          <div class="detail">
+                                              <label>美元（万元)</label>
+                                              <input type="text" style="margin-left: 24px;cursor: pointer" id="investDollar" placeholder="点击输入" readonly value="${protalk.investDollar}" onfocus="NormalProjectInfo.openCalculateInvest()">
+                                          </div>
+                                          <div class="underLine">
+                                              <!--<input type="hidden" id="investRatio" name="investRatio" value="${protalk.investRatio}"/>-->
+                                              <p></p>
+                                          </div>
+                                          <div class="detail" style="margin-top: 0px;">
+                                              <label>人民币总算（亿元）</label>
+                                              <!--<input type="text" id="invest" placeholder="" class="smallScreenWidth"style="width:312px;">-->
+                                              <input type="text" id="invest" placeholder="" readonly style="width:312px;">
+                                          </div>
+                                          <div class="cal_wrap" id="cal_wrap" style="">
+                                              <div class="title">
+                                                  <h3>换算</h3>
+                                                  <img src="${ctxPath}/static/img/bg_popup.png" onclick="NormalProjectInfo.closeCalculateModel()">
+                                              </div>
+                                              <div class="content">
+                                                  <div class="firstLine">
+                                                      <p><span>美元（万元）</span>
+                                                          <input type="text" id="investDollar1" value="${protalk.investDollar}">
+                                                      </p>
+                                                      <p>
+                                                          <span>* 汇率</span>
+                                                          <input id="investRatio" type="text" value="${protalk.investRatio}">
+                                                      </p>
+                                                  </div>
+                                                  <div class="line">
+                                                      <p></p>
+                                                  </div>
+                                                  <div class="secondeLine">
+                                                      <span>人民币（亿元）</span>
+                                                      <input id="investRmb2" type="text" readonly>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <input type="hidden" name="isBigPro" value="${protalk.isBigPro}"/>
+                                  <div class="weightBig">
+                                      <div class="form-group positionSite has-feedback isNotWeightProject" id="isNotWeightProject">
+                                          <label class=" control-label inputBr">是否重大项目：</label>
+                                          <img src="${ctxPath}/static/img/icon_help_unsel.png" class="weightProjectTips">
+                                          <div class="projectTips">
+                                              <h3>重大项目定义</h3>
+                                              <div class="content">
+                                                  一产大于1亿，二产、三产大于5亿为重大项目
+                                              </div>
+                                          </div>
+                                          <br>
+                                          <div class="inputWidth">
+                                              <ul>
+                                                  <li class="radioItem" onclick="NormalProjectInfo.checkIsBigPro(1)">
+                                                      <input name="isBigPro" value="1" type="radio" data-bv-field="isBigPro">
+                                                      <span>是</span>
+                                                  </li>
+                                                  <li class="radioItem" onclick="NormalProjectInfo.checkIsBigPro(0)">
+                                                      <input name="isBigPro" value="0" type="radio" data-bv-field="isBigPro">
+                                                      <span>否</span>
+                                                  </li>
+                                              </ul>
+                                          </div>
+                                      </div>
+                                      <div id="addZd">
+                                          <div class="weightProjectUnit" id="weightProjectUnit">
+                                              <label>重大项目备案单位</label>
+                                              <div class="content">
+                                                  <input id="bigProCom" name="重大项目备案单位：" placeholder="" value="${protalk.bigProCom}">
+                                              </div>
+                                          </div>
+                                          <div class="weightProjectTime" id="weightProjectTime">
+                                              <label class=" control-label inputBr">重大项目备案时间：</label>
+                                              <br>
+                                              <div class="inputWidth fillTime">
+                                                  <input class="datainp wicon" id="bigProTime" type="text" value="${protalk.bigProTime}" readonly>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group positionSite has-feedback uploadProject" id="uploadProject">
+
+                                      <div id="uploader" class=" wu-example divide">
+                                          <label class="control-label inputBr">上传项目备案表</label>
+                                          <span>备注：格式为.PNG/.JPG/.PDF</span>
+                                          <div class="title">
+                                              <div class="btns" id="normalFile">
+                                                  <div id="picker" style="visibility: hidden">选择文件</div>
+                                              </div>
+                                          </div>
+                                          <!--用来存放文件信息-->
+                                          <div id="thelist" class="uploader-list">
+                                              @for(image in protalk.attachments){
+                                              <div id="#handleWU_FILE_0" class="handleItem">
+                                                  <input type="hidden" name="attachId" value="${image.id}">
+                                                  <a target="_blank" id="fileInfo" href="${image.url}" url="${image.url}">${image.attachName}</a>
+                                                  <!--<span id="handleDel">删除</span>-->
+                                                  <!--<img src="/static/img/icon_delete_common1.png">-->
+                                                  <img src="${ctxPath}/static/img/icon_delete_common1.png" class="formCtrl" id="handleDel" onclick="NormalProjectInfo.delAttachment(this)">
+                                              </div>
+                                              @}
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="protalkLeader" id="protalkLeader">
+                                      <label>分管区领导</label>
+                                      <div class="content">
+                                          <input id="leader" name="分管区领导" value="${protalk.leader}">
+                                      </div>
+                                  </div>
+
+                                  <div class="adviseOpeType" id="adviseOpeType">
+                                      <label class="control-label inputBr">建议实施方式：</label>
+                                      <br>
+                                      <div class=" inputWidth">
+                                          <ul>
+                                              <li class="checkboxItem">
+                                                  <input name="adviseOpeType" type="checkbox" value="" data-bv-field="adviseOpeType">招商引资
+                                              </li>
+                                              <li class="checkboxItem">
+                                                  <input name="adviseOpeType" type="checkbox" value="" data-bv-field="adviseOpeType">基本建设
+                                              </li>
+                                              <li class="checkboxItem">
+                                                  <input name="adviseOpeType" type="checkbox" value="" data-bv-field="adviseOpeType">融资
+                                              </li>
+                                              <li class="checkboxItem">
+                                                  <input name="adviseOpeType" type="checkbox" value="" data-bv-field="adviseOpeType">PPP
+                                              </li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                                  <!--<#TimeCon id="firstTalkTime" name="项目初次洽谈时间" isTime="false" pattern="YYYY-MM-DD"/>-->
+                                  <div class="firstTalkTime" id="firstTalkTime1">
+                                      <label class="control-label inputBr">项目初次洽谈时间：</label>
+                                      <br>
+                                      <div class="inputWidth fillTime">
+                                          <input class="datainp wicon" id="firstTalkTime" type="text" value="${protalk.firstTalkTime}" readonly>
+                                      </div>
+                                  </div>
+                              </div>
+                                <div class="right">
+                                    <div class="baseInfo" id="peoject3">
+                                        <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.56);padding-bottom: 10px;">
+                                            <label class="control-label inputBr">责任单位及相关责任人信息：</label>
+                                            <div class="addUnit formCtrl" onclick="NormalProjectInfo.addZrTable()">
+                                                <span>添加</span>
+                                                <img src="${ctxPath}/static/img/icon_adding_common1.png">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="addZr commonStyle zeren">
+                                            <div class="delete formCtrl" onclick="NormalProjectInfo.delZrTable(this)">
+                                                <img src="${ctxPath}/static/img/icon_delete_common1.png">
+                                            </div>
+                                            <input type="hidden" name="unitLiableId" value="">
+                                            <div class="firstLine">
+                                                <label>
+                                                    <img src="${ctxPath}/static/img/icon_must1.png">
+                                                    责任单位
+                                                </label>
+                                                <input id="liable" name="unitLiable" value="">
+                                            </div>
+                                            <div class="secondLine">
+                                                <div class="first common">
+                                                    <label style=" margin-left: -7px;">责任人姓名</label>
+                                                    <input name="unitName" value="">
+                                                </div>
+                                                <div class="second common">
+                                                    <label style=" margin-left: -12px;">责任人电话</label>
+                                                    <input name="unitTel" value="" class="smallScrenenTel" style="width:82%;"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @for(unitLiable in protalk.unitLiables){
+                                        <div class="addZr commonStyle zeren" >
+                                            <div class="delete formCtrl" onclick="NormalProjectInfo.delZrTable(this)">
+                                                <img src="${ctxPath}/static/img/icon_delete_common1.png">
+                                            </div>
+                                            <input type="hidden" name="unitLiableId" value="${unitLiable.id}">
+                                            <div class="firstLine">
+                                                <label>
+                                                    <img src="${ctxPath}/static/img/icon_must1.png" alt="">
+                                                    责任单位
+                                                </label>
+                                                <input id="liable" name="unitLiable" value="${unitLiable.liable}">
+                                            </div>
+                                            <div class="secondLine">
+                                                <div class="first common">
+                                                    <label>责任人姓名</label>
+                                                    <input name="unitName" value="${unitLiable.name}">
+                                                </div>
+                                                <div class="second common">
+                                                    <label>责任人电话</label>
+                                                    <input name="unitTel" value="${unitLiable.tel}"/>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="unitLiableId" value="${unitLiable.id}">
+                                        </div>
+                                        @}
+                                    </div>
+
+
+                                    <div class="projectAddress" id="projectAddress">
+                                        <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.56);padding-bottom:10px;">
+                                            <label class=" control-label inputBr">项目地址及用地</label>
+                                            <div class="addUnit formCtrl" onclick="NormalProjectInfo.addXmTable()">
+                                                <span>添加</span>
+                                                <img src="${ctxPath}/static/img/icon_adding_common1.png">
+                                            </div>
+                                        </div>
+
+                                        <div class="addXm commonStyle project" >
+                                            <div class="delete formCtrl" onclick="NormalProjectInfo.delXmTable(this)">
+                                                <img src="${ctxPath}/static/img/icon_delete_common1.png">
+                                            </div>
+                                            <div class="firstLine">
+                                                <label>
+                                                    <img src="${ctxPath}/static/img/icon_must1.png" alt="">项目地址
+                                                </label>
+                                                <input type="hidden" name="proAreaId" value="">
+                                                <input id="addr" name="addr" value="">
+                                            </div>
+                                         <div class="secondLine">
+                                             <div class="first common" style="margin-left: 0px;">
+                                                 <label >资源使用类型</label>
+                                                 <select id="useType" name="useType" onchange="NormalProjectInfo.changeUserType(this)" style="width:78%;border:none;">
+                                                     <option value="1">土地类资源</option>
+                                                     <option value="2">楼宇资源</option>
+                                                     <option value="3">厂房资源</option>
+                                                 </select>
+                                             </div>
+                                           <div class="second common" style="margin-left: 0px;margin-top: 10px;">
+                                               <label>使用面积（亩）</label>
+                                               <input id="useArea" name="useArea" value="" class="useArea" style="width:75.5%;">
+                                           </div>
+                                         </div>
+                                        </div>
+                                        @for(proArea in protalk.proAreas){
+                                        <div class="addXm commonStyle">
+                                            <div class="delete formCtrl" onclick="NormalProjectInfo.delXmTable(this)">
+                                                <img src="${ctxPath}/static/img/icon_delete_common1.png">
+                                            </div>
+                                            <div class="firstLine">
+                                                <label>
+                                                    <img src="${ctxPath}/static/img/icon_must1.png" alt="">项目地址
+                                                </label>
+                                                <input type="hidden" name="proAreaId" value="${proArea.id}">
+                                                <input id="addr" name="addr" value="${proArea.addr}">
+                                            </div>
+                                            <div class="secondLine">
+                                                <div class="first common">
+                                                    <label>资源使用类型</label>
+                                                    <input type="hidden" name="useType" value="${proArea.useType}">
+                                                    <select id="useType" name="useType" onchange="NormalProjectInfo.changeUserType(this)">
+                                                        <option value="1">土地类资源</option>
+                                                        <option value="2">楼宇资源</option>
+                                                        <option value="3">厂房资源</option>
+                                                    </select>
+                                                </div>
+                                                <div class="second common">
+                                                    @if(proArea.useType == "2"||proArea.useType == "3"){
+                                                    <label>使用面积（平方米）</label>
+                                                    @}else{
+                                                    <label>使用面积（亩）</label>
+                                                    @}
+                                                    <input id="useArea" name="useArea" value="${proArea.useArea}"/>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        @}
+                                    </div>
+
+                                    @for(opeType in protalk.opeTypes){
+                                    <input type="hidden" name="opeTypeId" value="${opeType.id}">
+                                    <input type="hidden" name="opeTypeName" value="${opeType.name}">
+                                    @}
+                                    <input type="hidden" name="opeTypes" value="${protalk.opeTypes}">
+                                </div>
+
+                                <div class="addQt addQtButton"  id="addQt">
+                                    <div class="addUpdate">
+                                        <button  name="查看及修改更新记录" id="ensure" icon="fa-check" onclick="NormalProjectInfo.openTalkUpdate()">查看及修改更新记录</button>
+                                        <button btnCss="info"class="formCtrl" name="添加更新" id="ensure" icon="fa-check" onclick="NormalProjectInfo.addTalkUpdInfo()">添加更新 <img src="${ctxPath}/static/img/icon_add.png"></button>
+                                    </div>
+                                    <div class="updateInfoAndTime" id="updateInfoAndTime">
+                                        <label class="">项目洽谈更新信息：</label>
+                                        <label class=" updateTime" >更新时间：<input id="updateTime" type="text" value="${protalk.updateTime}" readonly></label>
+                                    </div>
+                                    <input type="hidden" id="isMerge" value="0"/>
+                                    <div class="allSiuation">
+                                        <div class="form-group positionSite has-feedback">
+                                            <label class="control-label inputBr">进展情况</label>
+                                            <div class="inputWidth rightGap">
+                                                <textarea class="form-control" name="progress" data-bv-field="progress">${protalk.progress}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group positionSite has-feedback">
+                                            <label class="control-label inputBr">存在问题</label>
+                                            <div class="inputWidth rightGap">
+                                                <textarea class="form-control" name="question" data-bv-field="question">${protalk.question}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group positionSite has-feedback">
+                                            <label class="control-label inputBr">下一步举措</label>
+                                            <div class="inputWidth lastGap">
+                                                <textarea class="form-control" name="nextStep" data-bv-field="nextStep">${protalk.nextStep}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="lastLineInfo">
+                                            <div class="form-group has-feedback first">
+                                                <label class="control-label inputBr">是否需要拜访</label>
+                                                <input type="hidden" name="isVisit" value="${protalk.isVisit}">
+                                                <div class="inputWidth">
+                                                    <ul>
+                                                        <li class="radioItem" onclick="NormalProjectInfo.checkIsVisit(1)">
+                                                            <input type="radio" name="isVisit" value="1"/>是
+                                                        </li>
+                                                        <li class="radioItem" onclick="NormalProjectInfo.checkIsVisit(0)">
+                                                            <input type="radio" name="isVisit" value="0"/>否
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="visit first" id="visitLvDiv">
+                                                <label>需拜访领导层级</label>
+                                                <input id="visitLv" name="visitLv" value="${protalk.visitLv}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               <div class="projectDecideTime">
+                                   <div class="form-group positionSite has-feedback" id="projectTime2">
+                                       <label class=" control-label inputBr">项目初审过会时间</label>
+                                       <br>
+                                       <div class=" inputWidth fillTime">
+                                           <input class="datainp wicon" id="proMeetTime" type="text" value="${protalk.proMeetTime}" readonly>
+                                       </div>
+                                   </div>
+                                   <div class="form-group positionSite has-feedback" id="projectTime3">
+                                       <label class=" control-label inputBr">项目审定过会时间</label>
+                                       <br>
+                                       <div class=" inputWidth fillTime">
+                                           <input class="datainp wicon" id="proViewTime" type="text" value="${protalk.proViewTime}" readonly>
+                                       </div>
+                                   </div>
+                                   <div class="form-group positionSite has-feedback" id="contractTime1">
+                                       <label class=" control-label inputBr">项目合同签约时间</label>
+                                       <br>
+                                       <div class="inputWidth fillTime">
+                                           <input class="datainp wicon" id="contractTime" type="text" value="${protalk.contractTime}" readonly>
+                                       </div>
+                                   </div>
+                               </div>
+
+                                @for(contractType in protalk.contractType){
+                                <input type="hidden" name="contractTypeId" value="${contractType.id}">
+                                <input type="hidden" name="contractTypeName" value="${contractType.name}">
+                                @}
+                                <div class="contractType" id="contractType">
+                                    <label class="control-label inputBr">项目合同类型：</label>
+                                    <br>
+                                    <div class=" inputWidth">
+                                        <ul class="contractTypeItem">
+                                            <li class="checkboxItem">
+                                                <input name="contractType" type="checkbox" value="" data-bv-field="contractType">框架协议
+                                            </li>
+                                            <li class="checkboxItem">
+                                                <input name="contractType" type="checkbox" value="" data-bv-field="contractType">投资协议
+                                            </li>
+                                            <li class="checkboxItem">
+                                                <input name="contractType" type="checkbox" value="" data-bv-field="contractType">PPP协议
+                                            </li>
+                                            <li class="checkboxItem">
+                                                <input name="contractType" type="checkbox" value="" data-bv-field="contractType">双创协议
+                                            </li>
+                                            <li class="checkboxItem">
+                                                <input name="contractType" type="checkbox" value="" data-bv-field="contractType">政校银企合作协议
+                                            </li>
+                                            <li class="checkboxItem">
+                                                <input name="contractType" type="checkbox" value="" data-bv-field="contractType">解除协议
+                                            </li>
+                                            <li class="checkboxItem">
+                                                <input name="contractType" type="checkbox" value="" data-bv-field="contractType">其它协议
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane clearfix" id="proconvention">
+                        <div class="ibox-content">
+                            <div class="row row-lg col-sm-12">
+                                <div class="projectPerformance">
+                                     <div class="left">
+                                         <div class="item" id="item1">
+                                             <label>项目牵头单位</label>
+                                             <div class="content">
+                                                 <input type="text" id="proConcatCom" name="项目牵头单位" value="${proconvention.proConcatCom}">
+                                             </div>
+                                         </div>
+                                         <div class="item">
+                                             <div class="detail" id="item2">
+                                                 <label>注册公司名称</label>
+                                                 <div class="content">
+                                                     <input type="text" id="regComName" name="注册公司名称" value="${proconvention.regComName}">
+                                                 </div>
+                                             </div>
+                                           <div class="detail" id="item3">
+                                                   <label>注册公司时间</label>
+                                                   <div class="content">
+                                                       <input type="text" class="datainp wicon" id="regComTime" name="注册公司名称" value="${proconvention.regComTime}" readonly>
+                                                   </div>
+                                           </div>
+                                             <div class="detail" id="item4">
+                                                     <label>注册资金（万元）</label>
+                                                     <div class="content">
+                                                         <input type="text" id="regInvest" name="注册资金（万元）" value="${proconvention.regInvest}">
+                                                     </div>
+                                             </div>
+                                             <div class="detail" id="item5">
+                                                     <label>注册号</label>
+                                                     <div class="content">
+                                                         <input type="text" id="regNo" name="注册号" value="${proconvention.regNo}">
+                                                     </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                    <div class="right">
+                                       <div class="item">
+                                           <div class="detail" id="item8">
+                                               <label>项目合同备案时间</label>
+                                               <div class="content">
+                                                   <input type="text" class="datainp wicon"  id="proContractTime" value="${proconvention.proContractTime}" readonly>
+                                               </div>
+                                           </div>
+                                        <div class="detail" id="item9">
+                                            <label>项目移交注册时间</label>
+                                            <div class="content">
+                                                <input class="datainp wicon" id="proRegTime" type="text" value="${proconvention.proRegTime}" readonly>
+                                            </div>
+                                        </div>
+                                           <div class="detail investmentArea projectLi" id="item10" style="margin-left: 0px;margin-top: 0px;height: 70px;">
+                                               <label>项目交办情况</label>
+                                               <div class="settledIndustry" style="margin-left: 0px;margin-top: 0px;">
+                                                   <input type="hidden" name="proType" value="${proconvention.proType}">
+                                                   <div class="content projectSiution">
+                                                       <ul>
+                                                           <li class="radioItem">
+                                                               <input type="radio" name="proType" value="1"/>
+                                                               <span>已交办</span>
+                                                           </li>
+                                                           <li class="radioItem">
+                                                               <input type="radio" name="proType" value="2"/>
+                                                               <span>  未交办</span>
+                                                           </li>
+                                                           <i class="form-control-feedback" data-bv-icon-for="fromArea" style="display: none;"></i>
+                                                           <small class="help-block" data-bv-validator="notEmpty" data-bv-for="fromArea" data-bv-result="NOT_VALIDATED" style="display: none;">请选择投资来源地归属</small>
+                                                       </ul>
+                                                   </div>
+                                               </div>
+
+                                           </div>
+                                       </div>
+                                        <div class="item">
+                                            <div class="detail" id="item11">
+                                                <label>项目申报市重大项目时间</label>
+                                                <div class="content">
+                                                    <input class="datainp wicon" id="regBigProTime" type="text" value="${proconvention.regBigProTime}" readonly>
+                                                </div>
+                                            </div>
+                                           <div class="detail" id="item12">
+                                               <label>项目认定市重大项目时间</label>
+                                               <div class="content">
+                                                   <input class="datainp wicon" id="regedBigProTime" type="text" value="${proconvention.regedBigProTime}" readonly>
+                                               </div>
+                                           </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="bottomContent">
+                                        <div class="item" id="item6">
+                                            <label>项目履约监管单位</label>
+                                            <div class="content">
+                                                <input id="controlCom" name="项目履约监管单位" value="${proconvention.controlCom}" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="item investmentArea projectLV" id="item7" style="margin-left: 0px;margin-top: 0px;height: 70px;">
+                                            <label>项目履约情况</label>
+                                            <div class="settledIndustry" style="margin-left: 0px;margin-top: 0px;">
+                                                <div class="content">
+                                                    <ul>
+                                                        <li class="radioItem" onclick="NormalProjectInfo.checkConventionType(2)">
+                                                            <input type="radio" name="proConventionType" value="2"/>
+                                                            <span>正常履约</span>
+                                                        </li>
+                                                        <li class="radioItem" onclick="NormalProjectInfo.checkConventionType(1)">
+                                                            <input type="radio" name="proConventionType" value="1"/>
+                                                            <span>不正常履约</span>
+                                                        </li>
+                                                        <i class="form-control-feedback" data-bv-icon-for="fromArea" style="display: none;"></i>
+                                                        <small class="help-block" data-bv-validator="notEmpty" data-bv-for="fromArea" data-bv-result="NOT_VALIDATED" style="display: none;">请选择投资来源地归属</small>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="content">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input id="addLyFlag" type="hidden" value="${proconvention.proConventionType}">
+                                <div class="addLy"  id="addLy">
+                                    <div class="form-group positionSite has-feedback updateTime">
+                                        <label class=" proconventionUpdateTime" >更新时间
+                                            <input id="proconventionUpdateTime" value="${proconvention.updateTime}">
+                                          </label>
+                                    </div>
+                                    <input type="hidden" id="isMergeT" value="0"/>
+                                    <div class="form-group positionSite has-feedback proConventionInfo">
+                                        <label class="control-label inputBr">情况说明</label>
+                                        <textarea class="form-control" name="proConventionInfo" data-bv-field="proConventionInfo">${proconvention.proConventionInfo}</textarea>
+                                    </div>
+                                    <div class="form-group positionSite has-feedback proConventionInfo"style="margin-left:32px; ">
+                                        <label class="control-label inputBr" >下一步工作建议</label>
+                                        <br>
+                                        <div class="inputWidth" style="margin-left: 34px;">
+                                            <textarea class="form-control" name="nextAdvise" data-bv-field="nextAdvise">${proconvention.nextAdvise}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="addUpdate">
+                                        <div class="col-sm-12" align="right">
+                                            <button class="danger" name="查看及修改更新记录" id="" icon="fa-eraser" onclick="NormalProjectInfo.openConventionUpdate()">查看及修改更新记录</button>
+                                            <button class="info formCtrl" name="添加更新" id="ensure1" icon="fa-check" onclick="NormalProjectInfo.addConventionUpdInfo()">添加更新 <img src="${ctxPath}/static/img/icon_add.png"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="note myTable tableGap" style="margin-top: 20px;">
+        <img src="/static/img/icon_project-1.png" alt="">
+        <span class="noteTitle" style="vertical-align: text-top;">历史操作日志</span>
+        <#table id="NormalProjectOperationLogTable"/>
+    </div>
+</div>
+</div>
+<div id="anchorSkip2" class="anchorSkip">
+    <ul>
+        <li><a href="#projectName">投资项目名称</a></li>
+        <li><a href="#tzfCompanyInfo">投资方信公司息</a></li>
+        <li><a href="#mask">备注</a></li>
+        <li><a href="#tzContent">投资建设内容</a></li>
+        <li><a href="#tzfFromPlace">投资来源地归属</a></li>
+        <li><a href="#tzfType">投资类型</a></li>
+        <li><a href="#belongProduct">归属产业</a></li>
+        <li><a href="#isLeader">是否主导产业</a></li>
+        <li><a href="#infoProdiver">信息提供者</a></li>
+        <li><a href="#enterProvider">企业联系者</a></li>
+        <li class="last"><a href="#returnTop"><img src="${ctxPath}/static/img/icon_return.png"><br>返回顶部</a></li>
+    </ul>
+</div>
+<div id="anchorSkip3" class="anchorSkip">
+    <ul>
+        <li><a href="#projectName">投资项目名称</a></li>
+        <li><a href="#tzfCompanyInfo">投资方信公司息</a></li>
+        <li><a href="#mask">备注</a></li>
+        <li><a href="#investRmb">总投资额</a></li>
+        <li><a href="#isNotWeightProject">是否重大项目</a></li>
+        <li><a href="#weightProjectUnit">重大项目备案单位</a></li>
+        <li><a href="#weightProjectTime">重大项目备案时间</a></li>
+        <li><a href="#uploadProject">上传项目备案表</a></li>
+        <li><a href="#protalkLeader">分管区领导</a></li>
+        <li><a href="#adviseOpeType">建议实施方式</a></li>
+        <li><a href="#firstTalkTime1">项目初次洽谈时间</a></li>
+        <li><a href="#updateInfoAndTime">项目洽谈更新信息</a></li>
+        <li><a href="#projectTime2">项目初审过会时间</a></li>
+        <li><a href="#projectTime3">项目审定过会时间</a></li>
+        <li><a href="#contractTime1">项目合同签约时间</a></li>
+        <li><a href="#contractType">项目合同类型</a></li>
+        <li><a href="#peoject3">责任单位及相关责任人信息</a></li>
+        <li><a href="#projectAddress">项目地址及用地</a></li>
+        <li class="last"><a href="#returnTop"><img src="${ctxPath}/static/img/icon_return.png"><br>返回顶部</a></li>
+    </ul>
+</div>
+<div id="anchorSkip4" class="anchorSkip">
+    <ul>
+        <li><a href="#projectName">投资项目名称</a></li>
+        <li><a href="#tzfCompanyInfo">投资方信公司息</a></li>
+        <li><a href="#mask">备注</a></li>
+        <li><a href="#item1">项目牵头单位</a></li>
+        <li><a href="#item2">注册公司名称</a></li>
+        <li><a href="#item3">注册公司时间</a></li>
+        <li><a href="#item4">注册资金（万元）</a></li>
+        <li><a href="#item5">注册号</a></li>
+        <li><a href="#item6">项目履约监管单位</a></li>
+        <li><a href="#item7">项目履约情况</a></li>
+        <li><a href="#item8">项目合同备案时间</a></li>
+        <li><a href="#item9">项目移交注册时间</a></li>
+        <li><a href="#item10">项目交办情况</a></li>
+        <li><a href="#item11">项目申报市重大项目时间</a></li>
+        <li><a href="#item12">项目认定市重大项目时间</a></li>
+        <li class="last"><a href="#returnTop"><img src="${ctxPath}/static/img/icon_return.png"><br>返回顶部</a></li>
+    </ul>
+</div>
+
+@}

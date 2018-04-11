@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.common.persistence.dao.NormalProjectMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.stylefeng.guns.common.persistence.model.NormalProject">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="content" property="content" />
+		<result column="fromArea" property="fromArea" />
+		<result column="investType" property="investType" />
+		<result column="category" property="category" />
+		<result column="author" property="author" />
+		<result column="tel" property="tel" />
+		<result column="status" property="status" />
+		<result column="createTime" property="createTime" />
+		<result column="updateTime" property="updateTime" />
+		<result column="createUserId" property="createUserId" />
+		<result column="updateUserId" property="updateUserId" />
+		<result column="investRmb" property="investRmb" />
+		<result column="investDollar" property="investDollar" />
+		<result column="investRatio" property="investRatio" />
+		<result column="isBigPro" property="isBigPro" />
+		<result column="BigProCom" property="BigProCom" />
+		<result column="BigProTime" property="BigProTime" />
+		<result column="uploadProTab" property="uploadProTab" />
+		<result column="leader" property="leader" />
+		<result column="firstTalkTime" property="firstTalkTime" />
+		<result column="progress" property="progress" />
+		<result column="question" property="question" />
+		<result column="nextStep" property="nextStep" />
+		<result column="isVisit" property="isVisit" />
+		<result column="visitLv" property="visitLv" />
+		<result column="proMeetTime" property="proMeetTime" />
+		<result column="proViewTime" property="proViewTime" />
+		<result column="contractTime" property="contractTime" />
+		<result column="contractType" property="contractType" />
+		<result column="proConcatCom" property="proConcatCom" />
+		<result column="regComName" property="regComName" />
+		<result column="regComTime" property="regComTime" />
+		<result column="regInvest" property="regInvest" />
+		<result column="regNo" property="regNo" />
+		<result column="proContractTime" property="proContractTime" />
+		<result column="proRegTime" property="proRegTime" />
+		<result column="proType" property="proType" />
+		<result column="regBigProTime" property="regBigProTime" />
+		<result column="regedBigProTime" property="regedBigProTime" />
+		<result column="controlCom" property="controlCom" />
+		<result column="proConventionType" property="proConventionType" />
+		<result column="proConventionInfo" property="proConventionInfo" />
+		<result column="nextAdvise" property="nextAdvise" />
+		<result column="infoDesc" property="infoDesc" />
+		<result column="followName" property="followName" />
+		<result column="followTel" property="followTel" />
+	</resultMap>
+
+</mapper>

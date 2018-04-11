@@ -1,0 +1,23 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<div class="form-horizontal" id="userInfoForm">
+		
+			<input type="hidden" id="id" value="">
+
+			<div class="row">
+				<div class="col-sm-12 b-r">
+					@for(log in details){
+					<div>
+						<p>${log.content}</p>
+					</div>
+					@}
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+<script src="${ctxPath}/static/modular/api/zate/zate_info.js"></script>
+@}

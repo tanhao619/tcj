@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.zate.dao.ZateLandDao">
+
+    <select id="selectByIds" resultType="com.stylefeng.guns.common.persistence.model.ExpZateland">
+        SELECT * from exp_zateland
+        <if test="ids != null and ids.size > 0">
+            WHERE id in
+            <foreach collection="ids" item="zid" open="(" close=")" separator=",">
+                #{zid}
+            </foreach>
+            <choose>
+                <when test="params.sort != null and params.sort == 'ordId'">
+                    ORDER BY id ${params.order}
+                </when>
+                <when test="params.sort != null and params.sort != 'ordId'">
+                    ORDER BY ${params.sort} ${params.order}
+                </when>
+                <otherwise>
+                    ORDER BY id ASC
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+</mapper>

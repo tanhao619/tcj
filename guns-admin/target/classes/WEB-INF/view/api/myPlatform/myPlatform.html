@@ -1,0 +1,45 @@
+@layout("/common/_container.html"){
+<link rel="stylesheet" href="${ctxPath}/static/css/page/myPlatform.css">
+<div class="row">
+    <div class="col-sm-12">
+       <div class="ibox-title">
+           <h3>我的工作台</h3>
+           <span>MY WORKBENCH</span>
+       </div>
+        <!--待处理项目-->
+        <div id="toBeHandle" class="myPlatformWarp">
+            <span class="myPlatformTitle">待分配项目<span id="toBeHandleTotalNum" class="totalNum"></span></span>
+            <div id="toBeAllocated" class="myTable">
+                <#table id="toBeAllocatedTable"/>
+            </div>
+        </div>
+        <div class="myPlatformWarp">
+            <div id="notice" class="myTable">
+                <span class="myPlatformTitle">提醒<span id="noticeTotalNum" class="totalNum"></span></span>
+                <span class="noticeTitle">
+                    <img src="/static/img/line_vertical.png" height="18" width="4"/>跟踪项目更新提醒
+                    [<span id="trackTableTotalNum"></span>]
+                </span>
+                <#table id="trackTable"/>
+                <span class="noticeTitle" style="margin-top: 7px">
+                    <img src="/static/img/line_vertical.png" height="18" width="4"/>项目一周未更新
+                    [<span id="noUpdateTableTotalNum"></span>]
+                </span>
+                <#table id="noUpdateTable"/>
+            </div>
+        </div>
+        <!--载体资源信息变更-->
+        <div class="myPlatformWarp">
+            <div id="resourcesChange" class="myTable">
+                <span class="myPlatformTitle">载体资源信息变更<span id="resTotalNum" class="totalNum"></span></span>
+                <#table id="resourcesChangeTable"/>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/api/myPlatform/myPlatform.js"></script>
+<script src="${ctxPath}/static/modular/api/myPlatform/toBeAllocated.js"></script>
+<script src="${ctxPath}/static/modular/api/myPlatform/trackTable.js"></script>
+<script src="${ctxPath}/static/modular/api/myPlatform/noUpdateTable.js"></script>
+<script src="${ctxPath}/static/modular/api/myPlatform/resourcesChangeTable.js"></script>
+@}

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.RoleDao">
+
+	<sql id="Base_Column_List">
+		id, num, pid, name, deptid, tips, version, duty, isSystem, remark
+	</sql>
+
+	<select id="selectRoles" resultType="map">
+		select
+		<include refid="Base_Column_List" />
+		from role
+		<if test="condition != null">
+			where name like CONCAT('%',#{condition},'%')
+		</if>
+	</select>
+
+	<delete id="deleteRolesById">
+		delete from relation where roleid = #{roleId}
+	</delete>
+
+	<select id="roleTreeList" resultType="com.stylefeng.guns.core.node.ZTreeNode">
+		select id "id",pId
+		"pId",name as "name",(case when (pId=0 or pId is null) then 'true'
+		else 'false' end) "open" from role
+		<!-- add by lgg-->
+		ORDER BY deptid ASC,duty ASC
+	</select>
+
+	<select id="roleTreeListByRoleId" resultType="com.stylefeng.guns.core.node.ZTreeNode">
+		SELECT
+		r.id "id",
+		pId "pId",
+		NAME AS "name",
+		(
+		CASE
+		WHEN (pId = 0 OR pId IS NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) "open",
+		(
+		CASE
+		WHEN (r1.ID = 0 OR r1.ID IS NULL) THEN
+		'false'
+		ELSE
+		'true'
+		END
+		) "checked"
+		FROM
+		role r
+		LEFT JOIN (
+		SELECT
+		ID
+		FROM
+		role
+		WHERE
+		ID IN 
+		
+		<foreach collection="array" index="index" item="i" open="(" separator="," close=")">  
+        #{i}
+    	</foreach>
+		
+		) r1 ON r.ID = r1.ID
+<!--		ORDER BY
+		pId,
+		num ASC
+-->
+		ORDER BY r.deptid ASC,duty ASC
+	</select>
+
+	<!--通过科室 simplename、tips 角色duty 确定角色-->
+	<select id="getRoleByNTD" resultType="com.stylefeng.guns.common.persistence.model.Role">
+		SELECT
+			ro.*
+		FROM
+			dept de,
+			role ro
+		WHERE
+			ro.deptid = de.id
+		AND de.simplename = #{simplename}
+		AND de.tips = #{tips}
+		AND ro.duty = #{duty}
+	</select>
+
+	<!--通过科室 tips 角色duty 确定角色-->
+	<select id="getRoleByTipsDuty" resultType="java.lang.Integer">
+		SELECT
+		DISTINCT ro.id
+		FROM
+		dept de,
+		role ro
+		WHERE
+		ro.deptid = de.id
+		AND de.tips = #{tips}
+		AND ro.duty = #{duty}
+	</select>
+
+	<select id="selectRoleByDidADuty" resultType="com.stylefeng.guns.common.persistence.model.Role">
+
+		SELECT
+			*
+		FROM
+			role
+		WHERE
+			deptid = #{deptid}
+		AND duty = #{duty}
+
+	</select>
+</mapper>

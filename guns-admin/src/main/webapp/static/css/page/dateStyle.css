@@ -1,0 +1,29 @@
+.jedatebox{
+    width: 240px;
+}
+.jedateblue{
+    border:1px solid #1ab394;
+}
+.jedateblue .jedatetop{
+    background: #1ab394;
+}
+.jedateblue .jedatebot .jedatebtn span{
+    background: #1ab394;
+}
+.jedateblue .jedaul li.action, .jedateblue .jedaul li.action:hover, .jedateblue .jedaul li.action .lunar{
+    background: #1ab394;
+}
+.datainp{
+    border:1px solid #dcdcdc;
+}
+.jedateblue .jedaul li .nolunar{
+    line-height: 28px;
+}
+.jedateblue .jedaul li{
+    /*width: 12.28%;*/
+    float: left;
+    /*height: 25px;*/
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}

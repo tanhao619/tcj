@@ -1,0 +1,14 @@
+package ${dao.packageName};
+import org.springframework.stereotype.Component;
+
+/**
+ * ${context.bizChName}Dao
+ *
+ * @author fengshuonan
+ * @Date ${tool.currentTime()}
+ */
+@Component
+public interface ${context.bizEnBigName}Dao {
+
+
+}

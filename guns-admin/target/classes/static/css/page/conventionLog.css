@@ -1,0 +1,19 @@
+.conventionLog .bootstrap-table{
+    margin-top: 0px!important;
+}
+.conventionLog .btn_wrap,.conventionLog .delete_wrap{
+    /*background: #fff!important;*/
+    width: 35px!important;
+    height: 35px!important;
+    display: inline-block;/**/
+}
+.conventionLog .opearteLog{
+    background: #fff!important;
+    width: 35px!important;
+    height: 35px!important;
+    text-align: center!important;
+    padding-right: 25px!important;
+    display: none;
+
+}
+

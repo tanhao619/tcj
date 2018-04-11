@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.project.dao.FollowProjectDao">
+
+    <insert id="batchInsert" parameterType="java.util.List" >
+        <selectKey resultType="java.lang.Long" keyProperty="id" >
+            <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+        </selectKey>
+        insert into follow_project (proId, userId, deptId, userName, currentTime,folType)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.proId},#{item.userId},#{item.deptId}, #{item.userName},#{item.currentTime},#{item.folType})
+        </foreach>
+    </insert>
+
+    <delete id="deleteFollowProjectByProId" parameterType="java.util.List">
+        delete from follow_project where proId = #{proId}
+        and folType = #{folType}
+        <if test="list.size > 0">
+            and id not in (
+            <foreach collection="list" item="item" index="index" separator="," >
+                #{item}
+            </foreach>
+            )
+        </if>
+    </delete>
+
+    <delete id="updateCurrentTimeByProId" parameterType="java.util.List">
+        update follow_project set currentTime = #{currentTime}
+        , userId = #{userId} , userName = #{userName}
+        where proId = #{proId}
+        <if test="list.size > 0">
+            and id not in (
+            <foreach collection="list" item="item" index="index" separator="," >
+                #{item}
+            </foreach>
+            )
+        </if>
+    </delete>
+
+    <select id="queryICDeptId" resultType="java.lang.Integer">
+        SELECT id FROM `dept` where tips = '1' and simplename ='信息服务中心'limit 1
+    </select>
+
+    <!--add by lgg-->
+    <!-- 通过proId查询到 该项目的所有跟踪科室中 投促局下科室 对应角色中的科长角色-->
+    <select id="selectFollowProjectKZRoleIds" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT ro.id FROM role ro WHERE deptid in(
+        SELECT de.id FROM follow_project pro,dept de
+        WHERE proId = #{proId} AND de.id = pro.deptId AND de.tips = 1
+        ) AND ro.duty = 2
+    </select>
+
+    <!--add by lgg-->
+    <!-- 通过proId查询到 该项目的所有跟踪科室中 投促局下科室 对应角色中的科员角色id-->
+    <!--<select id="selectFollowProjectKeYuanRoleIds" resultType="java.lang.Integer" parameterType="java.lang.Integer">-->
+        <!--SELECT DISTINCT ro.id FROM role ro WHERE deptid in(-->
+        <!--SELECT de.id FROM follow_project pro,dept de-->
+        <!--WHERE proId = #{proId} AND de.id = pro.deptId AND de.tips = 1 AND de.simplename != '信息服务中心'-->
+        <!--) AND ro.duty = 1-->
+    <!--</select>-->
+    <!-- 通过proId查询到 该项目的所有跟踪科室中 投促局下科室 所有角色id-->
+    <select id="selectFollowProjectAllRoleIds" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    SELECT DISTINCT ro.id FROM role ro WHERE deptid in(
+    SELECT de.id FROM follow_project pro,dept de
+    WHERE proId = #{proId} AND de.id = pro.deptId AND de.tips = 1 AND de.simplename != '信息服务中心'
+    )
+    </select>
+    <!--add by lgg-->
+    <!--获取登录账号所拥有的 投促局下的科室 对应角色中的科长角色-->
+    <select id="selectOwnTcjKZRoleIds" resultType="java.lang.Integer" >
+        <!--  这是错的-->
+  <!--        SELECT ro.id FROM role ro WHERE deptid in(
+              SELECT de.id FROM dept de WHERE  de.tips = 1 AND de.id in
+              <foreach collection="deptIds" item="deptId" open="(" close=")" separator=",">
+                  #{deptId}
+              </foreach>
+          ) AND ro.duty = 2-->
+        <!-- 来个对的 -->
+        SELECT * FROM role  ro WHERE ro.id in
+        <foreach collection="roleIds" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+        AND duty = 2
+    </select>
+
+    <select id="checkProAuthByUserId" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(1) as count from user u,role r
+        <if test="isAll != null">
+            ,dept d
+        </if>
+         where FIND_IN_SET(r.id,u.roleid)
+           and u.id = #{userId}
+        <if test="isAll != null">
+           and d.id = r.deptid
+           and d.tips = 1
+        </if>
+           and r.deptid in(
+              select f.deptId
+                from follow_project f
+               where f.proId = #{proId}
+                 and f.folType = #{folType}
+            )
+    </select>
+
+    <select id="queryDeptLv" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select MIN(d.tips) from user u,role r,dept d
+         where FIND_IN_SET(r.id,u.roleid)
+           and u.id = #{userId}
+           and d.id = r.deptid
+           and r.deptid in(
+                select f.deptId
+                  from follow_project f
+                 where proId = #{proId}
+                  and folType = #{folType}
+            )
+    </select>
+
+</mapper>

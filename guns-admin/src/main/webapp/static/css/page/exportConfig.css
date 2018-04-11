@@ -1,0 +1,94 @@
+.head{
+    height:50px;
+    background-color: transparent;
+    position: absolute;
+    right: -18px;
+    top: -91px;
+    width: auto;
+}
+.content{
+   padding: 30px 195px;
+}
+.content .baseInfo{
+    position: relative;
+    background-color:#e6edf5 ;
+    padding:30px 60px 90px ;
+}
+.content .topContent .baseInfo{
+    float: left;
+    width: 45%;
+    padding: 30px 122px;
+    height: 575px;
+    margin-bottom: 60px;
+}
+.detailHead{
+    position: absolute;
+    top: -35px;
+    left: 0;
+}
+.talkMessage{
+    display: flex;
+    justify-content:space-between;
+}
+.btnGroup{
+    text-align: center;
+    margin-top: 60px;
+}
+button.btn{
+    background-color: #2781a6;
+    border-color: #2781a6;
+    padding: 12px 44px;
+    font-size: 14px
+ }
+#cancel{
+    background-color: #fff;
+    color:#2781a6 ;
+}
+#cancel:hover{
+    border-color:#2781a6;
+}
+button.btn .fa{
+    display: none;
+}
+.detail p{
+    background-color: #fff;
+    height: 34px;
+    width: 250px;
+    line-height: 34px;
+    border: 1px solid #fff;
+    margin: 0 0 2px;
+    padding-left: 42px;
+}
+/*项目导出*/
+.bigProjectExport .content .baseInfo{
+    width: 100%!important;
+    height: 380px!important;
+    padding: 30px 70px !important;
+}
+.bigProjectExport .content .baseInfo .info{
+    width:33%;
+    float: left;
+}
+.bigProjectExport .content .baseInfo .info h3{
+    font-size: 14px;
+}
+.bigProjectExport .content .baseInfo .info .exportDate .create input{
+    width:93px!important;
+}
+/*
+.content .baseInfo .detail{
+    float: left;
+    margin-right: 30px;
+}
+.content .baseInfo .detail .con{
+    width:260px;
+    height:150px;
+    border:1px dashed #64a2bd;
+}
+.content .baseInfo .detail .con .date{
+   clear: both;
+}
+.content .baseInfo .detail div p{
+    float: left;
+    padding: 5px;
+}*/

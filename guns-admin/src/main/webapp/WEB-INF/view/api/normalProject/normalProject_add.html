@@ -1,0 +1,346 @@
+@layout("/common/_container.html"){
+<!--<link href="${ctxPath}/static/css/page/normalProjectTab.css" rel="stylesheet">-->
+
+<script src="${ctxPath}/static/modular/api/normalProject/normalProject_add.js"></script>
+<div class="ibox float-e-margins">
+    <div class="breadcrumbNav" id="returnTop">
+        <div class="firstTitle">
+            <a href="">常规投资项目</a>
+            <span>/</span>
+            <span>申报项目页</span>
+        </div>
+        <div class="secondTitle">
+            <span>CONVENTIONAL INVESTMENT</span>
+            <span>/</span>
+            <span>PROJECT APPLICATION</span>
+        </div>
+    </div>
+    <div class="ibox-content myList  ">
+        <div class="form-horizontal baseList" id="normalProjectAddForm">
+            <input type="hidden" id="id" value="">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="normalProjectAdd">
+                        <div class="form-group positionSite has-feedback tzfName" id="tzfName">
+                            <label class="control-label inputBr"><img src="${ctxPath}/static/img/icon_must1.png"> 投资项目名称：</label>
+                            <br>
+                            <div class="inputWidth tipsWidth">
+                                <input class="form-control" id="name" name="name" type="text" data-bv-field="name">
+                                <div class="tips" id="nameTip">
+                                   <!--<img src="${ctxPath}/static/img/icon_prompt.png">-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group positionSite has-feedback " id="setPlaceNoraml">
+                            <label class="control-label inputBr"><img src="${ctxPath}/static/img/icon_must1.png"> 投资建设内容：</label>
+                            <br>
+                            <div class="investContent tipsWidth">
+                                <textarea class="form-control" id="content" name="content"></textarea>
+                                <div class="tips" id="contentTip" style="right: 235px;">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investmentArea newAddInvestmentArea" id="newAddInvestmentArea">
+                            <div class="form-group positionSite has-feedback" id="tzfFromPlace">
+                                <label class=" control-label inputBr"><img src="${ctxPath}/static/img/icon_must1.png"> 投资来源地归属：</label>
+                                <div class="settledIndustry singleArea tipsWidth">
+                                    <div class="content">
+                                        <ul>
+                                            <li class="radioItem radioChecked">
+                                                <input name="fromArea" value="1" type="radio">
+                                                <span>市内</span>
+                                            </li>
+                                            <li class="radioItem radioChecked">
+                                                <input name="fromArea" value="2" type="radio">
+                                                <span> 市外</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tips" id="fromAreaTip" style="right: 5%;white-space: nowrap;">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group positionSite has-feedback" id="tzfType">
+                                <label class="control-label inputBr"><img src="${ctxPath}/static/img/icon_must1.png"> 投资类型：</label>
+                                <div class="settledIndustry tipsWidth">
+                                    <div class="content">
+                                        <ul>
+                                            <li class="radioItem radioChecked">
+                                                <input name="investType" value="1" type="radio">
+                                                <span>外资</span>
+                                            </li>
+                                            <li class="radioItem radioChecked">
+                                                <input name="investType" value="2" type="radio">
+                                                <span> 内资</span>
+                                            </li>
+                                            <li class="radioItem radioChecked">
+                                                <input name="investType" value="3" type="radio">
+                                                <span> 合资</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tips" id="investTypeTip" style="right: 4%;white-space: nowrap">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group positionSite has-feedback" id="tzfProduct">
+                                <label class=" control-label inputBr"><img src="${ctxPath}/static/img/icon_must1.png"> 归属产业：</label>
+                                <div class="settledIndustry tipsWidth">
+                                    <div class="content">
+                                        <ul class="checkboxChoice">
+                                            <li class="radioItem">
+                                                <input name="category" value="1" type="checkbox">
+                                                <span>第一产业</span>
+                                                <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                <div class="building" style="display: none">
+                                                    <h3>第一产业类型</h3>
+                                                    <ul>
+                                                        <li>设施产业</li>
+                                                        <li>规模化种养殖</li>
+                                                        <li>农业加工</li>
+                                                        <li>农业物流</li>
+                                                        <li>新农村建设</li>
+                                                        <li>其他</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="radioItem">
+                                                <input name="category" value="2" type="checkbox">
+                                                <span> 第二产业</span>
+                                                <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                <div class="building secondBuildiing" style="display: none">
+                                                    <h3>第二产业类型</h3>
+                                                    <ul>
+                                                        <li>电子信息</li>
+                                                        <li>物联网</li>
+                                                        <li>电子信息配套</li>
+                                                        <li>食品饮料</li>
+                                                        <li>节能环保</li>
+                                                        <li>生物医药</li>
+                                                        <li>冶金建材</li>
+                                                        <li>航空航天</li>
+                                                        <li>机械</li>
+                                                        <li>新能源</li>
+                                                        <li>印务包装</li>
+                                                        <li>新材料</li>
+                                                        <li>其他</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="radioItem">
+                                                <input name="category" value="3" type="checkbox">
+                                                <span> 第三产业</span>
+                                                <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                                <img src="${ctxPath}/static/img/icon_help.png" class="helpImg">
+                                                <div class="building secondBuildiing" style="display: none">
+                                                    <h3>第三产业类型</h3>
+                                                    <ul>
+                                                        <li>研发设计</li>
+                                                        <li>地产</li>
+                                                        <li>总部</li>
+                                                        <li>信息服务</li>
+                                                        <li>软件业务</li>
+                                                        <li>旅游</li>
+                                                        <li>生物医药</li>
+                                                        <li>冶金建材</li>
+                                                        <li>物流</li>
+                                                        <li>创业孵化</li>
+                                                        <li>金融</li>
+                                                        <li>商贸</li>
+                                                        <li>基础设施</li>
+                                                        <li>工业设计</li>
+                                                        <li>文化创意</li>
+                                                        <li>教育</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tips" id="categoryTip" style="right: 66px;">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group positionSite has-feedback" id="isMainProduct">
+                                <label class=" control-label inputBr" >是否主导产业：</label>
+                                <div class="settledIndustry singleArea" style="margin-top: 2px;">
+                                    <div class="content">
+                                        <ul>
+                                            <li class="radioItem radioChecked">
+                                                <input name="leadCategory" value="1" type="radio" data-bv-field="leadCategory">
+                                                <span>是</span>
+                                            </li>
+                                            <li class="radioItem radioChecked">
+                                                <input name="leadCategory" value="0" type="radio" data-bv-field="leadCategory">
+                                                <span> 否</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="newAddInfo infoProviderBig" id="newAddInfo">
+                            <div class="form-group positionSite has-feedback infoProvider" id="tzfInfoProvider">
+                                <label class="control-label inputBr" style="margin-left: 10px;">信息提供者</label>
+                                <div class="detail tipsWidth">
+                                    <p>
+                                        <span>姓名</span>
+                                        <input type="text" name="author" id="author">
+                                    </p>
+                                    <p>
+                                        <span>电话</span>
+                                        <input type="text" name="tel" id="tel">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group positionSite has-feedback infoProvider" id="entProdiver">
+                                <label class="control-label inputBr"><img src="${ctxPath}/static/img/icon_must1.png"> 企业联系者</label>
+                                <div class="detail tipsWidth">
+                                    <p>
+                                        <span>姓名</span>
+                                        <input type="text" name="enterOfferName" id="enterOfferName">
+
+                                    </p>
+
+                                    <p>
+                                        <span>电话</span>
+                                        <input type="text" name="enterOfferTel" id="enterOfferTel">
+
+                                    </p>
+                                    <div class="tips" id="entProviderTip" style="line-height: 15px;">
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="investmentCompanyInfo tzfCompanyInf newInfo" id="investmentCompanyForm" >
+                            <div class="form-group positionSite has-feedback">
+                                <label class="ccontrol-label inputBr addUnderline"><img src="${ctxPath}/static/img/icon_must1.png"> 投资方公司信息</label>
+                                <div class="continueAdd" id="ensure" onclick="NormalProjectAdd.addTzfTable()">
+                                    <span>添加</span>
+                                    <img src="${ctxPath}/static/img/icon_adding_common1.png">
+                                </div>
+                                <br>
+                                <div class="inputWidth tipsWidth" style="width:100%;">
+                                    <input class="form-control" id="comCount" name="comCount" type="hidden" value="0">
+                                    <div class="tips" id="comTip" style="top:inherit;right:28%;bottom:40px;"></div>
+                                    <div class="detail addTzf" style="background: #e6edf5">
+                                        <div class="deleteInfo" onclick="NormalProjectAdd.deleteTzfTable(this)">
+                                            <img src="${ctxPath}/static/img/icon_delete_common1.png">
+                                        </div>
+                                        <div class="firstLine">
+                                            <p class="detailInfo rightGap">
+                                                <span>公司名称</span>
+                                                <input class="" name="comName" type="text">
+                                            </p>
+                                            <p class="detailInfo">
+                                                <span>公司联系人</span>
+                                                <input class="" name="comAuthor" type="text">
+                                            </p>
+                                        </div>
+                                        <div class="firstLine">
+                                            <p class="detailInfo rightGap">
+                                                <span>公司地址</span>
+                                                <input class="" name="comAddr" type="text">
+                                            </p>
+                                            <p class="detailInfo ">
+                                                <span>联系人电话</span>
+                                                <input class="" name="comTel" type="text">
+                                            </p>
+
+                                        </div>
+                                        <div class="secondLine">
+
+                                            <p class="newCompany">
+                                                <span>企业情况</span>
+                                                <select id="comType" name="comType">
+                                                    <option value="0">不属于任何类</option>
+                                                    <option value="1">世界500强企业</option>
+                                                    <option value="2">中国500强企业</option>
+                                                    <option value="3">中国服务业企业500强</option>
+                                                    <option value="4">中国民营500强企业</option>
+                                                    <option value="5">美国500强企业</option>
+                                                    <option value="6">独角兽估值300强</option>
+                                                </select>
+                                            </p>
+                                        </div>
+                                        <div class="lastLine" style="margin-top: 10px;">
+                                            <span>公司简介</span>
+                                            <textarea class="" name="comContent" data-bv-field="comContent"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!--<div class="form-group positionSite has-feedback "  id="resFollowPlatform">-->
+                            <!--<label class="control-label inputBr"><img src="${ctxPath}/static/img/icon_must1.png"> 负责跟踪平台</label>-->
+                            <!--<br>-->
+                            <!--<div class="tipsWidth followPlatform">-->
+                                <!--<ul class="checkboxChoice">-->
+                                    <!--&lt;!&ndash;<input name="followDeptId" value="1" type="checkbox">第一产业&ndash;&gt;-->
+                                <!--</ul>-->
+                                <!--<div class="tips" id="followDeptTip">-->
+
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <div class="form-group positionSite has-feedback infoDescParent newAddMask"  id="mask" style="margin-left: 110px;">
+                            <label class="control-label inputBr">备注</label>
+                            <br>
+                            <div class="tipsWidth infoDesc">
+                                <textarea class="form-control" id="infoDesc" name="infoDesc"></textarea>
+                                <div class="tips" id="infoDescTip">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row btn-group-m-t btnSubmit">
+                <div class="col-sm-12 addBtn" align="center">
+                    <#button btnCss="info" name="提交" id="submit" icon="fa-check" clickFun="NormalProjectAdd.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="NormalProjectAdd.addCancel()"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<div id="anchorSkip1" class="anchorSkip">
+    <ul>
+        <li><a href="#tzfName">投资项目名称</a></li>
+        <li><a href="#setPlaceNoraml">投资建设内容</a></li>
+        <li><a href="#tzfFromPlace">投资来源地归属</a></li>
+        <li><a href="#tzfProduct">归属产业</a></li>
+        <li><a href="#tzfType">投资类型</a></li>
+        <li><a href="#isMainProduct">是否主导产业</a></li>
+        <li><a href="#tzfInfoProvider">信息提供者</a></li>
+        <li><a href="#entProdiver">企业提供者</a></li>
+        <li><a href="#investmentCompanyForm">投资方公司信息</a></li>
+        <!--<li><a href="#resFollowPlatform">负责跟踪平台</a></li>-->
+        <li><a href="#mask">备注</a></li>
+        <li class="last"><a href="#returnTop"><img src="${ctxPath}/static/img/icon_return.png"><br>返回顶部</a></li>
+    </ul>
+</div>
+
+@}

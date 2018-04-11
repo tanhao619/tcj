@@ -1,0 +1,9 @@
+/*修改和确认按钮位置*/
+.myList .btn-group-m-t{
+    position: absolute;
+    top: -24px;
+    right: 19px;
+}
+.li-disable{
+    pointer-events: none;
+}

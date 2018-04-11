@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.project.dao.NormalProjectDao">
+    <select id="list" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        SELECT p.id,p.name,p.createTime,GROUP_CONCAT(c.name) as investor,p.`status`,p.updateTime
+        FROM normal_project p
+        LEFT OUTER JOIN pro_company c on c.proId = p.id
+        WHERE 1=1
+        <if test="params.name !=null ">
+            AND p.name like CONCAT("%",#{params.name},"%")
+        </if>
+        <if test="params.createTimeB !=null or params.createTimeE !=null">
+            AND p.createTime BETWEEN #{params.createTimeB}  AND  DATE_ADD(#{params.createTimeE},INTERVAL 1 day)
+        </if>
+        <if test="params.category !=null ">
+            AND p.category = #{params.category}
+        </if>
+        <if test="params.status !=null ">
+            AND p.status = #{params.status}
+        </if>
+        <if test="params.updateTimeB !=null or params.updateTimeE !=null">
+            AND p.updateTime BETWEEN #{params.updateTimeB}  AND  DATE_ADD(#{params.updateTimeE},INTERVAL 1 day)
+        </if>
+        <if test="params.fromArea !=null ">
+            AND p.fromArea = #{params.fromArea}
+        </if>
+        <if test="params.investType !=null ">
+            AND p.investType = #{params.investType}
+        </if>
+        <if test="params.useAreaB !=null and params.useAreaE !=null ">
+            AND p.id in(
+            SELECT DISTINCT p.id
+            FROM normal_project p,pro_area a
+            WHERE a.proId = p.id
+            AND  a.useArea BETWEEN cast(#{params.useAreaB} as DECIMAL(12,3))  AND cast(#{params.useAreaE} as DECIMAL(12,3))
+            )
+        </if>
+        <if test="params.investType !=null ">
+            AND p.investType = #{params.investType}
+        </if>
+        <if test="params.investRmbB !=null or params.investRmbE !=null">
+            AND p.countRmb BETWEEN cast(#{params.investRmbB} as DECIMAL(12,3))  AND cast(#{params.investRmbE} as DECIMAL(12,3))
+        </if>
+        <if test="params.contractType !=null ">
+            AND p.id in(
+                SELECT DISTINCT p.id
+                FROM normal_project p,pro_contractType c
+                WHERE c.proId = p.id
+                AND c.name = #{params.contractType}
+            )
+
+        </if>
+        <if test="params.isVisit !=null ">
+            AND p.isVisit = #{params.isVisit}
+        </if>
+        GROUP BY id
+        order by createTime desc
+    </select>
+
+    <select id="getIds" resultType="Integer">
+        SELECT id FROM dept WHERE pid = (SELECT id from dept WHERE pid = 0 and tips = 1)
+    </select>
+
+    <select id="getRoleIds" resultType="Integer">
+        SELECT id FROM role WHERE deptid = #{id}
+    </select>
+
+    <select id="followsOffice" resultType="Map">
+        SELECT id,fullname FROM dept WHERE pid = (SELECT id from dept WHERE pid = 0 and tips = 1)
+    </select>
+
+    <select id="followsStreet" resultType="Map">
+        SELECT id,fullname FROM dept WHERE pid = (SELECT id from dept WHERE pid = 0 and tips = 3)
+    </select>
+
+    <select id="getFollowsPlat" resultType="Map">
+          SELECT id,fullname FROM dept WHERE pid = (SELECT id from dept WHERE pid = 0 and tips = 2)
+    </select>
+
+    <select id="getAttachByProId" parameterType="Integer" resultType="ProAttachment">
+        SELECT id,attachName,url FROM pro_attachment WHERE proId = #{proid}
+    </select>
+
+    <select id="getUnitLiableByProId" parameterType="Integer" resultType="UnitLiable">
+        SELECT id,liable,name,tel,folType FROM unit_liable where proId = #{proid}
+    </select>
+
+    <select id="getProAreasByProId" parameterType="Integer" resultType="ProArea">
+        SELECT id,addr,useArea,useType,folType FROM pro_area WHERE proId = #{proid}
+    </select>
+
+    <select id="getTypeByProId" parameterType="Integer" resultType="ProAdviseOpeType">
+        SELECT id,name FROM pro_adviseOpeType WHERE proId = #{proid}
+    </select>
+
+    <select id="getContractTypeByProId" parameterType="Integer" resultType="ProContractType">
+        SELECT id,name FROM pro_contractType WHERE proId = #{proid}
+    </select>
+
+    <select id="getFollowOffice" parameterType="Integer" resultType="Map">
+        SELECT id,deptId FROM follow_project WHERE proId = #{proid}
+    </select>
+
+    <!--<select id="getFollowFlat" parameterType="Integer" resultType="Integer">-->
+        <!--SELECT id FROM-->
+        <!--(-->
+            <!--SELECT * FROM dept WHERE id in (-->
+            <!--SELECT deptId FROM follow_project WHERE proId = #{proid}-->
+            <!--)-->
+        <!--) deptt WHERE deptt.tips = 3 AND pid != 0-->
+    <!--</select>-->
+
+    <insert id="insertProject" parameterType="java.util.HashMap">
+        <selectKey resultType="java.lang.Long" keyProperty="newId" >
+            <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+        </selectKey>
+        insert into normal_project (updateTime,createUserId,isBigPro
+        <if test="name != null">,name</if>
+        <if test="countRmb != null">,countRmb</if>
+        <if test="content != null">,content</if>
+        <if test="fromArea != null">,fromArea</if>
+        <if test="investType != null">,investType</if>
+        <if test="category != null">,category</if>
+        <if test="leadCategory != null">,leadCategory</if>
+        <if test="author != null">,author</if>
+        <if test="tel != null">,tel</if>
+        <if test="status != null">,status</if>
+        <if test="infoDesc != null">,infoDesc</if>
+        <if test="enterOfferName != null">,enterOfferName</if>
+        <if test="enterOfferTel != null">,enterOfferTel</if>
+        <if test="currentTime != null">,currentTime</if>
+        <if test="folType != null">,folType</if>
+        )  values(now(),#{userId},0
+        <if test="name != null">,#{name}</if>
+        <if test="countRmb != null">,#{countRmb}</if>
+        <if test="content != null">,#{content}</if>
+        <if test="fromArea != null">,#{fromArea}</if>
+        <if test="investType != null">,#{investType}</if>
+        <if test="category != null">,#{category}</if>
+        <if test="leadCategory != null">,#{leadCategory}</if>
+        <if test="author != null">,#{author}</if>
+        <if test="tel != null">,#{tel}</if>
+        <if test="status != null">,#{status}</if>
+        <if test="infoDesc != null">,#{infoDesc}</if>
+        <if test="enterOfferName != null">,#{enterOfferName}</if>
+        <if test="enterOfferTel != null">,#{enterOfferTel}</if>
+        <if test="currentTime != null">,#{currentTime}</if>
+        <if test="folType != null">,#{folType}</if>
+        )
+    </insert>
+
+    <update id="updateProject" parameterType="java.util.HashMap">
+        update normal_project
+        <set>
+            <if test="name != null" >
+                name = #{name},
+            </if>
+            <if test="followUserId != null" >
+                followUserId = #{followUserId},
+            </if>
+            <if test="content != null" >
+                content = #{content},
+            </if>
+            <if test="fromArea != null" >
+                fromArea = #{fromArea},
+            </if>
+            <if test="investType != null" >
+                investType = #{investType},
+            </if>
+            <if test="category != null" >
+                category = #{category},
+            </if>
+            <if test="leadCategory != null" >
+                leadCategory = #{leadCategory},
+            </if>
+            <if test="author != null" >
+                author = #{author},
+            </if>
+            <if test="tel != null" >
+                tel = #{tel},
+            </if>
+            <if test="status != null" >
+                status = #{status},
+            </if>
+           <!-- <if test="infoDesc != null" >
+                infoDesc = #{infoDesc},
+            </if>-->
+            <if test="investRmb != null" >
+                investRmb = #{investRmb},
+            </if>
+            <if test="investDollar != null" >
+                investDollar = #{investDollar},
+            </if>
+            <if test="investRatio != null" >
+                investRatio = #{investRatio},
+            </if>
+            <if test="isBigPro != null" >
+                isBigPro = #{isBigPro},
+            </if>
+            <if test="bigProCom != null" >
+                bigProCom = #{bigProCom},
+            </if>
+            <if test="bigProTime != null" >
+                bigProTime = #{bigProTime},
+            </if>
+            <if test="leader != null" >
+                leader = #{leader},
+            </if>
+            <if test="progress != null" >
+                progress = #{progress},
+            </if>
+            <if test="question != null" >
+                question = #{question},
+            </if>
+            <if test="nextStep != null" >
+                nextStep = #{nextStep},
+            </if>
+            <if test="isVisit != null" >
+                isVisit = #{isVisit},
+            </if>
+            <if test="visitLv != null" >
+                visitLv = #{visitLv},
+            </if>
+            <if test="talkCreateTime != null" >
+                talkCreateTime = #{talkCreateTime},
+            </if>
+
+            <if test="proMeetTime != null" >
+                proMeetTime = #{proMeetTime},
+            </if>
+            <if test="proViewTime != null" >
+                proViewTime = #{proViewTime},
+            </if>
+            <if test="contractTime != null" >
+                contractTime = #{contractTime},
+            </if>
+            <if test="proConcatCom != null" >
+                proConcatCom = #{proConcatCom},
+            </if>
+            <if test="regComName != null" >
+                regComName = #{regComName},
+            </if>
+            <if test="regComTime != null" >
+                regComTime = #{regComTime},
+            </if>
+            <if test="regInvest != null" >
+                regInvest = #{regInvest},
+            </if>
+            <if test="regNo != null" >
+                regNo = #{regNo},
+            </if>
+            <if test="proContractTime != null" >
+                proContractTime = #{proContractTime},
+            </if>
+            <if test="proRegTime != null" >
+                proRegTime = #{proRegTime},
+            </if>
+            <if test="proType != null" >
+                proType = #{proType},
+            </if>
+            <if test="regBigProTime != null" >
+                regBigProTime = #{regBigProTime},
+            </if>
+            <if test="regedBigProTime != null" >
+                regedBigProTime = #{regedBigProTime},
+            </if>
+            <if test="controlCom != null" >
+                controlCom = #{controlCom},
+            </if>
+            <if test="supervisionUnit != null" >
+                supervisionUnit = #{supervisionUnit},
+            </if>
+            <if test="proConventionType != null" >
+                proConventionType = #{proConventionType},
+            </if>
+            <if test="proConventionInfo != null" >
+                proConventionInfo = #{proConventionInfo},
+            </if>
+            <if test="nextAdvise != null" >
+                nextAdvise = #{nextAdvise},
+            </if>
+            <if test="followTel != null" >
+                followTel = #{followTel},
+            </if>
+            <if test="followName != null" >
+                followName = #{followName},
+            </if>
+            <!--<if test="proConventionType != null" >
+                conUpdateTime = now(),
+            </if>-->
+            <if test="firstTalkTime != null" >
+                firstTalkTime = #{firstTalkTime},
+            </if>
+            <if test="enterOfferName != null" >
+                enterOfferName = #{enterOfferName},
+            </if>
+            <if test="enterOfferTel != null" >
+                enterOfferTel = #{enterOfferTel},
+            </if>
+            <if test="currentTime != null" >
+                currentTime = #{currentTime},
+            </if>
+            <if test="folType != null" >
+                folType = #{folType},
+            </if>
+            <if test="isMerge != null" >
+                isMerge = #{isMerge},
+            </if>
+            <if test="isMergeT != null" >
+                isMergeT = #{isMergeT},
+            </if>
+            <if test="countRmb != null" >
+                countRmb = #{countRmb},
+            </if>
+            infoDesc = #{infoDesc}, updateTime = now() ,talkUpdateTime = now() ,conUpdateTime = now(), updateUserId = #{userId}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="exportExcel" resultType="com.stylefeng.guns.modular.project.dto.ExportExcelDTO">
+        SELECT
+        <foreach collection="fields" item="field" separator=",">
+            ${field}
+        </foreach>
+        FROM normal_project
+        <foreach collection="tables" item="table">
+            ,${table}
+        </foreach>
+        WHERE 1=1
+        <foreach collection="tables" item="table">
+            and normal_project.id = ${table}.proId
+        </foreach>
+        GROUP BY normal_project.id
+    </select>
+
+    <select id="getDeptNameById" resultType="String">
+        	SELECT fullname FROM dept WHERE id = #{did}
+    </select>
+
+    <update id="updateFolType" parameterType="java.util.HashMap">
+        UPDATE normal_project
+           set folType = #{folType},
+                updateTime = now() ,
+                currentTime = #{currentTime},
+                followUserId = null,
+                followName = null,
+                followTel = null
+         where id = #{proId}
+    </update>
+
+    <select id="checkNormalProject" resultType="java.lang.Integer">
+      SELECT count(1) FROM normal_project where name = #{name}
+      <if test="proId != null">
+          <![CDATA[
+                and id <> #{proId}
+          ]]>
+      </if>
+    </select>
+
+    <select id="getExcelList" resultType="com.stylefeng.guns.modular.project.dto.ExportExcelDTO">
+        	SELECT * FROM v_pro v
+        	WHERE v.id in
+        (SELECT proId FROM follow_project WHERE deptId in(
+        <foreach collection="deptIds" item="deptId" separator=",">
+            ${deptId}
+        </foreach>
+        ))
+        ORDER BY v.id
+    </select>
+
+    <select id="getExcelListAdmin" resultType="com.stylefeng.guns.modular.project.dto.ExportExcelDTO">
+        SELECT * FROM v_pro v ORDER BY v.id
+    </select>
+
+    <select id="getTalkListByTime" resultType="com.stylefeng.guns.modular.project.dto.ExportExcelDTO">
+        SELECT
+            GROUP_CONCAT( progress SEPARATOR '##' ) AS talkProgress,
+            GROUP_CONCAT( question SEPARATOR '##' ) as talkQuestion,
+            GROUP_CONCAT( nextStep SEPARATOR '##' ) as talkNextStep,
+            GROUP_CONCAT( isVisit ) as talkIsvisit,
+            GROUP_CONCAT( visitLv ) as talkVisitLv
+        FROM	pro_talk
+        WHERE	proId = #{proid}
+        <if test="talkStartTime!=null and talkStartTime!=''">
+            and date(createTime)>=#{talkStartTime}
+        </if>
+        <if test="talkEndTime!=null and talkEndTime!=''">
+            <![CDATA[and date(createTime)<=#{talkEndTime}]]>
+        </if>
+        <if test="dayTime!=null and dayTime!=''">
+            AND <![CDATA[ TIMESTAMPDIFF(DAY,createTime,SYSDATE()) < #{dayTime} ]]>
+        </if>
+    </select>
+
+    <select id="getConListByTime" resultType="com.stylefeng.guns.modular.project.dto.ExportExcelDTO">
+        SELECT
+        GROUP_CONCAT( proConventionInfo  SEPARATOR '##' ) AS conProConventionInfo,
+        GROUP_CONCAT( nextAdvise  SEPARATOR '##' ) as conNextAdvise
+        FROM	pro_convention
+        WHERE	proId = #{proid}
+        <if test="conStart!=null and conStart!=''">
+            and date(createTime)>=#{conStart}
+        </if>
+        <if test="conEnd!=null and conEnd!=''">
+            <![CDATA[and date(createTime)<=#{conEnd}]]>
+        </if>
+        <if test="conTime!=null and conTime!=''">
+            AND <![CDATA[ TIMESTAMPDIFF(DAY,createTime,SYSDATE()) < #{conTime} ]]>
+        </if>
+    </select>
+
+    <update id="updateNomalProject" parameterType="java.util.HashMap">
+        update normal_project
+        <set>
+            <if test="followUserId != null" >
+                followUserId = #{followUserId},
+            </if>
+            <if test="followName != null" >
+                followName = #{followName},
+            </if>
+            <if test="followTel != null" >
+                followTel = #{followTel},
+            </if>
+            <if test="currentTime != null" >
+                currentTime = #{currentTime},
+            </if>
+             updateTime = now(), updateUserId = #{updateUserId}
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

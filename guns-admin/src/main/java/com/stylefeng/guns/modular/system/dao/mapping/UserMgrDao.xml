@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.UserMgrDao">
+
+	<sql id="Base_Column_List">
+		id, account, name, birthday, sex, email, avatar,
+		phone, roleid,
+		deptid, status,
+		createtime, version
+	</sql>
+
+	<sql id="Base_Column_List_With_Pwd">
+		id, account, name, birthday,password, sex, email, avatar,
+		phone, roleid,salt,
+		deptid, status,
+		createtime, version
+	</sql>
+
+	<select id="selectUsers" resultType="map">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where status != 3
+		<if test="name != null and name != ''">
+			and (phone like CONCAT('%',#{name},'%')
+			or account like CONCAT('%',#{name},'%')
+			or name like CONCAT('%',#{name},'%'))
+		</if>
+		<if test="deptid != null and deptid != 0">
+			and (deptid = #{deptid} or deptid in ( select id from dept where pids like CONCAT('%[', #{deptid}, ']%') ))
+		</if>
+		<if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+			and (createTime between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+		</if>
+		<if test="beginTime != null and beginTime != '' and (endTime == null or endTime == '')">
+			and   createTime &gt;= CONCAT(#{beginTime},' 00:00:00')
+		</if>
+		<if test="(beginTime == null or beginTime == '') and endTime != null and endTime != ''">
+			and  createTime  &lt;= CONCAT(#{endTime},' 23:59:59')
+		</if>
+		<!--默认创建时间倒叙-->
+		ORDER BY createtime DESC
+	</select>
+
+	<update id="setStatus">
+		update user set status = #{status} where id =
+		#{userId}
+	</update>
+
+	<update id="changePwd">
+		update user set password = #{pwd} where id =
+		#{userId}
+	</update>
+
+	<update id="setRoles">
+		update user set roleid = #{roleIds} where id =
+		#{userId}
+	</update>
+
+	<select id="getByAccount" resultType="user">
+		select
+		<include refid="Base_Column_List_With_Pwd" />
+		from user where account = #{account} and status != 3
+	</select>
+
+	<select id="getFollowsPerson" resultType="Map">
+		SELECT id,name,phone FROM user WHERE instr(concat (',', roleid ,','),concat(',',#{tid},',')) > 0
+		AND status = 1 <!-- 只查询启用的用户-->
+		<if test="name != null and name != '' ">
+			and name like CONCAT('%',#{name},'%')
+		</if>
+	</select>
+
+	<!--根据角色id获取的包含角色的所有用户-->
+	<select id="selectUsersByRoleId" parameterType="java.lang.Integer" resultType="com.stylefeng.guns.common.persistence.model.User">
+		SELECT * FROM `user` u WHERE FIND_IN_SET(#{roleid},u.roleid) >0 AND u.status = 1<!-- 必须是激活的用户-->
+	</select>
+
+	<!--根据角色id获取的包含角色的所有用户ids-->
+	<select id="selectContainsUsersByRoleId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT DISTINCT u.id FROM `user` u WHERE FIND_IN_SET(#{roleid},u.roleid) >0 AND u.status = 1<!-- 必须是激活的用户-->
+	</select>
+
+	<!--批量查询并去重用户-->
+	<!-- 必须是激活的用户-->
+	<select id="selectBatchQcUsers"  resultType="com.stylefeng.guns.modular.oa.dto.UserFPDTO">
+			SELECT ut.account AS userName,ut.id AS userId FROM (
+				SELECT DISTINCT u.* FROM user u WHERE u.status = 1 AND u.id in
+				(
+				<foreach collection="userIds" item="userId" index="index" separator=",">#{userId}
+				</foreach>
+				)
+			) ut
+
+	</select>
+
+	<!--通过account查询用户-->
+	<select id="selectUserByAccount" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT id FROM user where account = #{account} AND status = 1
+	</select>
+</mapper>

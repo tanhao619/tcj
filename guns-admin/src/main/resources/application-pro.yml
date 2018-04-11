@@ -1,0 +1,29 @@
+##########################################################
+###################  演示环境pro  ###################
+##########################################################
+spring:
+  profiles: pro
+  datasource:
+      url: jdbc:mysql://192.168.30.231:3306/tcjdb?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: aq1sw2de3
+      filters: log4j,wall,mergeStat
+#logging:
+#  level.root: warn
+#  path: logs/
+#  file: guns.log
+logging:
+  level.root: info
+  level.com.stylefeng: debug
+  path: logs/
+  file: guns.log
+###################  项目启动端口  ###################
+server:
+  port: 8090
+
+###################  图片服务器   ###################
+default:
+  path: /mnt/NFS_Client/
+  #server: http://172.16.0.41:8081/
+  server: http://cdyoue.com.cn:4181/
+  fileAddress: tcj

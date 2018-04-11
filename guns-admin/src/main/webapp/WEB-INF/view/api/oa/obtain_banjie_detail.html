@@ -1,0 +1,31 @@
+@layout("/common/_container.html"){
+<style>
+    .layui-timeline-axis{
+        left: -4px;
+        width: 18px!important;
+        height: 18px!important;
+        background-color: #6ec0b4!important;
+        color: #fff!important;
+
+    }
+</style>
+<div class="ibox float-e-margins">
+
+    <div class="form-horizontal">
+        <input type="hidden" id="BanJieDetailworkflowId" value="${workflowId}">
+        <div class="comfen">
+            <ul class="fenPeiPerson commonUser"></ul>
+            <div class="row btn-group-m-t ">
+                <ul class="layui-timeline">
+
+
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="${ctxPath}/static/modular/api/oa/obtain_banjie_detail.js"></script>
+@}

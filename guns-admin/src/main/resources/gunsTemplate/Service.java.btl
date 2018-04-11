@@ -1,0 +1,11 @@
+package ${service.packageName};
+import com.baomidou.mybatisplus.service.IService;
+import com.stylefeng.guns.common.persistence.model.${context.entityName};
+/**
+ * ${context.bizChName}Service
+ *
+ * @author ${context.author}
+ * @Date ${tool.currentTime()}
+ */
+public interface I${context.bizEnBigName}Service extends IService<${context.entityName}>{
+}

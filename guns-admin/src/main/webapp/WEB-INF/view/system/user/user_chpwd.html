@@ -1,0 +1,51 @@
+@layout("/common/_container.html"){
+<style>
+    .btn-group-m-t button:first-of-type{
+        margin-left: -60px;
+    }
+    .btn-group-m-t button:last-of-type{
+        background: #fff;
+        border: 1px solid #2d89b0;
+        color: #2d89b0;
+        margin-left: 16%;
+    }
+    .btn-group-m-t button:last-of-type a{
+        color: #2d89b0;
+    }
+</style>
+<div class="col-sm-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>修改密码</h5>
+        </div>
+        <div class="form-horizontal systemBtn" id="userInfoForm">
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content" style="border:none !important; ">
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-2">
+                                        <#input id="oldPwd" name="原密码" type="password"/>
+                                        <#input id="newPwd" name="新密码"  type="password"/>
+                                        <#input id="rePwd" name="新密码验证" type="password"/>
+                                    </div>
+                                </div>
+                                <div class="row btn-group-m-t">
+                                    <div class="col-sm-6 col-sm-offset-3" style="text-align: center">
+                                        <#button btnCss="info" name="提交" id="ensure" icon="" clickFun="UserInfoDlg.chPwd()"/>
+                                        <button name="提交" id="ensure" icon=""><a href="/myPlatform">取消</a></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/user/user_info.js"></script>
+@}

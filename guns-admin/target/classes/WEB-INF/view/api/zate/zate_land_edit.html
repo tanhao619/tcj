@@ -1,0 +1,145 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h3>载体资源总页/土地类载体资源</h3>
+        <span>CARRIER RESOURCES / LAND-BASED VECTOR RESOURCE </span>
+    </div>
+    <div class="myList ibox-content zateUpdatePadding">
+        <div class="form-horizontal" id="zateInfoForm">
+            <input type="hidden" id="id" value="${zateLand.id}">
+            <input type="hidden" id="type" value="1">
+            <input type="hidden" id="statusValue" value="${zateLand.status}">
+            <input type="hidden" id="propertyValue" value="${zateLand.property}">
+            <div class="row">
+                <div class="row btn-group-m-t">
+                    <div class="col-sm-10">
+                        <#button btnCss="info" name="确认" id="ensure" icon="fa-check" clickFun="ZateInfoDlg.editSubmit()" style="display:none"/>
+                        <#button btnCss="danger" name="修改" id="change" icon="fa-eraser"  style="display:block"/>
+                    </div>
+                </div>
+                <div class="col-sm-12 b-r">
+                    <div class="l-r clearfix">
+                        <div class="left">
+                            <!--id与实体属性相同-->
+                            <#input id="name" name="载体资源名称" underline="true" value="${zateLand.name}" disabled="disabled"/>
+                            <div class="divide">
+                                <#input id="address" name="资源地点" underline="true" value="${zateLand.address}" disabled="disabled"/>
+                                <#input id="area" name="面积(单位亩)" underline="true" value="${zateLand.area}" disabled="disabled"/>
+                            </div>
+                             <div class="divide">
+                                <#select id="status" name="资源状态" underline="true" disabled="disabled">
+                                    <option value="1">未使用</option>
+                                    <option value="2">已使用</option>
+                                    <option value="3">已停用</option>
+                                </#select>
+                                <#select id="property" name="用地性质" underline="true" disabled="disabled">
+                                    <option value="1">国有土地</option>
+                                    <option value="2">农用地</option>
+                                    <option value="3">建设用地</option>
+                                </#select>
+                             </div>
+                            <!--上传-->
+                            <div id="uploader" class="wu-example divide">
+                                <div class="title">
+                                    <span class="">土地点位图</span>
+                                    <span class="">上传CAD红线图和JPG图</span>
+                                    <div class="btns ">
+                                        <div id="picker">上传<img src="/static/img/uploader.png" alt=""></div>
+                                    </div>
+                                </div>
+                                <!--用来存放文件信息-->
+                                <div id="thelist" class="uploader-list">
+                                    @if(zateLand.zateImgs!=null){
+                                    @for(image in zateLand.zateImgs){
+                                    <div>
+                                        <a target="_blank" class="J_menuItem" href=${image.url} url="${image.url}" title="${image.name}">
+                                            ${image.name}
+                                            <!--<span class="nav-label"></span>-->
+                                            <input type="hidden" value="${image.id}">
+                                        </a>
+                                    </div>
+                                    @}
+                                    @}
+                                </div>
+                            </div>
+                            <div class="personInfo divide">
+                                <p>填报单位及填报人信息</p>
+                                <div class="info clearfix col-sm-12">
+                                    <div class="form-group positionSite col-sm-12">
+                                        <label class="col-sm-3 control-label inputBr">填报单位</label>
+                                        <br>
+                                        <div class="col-sm-9 inputWidth">
+                                            <input class="form-control " id="unit" name="填报单位" value="${zateLand.unit}"  disabled="disabled">
+                                        </div>
+                                    </div>
+                                    <!--<#input id="unit" name="填报单位" underline="true" value="${zateLand.unit}" disabled="disabled"/>-->
+                                    <!--<#input id="fillTime" name="填报时间"  value="${zateLand.fillTime}" disabled="disabled"/>-->
+                                    <div class="form-group positionSite col-sm-12" style="margin-bottom: 12px;">
+                                        <label class="col-sm-3 control-label inputBr"><img src="/static/img/icon_must1.png">填报时间</label>
+                                        <br>
+                                        <div class="col-sm-9 inputWidth">
+                                            <input class="form-control  wicon" id="fillTime" name="填报时间" value="${zateLand.fillTime}"  disabled="disabled" readonly>
+                                        </div>
+                                    </div>
+                                    <!--<div class="form-control fillTime">-->
+                                        <!--<span>填报时间</span><input class="datainp wicon" id="fillTime" type="text" value="${zateLand.fillTime}"  readonly disabled="disabled">-->
+                                    <!--</div>-->
+                                    <div class="form-group positionSite col-sm-12">
+                                        <label class="col-sm-3 control-label inputBr">填报人姓名</label>
+                                        <br>
+                                        <div class="col-sm-9 inputWidth">
+                                            <input class="form-control " id="fillContacter" name="填报人姓名" value="${zateLand.fillContacter}"  disabled="disabled">
+                                        </div>
+                                    </div>
+                                    <div class="form-group positionSite col-sm-12">
+                                        <label class="col-sm-3 control-label inputBr">填报人电话</label>
+                                        <br>
+                                        <div class="col-sm-9 inputWidth">
+                                            <input class="form-control " id="fillTel" name="填报人电话" value="${zateLand.fillTel}"  disabled="disabled">
+                                        </div>
+                                    </div>
+                                    <!--<#input id="fillContacter" name="填报人姓名" underline="true" value="${zateLand.fillContacter}" disabled="disabled"/>-->
+                                    <!--<#input id="fillTel" name="填报人电话" underline="true" value="${zateLand.fillTel}" disabled="disabled"/>-->
+
+                            </div>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="divide"><span>规划产业定位</span><textarea class="changeable" id="induPosition" name="induPosition" disabled="disabled" placeholder="可输入文本100字以内">${zateLand.induPosition}</textarea><div id="induPosition_error"></div></div>
+                            <div class="divide"><span>地块现状</span><textarea class="changeable" id="situation" name="situation" disabled="disabled" placeholder="可输入文本100字以内">${zateLand.situation}</textarea><div id="situation_error"></div></div>
+                            <div class="divide"><span>规划设计条件</span><textarea class="changeable" id="condition" name="condition" disabled="disabled" placeholder="可输入文本200字以内">${zateLand.condition}</textarea><div id="condition_error"></div></div>
+                        </div>
+                    </div>
+                    <div class="remark divide">
+                        <span>备注</span>
+                        <textarea class="changeable" id="remark" name="remark" disabled="disabled" placeholder="可输入文本100字以内" style="width: 100%">${zateLand.remark}</textarea>
+                        <div id="remark_error"></div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--<div class="row btn-group-m-t">-->
+                <!--<div class="col-sm-10">-->
+                    <!--<#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ZateInfoDlg.editSubmit()"/>-->
+                    <!--<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ZateInfoDlg.close()"/>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="note myTable">
+        <img src="/static/img/icon_project-1.png" alt="">
+        <span class="noteTitle">历史操作日志</span>
+        <#table id="ZateLogTable"/>
+    </div>
+</div>
+<link href="${ctxPath}/static/css/page/zate_common.css" rel="stylesheet">
+<link href="${ctxPath}/static/css/page/zate_land_edit.css" rel="stylesheet">
+<script>
+    //初始化状态
+    $("#status").val($("#statusValue").val());
+    $("#property").val($("#propertyValue").val());
+</script>
+<script src="${ctxPath}/static/modular/api/zate/zate_info.js"></script>
+@}

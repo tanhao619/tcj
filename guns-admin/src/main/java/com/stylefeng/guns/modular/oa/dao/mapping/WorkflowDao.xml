@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.oa.dao.WorkflowDao">
+    <select id="list" resultType="com.stylefeng.guns.modular.oa.dto.WorkflowDTO" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        SELECT
+        wf.id,
+        wf.type,
+        IF(INSTR(ro.name,'分管副局长')>0,'副局长',ro.name) AS role,
+        wf.ordnum,
+        wf.apprTime,
+        wf.status,
+        wf.endTime,
+
+        CASE WHEN (SELECT COUNT(*) FROM workflow_step step WHERE step.apprAdvice = 0 AND step.workflowId = wf.id)
+        <![CDATA[ = ]]> 1
+        THEN 1 ELSE 0 end AS isShowRevo
+        FROM
+        workflow wf,
+        role ro
+        WHERE
+        wf.userId = #{params.userId}
+        AND wf.roleId = ro.id
+
+        <if test="params.type !=null ">
+            AND wf.type = #{params.type}
+        </if>
+        <if test="params.roleId !=null ">
+            AND wf.roleId = #{params.roleId}
+        </if>
+        <if test="params.status !=null ">
+            AND wf.status = #{params.status}
+        </if>
+        <if test="params.type !=null ">
+            AND wf.type = #{params.type}
+        </if>
+        <if test="params.type !=null ">
+            AND wf.type = #{params.type}
+        </if>
+        <if test="params.apprTimeB !=null || params.apprTimeE !=null">
+            AND wf.apprTime BETWEEN  concat(#{params.apprTimeB},' 00:00:00')
+            AND  concat(#{params.apprTimeE},' 23:59:59')
+        </if>
+        <if test="params.endTimeB !=null || params.endTimeE !=null">
+            AND wf.endTime BETWEEN concat(#{params.endTimeB},' 00:00:00')
+            AND concat(#{params.endTimeE},' 23:59:59')
+        </if>
+        /*默认以发起时间倒叙*/
+        ORDER BY apprTime DESC
+
+    </select>
+    <select id="adminList" resultType="com.stylefeng.guns.modular.oa.dto.WorkflowDTO" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        SELECT
+        wf.id,
+        wf.type,
+        IF(INSTR(ro.name,'分管副局长')>0,'副局长',ro.name) AS role,
+        wf.ordnum,
+        wf.apprTime,
+        wf.status,
+        wf.endTime,
+        0  AS isShowRevo
+        FROM
+        workflow wf,
+        role ro
+        WHERE
+        1=1
+        AND wf.roleId = ro.id
+        <if test="params.type !=null ">
+            AND wf.type = #{params.type}
+        </if>
+        <if test="params.roleId !=null ">
+            AND wf.roleId = #{params.roleId}
+        </if>
+        <if test="params.status !=null ">
+            AND wf.status = #{params.status}
+        </if>
+        <if test="params.type !=null ">
+            AND wf.type = #{params.type}
+        </if>
+        <if test="params.type !=null ">
+            AND wf.type = #{params.type}
+        </if>
+        <if test="params.apprTimeB !=null || params.apprTimeE !=null">
+            AND wf.apprTime BETWEEN  concat(#{params.apprTimeB},' 00:00:00')
+            AND  concat(#{params.apprTimeE},' 23:59:59')
+        </if>
+        <if test="params.endTimeB !=null || params.endTimeE !=null">
+            AND wf.endTime BETWEEN concat(#{params.endTimeB},' 00:00:00')
+            AND concat(#{params.endTimeE},' 23:59:59')
+        </if>
+        /*默认以发起时间倒叙*/
+        ORDER BY apprTime DESC
+    </select>
+
+    <!--办公室主任归档的workflowlist：除开收发文-->
+    <select id="guidangList" resultType="com.stylefeng.guns.modular.oa.dto.GuidangWorkflowDTO" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        SELECT * FROM (
+            SELECT
+            wf.id,
+            CASE WHEN re.readStatus = "0" THEN "未读"
+            WHEN re.readStatus = "1" THEN "已读"
+            ELSE ""
+            END AS readStatus,
+            wf.type,
+            usr.name apprUserName,
+            wf.ordnum,
+            IF(INSTR(ro.name,'分管副局长')>0,'副局长',ro.name) AS role,
+            wf.apprTime,
+            wf.endTime
+
+            FROM
+            workflow wf,
+            role ro,
+            user usr,
+            workflow_read re
+            WHERE
+            wf.roleId = ro.id AND usr.id = wf.userId AND wf.id = re.workflowId
+            <if test="params.isBGSZR == 'isBGSZR'  ">
+                AND wf.status = 3 AND wf.type not in("7","8")
+            </if>
+            <if test="params.isSWGD == 'isSWGD' ">
+                AND (wf.status = 3 OR  wf.status = 5) AND wf.type in("7","8")
+            </if>
+        ) bj WHERE  1=1
+
+        <if test="params.guidangType !=null ">
+            AND bj.type = #{params.guidangType}
+        </if>
+        <if test="params.guidangApprUser !=null ">
+            AND bj.apprUserName LIKE concat('%',#{params.guidangApprUser},'%')
+        </if>
+        <if test="params.guidangApprTimeB !=null || params.guidangApprTimeE !=null">
+            AND bj.apprTime BETWEEN  concat(#{params.guidangApprTimeB},' 00:00:00')
+            AND  concat(#{params.guidangApprTimeE},' 23:59:59')
+        </if>
+        <if test="params.guidangEndTimeB !=null || params.guidangEndTimeE !=null">
+            AND bj.endTime BETWEEN concat(#{params.guidangEndTimeB},' 00:00:00')
+            AND concat(#{params.guidangEndTimeE},' 23:59:59')
+        </if>
+        <if test="params.readStatus !=null ">
+            AND bj.readStatus = #{params.readStatus}
+        </if>
+        /*默认以发起时间倒叙*/
+        ORDER BY bj.apprTime DESC
+
+    </select>
+
+
+
+    <!--通过登录用户id 获取OA 【我发起的】-发起人角色 ，必须是投促局下的科室角色 -->
+    <select id="getFaqiRole" resultType="com.stylefeng.guns.common.persistence.model.Role" parameterType="java.lang.Integer">
+        		SELECT DISTINCT
+			r.*
+		FROM
+			dept dept,
+			role r,
+			user u
+		WHERE
+			dept.id = r.deptid
+		AND instr(
+			concat(',', u.roleid, ','),
+			concat(',', r.id, ',')
+		) > 0
+		AND u.id = #{uid} AND dept.pid != 0 AND dept.tips=1
+    </select>
+
+    <!--根据角色id获取角色所用账号-->
+    <select id="selectOfficeKZs" parameterType="java.lang.Integer" resultType="com.stylefeng.guns.common.persistence.model.User">
+        SELECT * FROM `user` u WHERE FIND_IN_SET(#{roleid},u.roleid) >0
+    </select>
+
+    <!--根据角色id获取角色所用账号-->
+    <select id="selectUsersByRoleId" parameterType="java.lang.Integer" resultType="com.stylefeng.guns.common.persistence.model.User">
+        SELECT * FROM `user` u WHERE FIND_IN_SET(#{roleid},u.roleid) >0
+    </select>
+
+    <select id="selectExsitQJCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM (
+            SELECT * FROM workflow_property fprot WHERE fprot.workflowId in
+            (
+
+            SELECT prog.workflowId FROM workflow_property  prog WHERE prog.workflowId in
+            (
+
+            SELECT DISTINCT prot.workflowId FROM
+            (
+            SELECT pro.* FROM workflow_property pro,workflow wf
+            WHERE wf.id = pro.workflowId AND wf.userId = #{params.userId} AND wf.type = 1 AND wf.status != 6 AND wf.status != 2<!--不同意的或撤销的请假时间作废-->
+            ) prot WHERE  prot.value BETWEEN #{params.qjTimeB} AND #{params.qjTimeE}
+
+            ) AND (prog.name='qjAMPMB' AND prog.value = #{params.qjAMPMB})
+            ) AND  fprot.name = "qjTimeB" AND fprot.value =#{params.qjTimeB}
+
+            UNION ALL
+
+            SELECT * FROM workflow_property fprot WHERE fprot.workflowId in
+            (
+
+            SELECT prog.workflowId FROM workflow_property  prog WHERE prog.workflowId in
+            (
+
+            SELECT DISTINCT prot.workflowId FROM
+            (
+            SELECT pro.* FROM workflow_property pro,workflow wf
+            WHERE wf.id = pro.workflowId AND wf.userId = #{params.userId} AND wf.type = 1 AND wf.status != 6 AND wf.status != 2<!--不同意的或撤销的请假时间作废-->
+            ) prot WHERE  prot.value BETWEEN #{params.qjTimeB} AND #{params.qjTimeE}
+
+            ) AND (prog.name='qjAMPME' AND prog.value = #{params.qjAMPME})
+            ) AND  fprot.name = "qjTimeE" AND fprot.value =#{params.qjTimeE}
+
+            UNION ALL
+
+            SELECT pro.* FROM workflow_property pro,workflow wf
+            WHERE wf.id = pro.workflowId AND wf.userId = #{params.userId} AND wf.type = 1 AND wf.status != 6 AND wf.status != 2<!--不同意的或撤销的请假时间作废-->
+            <![CDATA[ AND pro.value > #{params.qjTimeB} AND pro.value < #{params.qjTimeE}]]>
+        ) tepro
+    </select>
+
+    <!--根据workflowId与确定类型（销假审批）来确定销假按钮-->
+    <!--销假按钮：0可销假，1不可销假，2.已销假-->
+    <select id="selectXiaojBtnByWfwId" parameterType="java.lang.Integer" resultType="java.lang.String">
+      SELECT
+        CASE
+        WHEN
+        ((SELECT wf.status FROM workflow wf WHERE wf.id = #{workflowId} AND type = "1") = "3")
+        AND
+        ((SELECT COUNT(*) FROM workflow_property pro WHERE pro.workflowId = #{workflowId} AND pro.name="qjXJBtn") = 0)
+        THEN '0'
+        WHEN (SELECT wf.status FROM workflow wf WHERE wf.id = #{workflowId} AND type = "1") != "3" THEN '1'
+
+        WHEN
+        ((SELECT wf.status FROM workflow wf WHERE wf.id = #{workflowId} AND type = "1") = "3")
+        AND
+        ((SELECT pro.value FROM workflow_property pro WHERE pro.workflowId = #{workflowId} AND pro.name="qjXJBtn") = "true")
+        THEN '2'
+        ELSE ''
+        END AS xiaojBtn
+    </select>
+
+    <select id="banjieList" resultType="com.stylefeng.guns.modular.oa.dto.BanjieWorkflowDTO">
+   SELECT * FROM (
+        SELECT
+            step.workflowId AS workflowId,
+            wf.type AS type,
+            wf.ordnum AS ordnum,
+            pro.value AS ordnumSW,
+            wf.apprTime AS faqiTime,
+            de.simplename AS assignDept,
+            # 指派科长
+            (SELECT usrTemp.name FROM workflow_step stepTemp,user usrTemp
+            WHERE usrTemp.id = stepTemp.userId AND stepTemp.step ="4" AND stepTemp.workflowId = step.workflowId
+            AND stepTemp.deptId = step.deptId
+            AND INSTR(CONCAT(",",fenpeiUsers,","),CONCAT(",",step.userId,",")) > 0) AS assignKZ
+            ,
+            # 指派时间
+            (SELECT stepTemp.apprTime FROM workflow_step stepTemp
+            WHERE  stepTemp.step ="4" AND stepTemp.workflowId = step.workflowId  AND stepTemp.deptId = step.deptId
+            AND INSTR(CONCAT(",",fenpeiUsers,","),CONCAT(",",step.userId,",")) > 0) AS assignTime
+            ,
+            CASE
+            WHEN step.apprAdvice = "0" THEN "否"
+            WHEN step.apprAdvice = "3" THEN "是"
+            else ""
+            END AS isBanjie,
+            step.apprTime AS banjieTime
+            FROM  workflow wf,workflow_step step,workflow_property pro,user usr, dept de
+         WHERE wf.id = step.workflowId AND pro.workflowId = step.workflowId AND usr.id = step.userId AND de.id = step.deptId
+            AND step.userId = #{params.userId} AND step.duty = "1"
+        ) bjda WHERE 1=1
+        <if test="params.isBanjie !=null ">
+            AND bjda.isBanjie = #{params.isBanjie}
+        </if>
+        <if test="params.assignKZ !=null ">
+            AND bjda.assignKZ LIKE concat('%',#{params.assignKZ},'%')
+        </if>
+        <if test="params.assignDept !=null ">
+            AND bjda.assignDept = #{params.assignDept}
+        </if>
+        <!--办结发起时间-->
+        <if test="params.banjieFaqiTimeB !=null || params.banjieFaqiTimeE !=null">
+            AND bjda.faqiTime BETWEEN  concat(#{params.banjieFaqiTimeB},' 00:00:00')
+            AND  concat(#{params.banjieFaqiTimeE},' 23:59:59')
+        </if>
+        <!--指派时间-->
+        <if test="params.assignTimeB !=null || params.assignTimeE !=null">
+            AND bjda.assignTime BETWEEN  concat(#{params.assignTimeB},' 00:00:00')
+            AND  concat(#{params.assignTimeE},' 23:59:59')
+        </if>
+        <!--办结时间-->
+        <if test="params.banjieTimeB !=null || params.banjieTimeE !=null">
+            AND bjda.banjieTime BETWEEN  concat(#{params.banjieTimeB},' 00:00:00')
+            AND  concat(#{params.banjieTimeE},' 23:59:59')
+        </if>
+        <!--默认以指派时间倒叙-->
+        ORDER BY bjda.assignTime DESC
+    </select>
+</mapper>

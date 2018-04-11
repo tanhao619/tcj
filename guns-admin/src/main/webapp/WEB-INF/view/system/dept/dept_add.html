@@ -1,0 +1,89 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+
+    <ul class="nav nav-tabs zateAdd" role="tablist">
+        <li role="presentation" class="active"><a href="#deptUnitInfoForm" class="trackTab" aria-controls="track" role="tab" data-toggle="tab" onclick="clearForm()">添加单位</a></li>
+        <li role="presentation"><a href="#deptOfficeInfoForm" class="noUpdateTab" aria-controls="noUpdate" role="tab" data-toggle="tab" onclick="clearForm()">添加科室</a></li>
+    </ul>
+
+    <!--单位-->
+    <div class="tab-content ">
+        <div class="form-horizontal systemBtn tab-pane active" id="deptUnitInfoForm" role="tabpanel">
+            <!-- <input type="hidden" id="id" value="">-->
+                <div  id="unit">
+                    <div class="row">
+                        <div class="col-sm-6 b-r systemDeptName">
+                            <#input id="simplenameUnit" name="单位名称"/>
+
+
+                        </div>
+                        <div class="col-sm-6 systemDeptName">
+                            <label>备注</label>
+                            <div>
+                                <textarea id="remarkUnit" name="备注" ></textarea>
+                            </div>
+                            <!--<#input id="remarkUnit" name="备注"/>-->
+                            <!--<#input id="num" name="排序" underline="true"/>-->
+
+                            <!--      <#input id="pName" name="上级单位" underline="true" readonly="readonly" hidden="pid"
+                                          clickFun="DeptInfoDlg.showDeptSelectTree(); return false;"
+                                          style="background-color: #ffffff !important;"/>-->
+                        </div>
+                    </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10 addBtn">
+                    <button  name="提交" id="ensureUnit"  onclick="DeptInfoDlg.addSubmit('unit')">提交</button>
+                    <button  name="取消" id="cancelUnit"  onclick="DeptInfoDlg.close()" style="margin-left: 10px;background: none;border: 1px solid #2d89b0;color: #2d89b0;">取消</button>
+                    <!--<#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="DeptInfoDlg.addSubmit()"/>-->
+                    <!--<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="DeptInfoDlg.close()"/>-->
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--科室-->
+        <div class="form-horizontal systemBtn tab-pane " id="deptOfficeInfoForm" role="tabpanel">
+            <!--<input type="hidden" id="id" value="">-->
+                <div  id="office">
+                    <div class="row">
+                        <div class="col-sm-12 b-r">
+                            <div class="col-sm-6 b-r leftRight">
+                                    <#input id="simplenameOffice" name="科室名称" type="text"/>
+
+                                <#input id="pName" name="上级单位"  readonly="readonly" hidden="pid"
+                                        clickFun="DeptInfoDlg.showDeptSelectTree(); return false;"
+                                        style="background-color: #ffffff !important;"/>
+
+                            </div>
+
+
+
+                                <!--<#input id="num" name="排序" underline="true"/>-->
+                            <label style="margin-left: 18px;">备注</label><br>
+                            <textarea id="remarkOffice" name="备注" style="width: 80%;border: none;height: 75px;margin-left: 18px;"></textarea>
+
+                        </div>
+                    </div>
+            </div>
+            <!-- 父级部门的选择框 -->
+            <div id="parentDeptMenu" class="menuContent"
+                 style="display: none; position: absolute; z-index: 200;">
+                <ul id="parentDeptMenuTree" class="ztree tree-box" style="width: 245px !important;"></ul>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10 addBtn">
+                    <button  name="提交" id="ensureOffice"  onclick="DeptInfoDlg.addSubmit('office')">提交</button>
+                    <button  name="取消" id="cancelOffice"  onclick="DeptInfoDlg.close()" style="margin-left: 10px;background: none;border: 1px solid #2d89b0;color: #2d89b0;">取消</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script src="${ctxPath}/static/modular/system/dept/dept_info.js"></script>
+@}

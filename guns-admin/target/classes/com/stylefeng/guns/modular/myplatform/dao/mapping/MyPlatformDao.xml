@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.myplatform.dao.MyPlatformDao">
+    <select id="pendingList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select * from ((SELECT p.id,p.name,p.category,group_concat(c.liable) as liable,0 as isBigPro,p.folType,p.createTime
+            FROM normal_project p LEFT JOIN unit_liable c on p.id = c.proId
+            WHERE p.id in ( SELECT proId from follow_project WHERE deptId = #{deptId})
+            AND  p.folType = 1
+            GROUP BY p.id
+        )
+        UNION
+        (SELECT p.id,p.name,p.category,group_concat(c.liable) as liable,1 as isBigPro,p.folType,p.createTime
+            FROM big_project p LEFT JOIN unit_liable c on p.id = c.proId
+            WHERE p.id in (  SELECT proId from follow_project WHERE  deptId = #{deptId} )
+            AND  p.folType = 1
+            GROUP BY p.id
+        )) as t_table
+        ORDER by t_table.createTime DESC
+    </select>
+
+    <select id="updateList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        (SELECT p.id,p.name,p.createTime,group_concat(c.liable) as liable,0 as isBigPro,p.status,p.updateTime
+        FROM normal_project p LEFT JOIN unit_liable c on p.id = c.proId
+        WHERE p.id in (
+        SELECT proId from follow_project WHERE deptId in
+        <foreach collection="ids" item="zid" open="(" close=")" separator=",">
+            #{zid}
+        </foreach>
+        )
+        AND <![CDATA[ TIMESTAMPDIFF(DAY,p.updateTime,SYSDATE())< 2 ]]>
+        GROUP BY p.id)
+        UNION
+        (SELECT p.id,p.name,p.createTime,group_concat(c.liable) as liable,1 as isBigPro,p.status,p.updateTime
+        FROM big_project p LEFT JOIN unit_liable c on p.id = c.proId
+        WHERE p.id in (
+        SELECT proId from follow_project WHERE deptId in
+        <foreach collection="ids" item="zid" open="(" close=")" separator=",">
+            #{zid}
+        </foreach>
+        )
+        AND <![CDATA[ TIMESTAMPDIFF(DAY,p.updateTime,SYSDATE())< 2 ]]>
+        GROUP BY p.id)
+        ORDER BY updateTime DESC
+    </select>
+
+    <select id="noUpdateList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        (SELECT p.id,p.name,p.createTime,group_concat(c.liable) as liable,0 as isBigPro,p.status,p.updateTime
+        FROM normal_project p LEFT JOIN unit_liable c on p.id = c.proId
+        WHERE p.id in (
+        SELECT proId from follow_project WHERE deptId in
+        <foreach collection="ids" item="zid" open="(" close=")" separator=",">
+            #{zid}
+        </foreach>
+        )
+        AND <![CDATA[ TIMESTAMPDIFF(DAY,p.updateTime,SYSDATE())> 7 ]]>
+        GROUP BY p.id)
+        UNION
+        (SELECT p.id,p.name,p.createTime,group_concat(c.liable) as liable,1 as isBigPro,p.status,p.updateTime
+        FROM big_project p LEFT JOIN unit_liable c on p.id = c.proId
+        WHERE p.id in (
+        SELECT proId from follow_project WHERE deptId in
+        <foreach collection="ids" item="zid" open="(" close=")" separator=",">
+            #{zid}
+        </foreach>
+        )
+
+        AND <![CDATA[ TIMESTAMPDIFF(DAY,p.updateTime,SYSDATE())> 7 ]]>
+        GROUP BY p.id)
+        ORDER BY updateTime DESC
+
+    </select>
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.oa.dao.WorkflowDao">
+    <select id="list" resultType="com.stylefeng.guns.modular.oa.dto.WorkflowDTO" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        SELECT
+        wf.id,
+        wf.type,
+        IF(INSTR(ro.name,'分管副局长')>0,'副局长',ro.name) AS role,
+        wf.ordnum,
+        wf.apprTime,
+        wf.status,
+        wf.endTime,
+
+        CASE WHEN (SELECT COUNT(*) FROM workflow_step step WHERE step.apprAdvice = 0 AND step.workflowId = wf.id)
+        <![CDATA[ = ]]> 1
+        THEN 1 ELSE 0 end AS isShowRevo
+        FROM
+        workflow wf,
+        role ro
+        WHERE
+        wf.userId = #{params.userId}
+        AND wf.roleId = ro.id
+
+        <if test="params.type !=null ">
+            AND wf.type = #{params.type}
+        </if>
+        <if test="params.roleId !=null ">
+            AND wf.roleId = #{params.roleId}
+        </if>
+        <if test="params.status !=null ">
+            AND wf.status = #{params.status}
+        </if>
+        <if test="params.type !=null ">
+            AND wf.type = #{params.type}
+        </if>
+        <if test="params.type !=null ">
+            AND wf.type = #{params.type}
+        </if>
+        <if test="params.apprTimeB !=null || params.apprTimeE !=null">
+            AND wf.apprTime BETWEEN  concat(#{params.apprTimeB},' 00:00:00')
+            AND  concat(#{params.apprTimeE},' 23:59:59')
+        </if>
+        <if test="params.endTimeB !=null || params.endTimeE !=null">
+            AND wf.endTime BETWEEN concat(#{params.endTimeB},' 00:00:00')
+            AND concat(#{params.endTimeE},' 23:59:59')
+        </if>
+        /*默认以发起时间倒叙*/
+        ORDER BY apprTime DESC
+
+    </select>
+    <!--通过登录用户id 获取OA 【我发起的】-发起人角色 ，必须是投促局下的科室角色 -->
+    <select id="getFaqiRole" resultType="com.stylefeng.guns.common.persistence.model.Role" parameterType="java.lang.Integer">
+        		SELECT DISTINCT
+			r.*
+		FROM
+			dept dept,
+			role r,
+			user u
+		WHERE
+			dept.id = r.deptid
+		AND instr(
+			concat(',', u.roleid, ','),
+			concat(',', r.id, ',')
+		) > 0
+		AND u.id = #{uid} AND dept.pid != 0 AND dept.tips=1
+    </select>
+
+    <!--根据角色id获取角色所用账号-->
+    <select id="selectOfficeKZs" parameterType="java.lang.Integer" resultType="com.stylefeng.guns.common.persistence.model.User">
+        SELECT * FROM `user` u WHERE FIND_IN_SET(#{roleid},u.roleid) >0
+    </select>
+</mapper>

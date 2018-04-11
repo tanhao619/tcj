@@ -1,0 +1,193 @@
+.li-disable{
+    pointer-events: none;
+}
+#noUpdate .create{
+    margin-top: 1px;
+    width: 276px;
+    background: #fff;
+}
+#noUpdate .create input{
+    display: inline-block;
+    width:95px;
+    border:none;
+    padding-left: 10px;
+    height: 32px;
+    margin-right: 3px;
+    font-size: 12px;
+}
+#noUpdate .create input:focus,#noUpdate .create input:active,#noUpdate .create input:visited{
+    border:1px solid #fff;
+    outline:none;
+}
+#noUpdate .area{
+    background: #fff;
+    margin-left: -15px;
+    height: 33px;
+}
+#noUpdate .area input{
+    width:100px;
+    margin-top: 5px;
+    border:none;
+    outline:none;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #b2bac5; opacity:1;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #b2bac5;opacity:1;
+}
+
+input:-ms-input-placeholder{
+    color: #b2bac5;opacity:1;
+}
+
+input::-webkit-input-placeholder{
+    color: #b2bac5;opacity:1;
+}
+#noUpdate .investment{
+    width:234px;
+}
+#noUpdate .col-sm-3,#noUpdate .col-sm-4,#noUpdate .col-sm-2{
+    margin-bottom: 24px;
+}
+#noUpdate .line{
+    border:1px solid #fff;
+    margin-bottom: 24px;
+    border-radius: 5px;
+    width: 96%;
+    margin-left: 15px;
+    display: inline-block;
+    vertical-align: text-top;
+    background: none!important;
+    height: 0px!important;
+}
+#noUpdate .hideShow{
+    margin-left: 10px;
+    display: inline-block;
+    margin-top: -9px;
+}
+#noUpdate .hideContent{
+    cursor: pointer;
+    vertical-align: baseline;
+    display: none;
+}
+#noUpdate .showContent{
+
+    cursor: pointer;
+    vertical-align: baseline;
+}
+#noUpdate .operate,#protalk .operate,#proconvention .operate{
+    float:right;
+    margin-bottom: 30px;
+}
+#noUpdate .operate span{
+    color:#2d89b0;
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: bottom;
+    cursor: pointer;
+}
+#noUpdate .operate button,#protalk .operate button,#proconvention .operate button{
+    width:150px;
+    height:40px;
+    color:#fff;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-left: 10px;
+    border: 1px solid #dcdcdc;
+    outline:none;
+}
+#noUpdate .operate button a{
+    color:#fff;
+}
+#noUpdate .operate button:first-of-type{
+    background: #2d89b0;
+}
+#noUpdate .operate button:last-of-type{
+    background: #7abfdd;
+}
+#noUpdate .operate button:last-of-type a{
+    width: 150px;
+    height: 40px;
+    display: inline-block;
+    vertical-align: middle;
+    padding-top: 7px;
+}
+#noUpdate .packPositionInput{
+    width: 637px;
+    height: 32px;
+}
+#noUpdate .packPositionInput input[type='checkbox']{
+    width: 15px;
+    height: 15px;
+    margin-top: 8px;
+    margin-left: 6px;
+    /*margin-right: 2px;*/
+}
+#noUpdate .packPositionInput span{
+    vertical-align: text-bottom;
+    margin-right: 25px;
+}
+#noUpdate .totalBigInvest{
+    width: 53%;
+    /*margin-left: -12px;*/
+}
+#noUpdate .totalBigInvest input{
+    margin-right: 0px;
+    /*width: 65px;*/
+    width:36%;
+}
+#noUpdate .needShow .updateTime{
+    width:74%;
+}
+#noUpdate .needShow .updateTime input{
+    /*width:79px;*/
+    width:37%;
+}
+#noUpdate .createTime input{
+    width:37%;
+}
+#noUpdate .createTime {
+    width:74%;
+}
+#noUpdate .firstLine .col-sm-3{
+    /*padding-left: 0px;*/
+}
+
+/*重大项目修改*/
+.projectOpearte{
+    margin-left: 30px;
+}
+.projectOpearte .positionSite{
+    display: inline-block;
+    width: 365px;
+}
+.projectOpearte .positionSite select{
+    width:250px;
+    height:32px;
+    border:none;
+    padding-left: 10px;
+    vertical-align: text-top;
+    outline: none;
+}
+#weightBig .positionSite{
+    position: relative;
+}
+#weightBig .positionSite .control-label{
+    /*position: absolute;*/
+    /*left:56px;*/
+    /*top:-7px;*/
+}
+#weightBig .singlePosition{
+    margin-left: 90px;
+}
+#track .col-sm-9{
+    width:71%!important;
+}
+#noUpdate .col-sm-9{
+    width:73%!important;
+}
+#track .col-sm-8{
+    width:63.666667%!important;
+}

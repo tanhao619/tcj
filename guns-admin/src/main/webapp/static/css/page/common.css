@@ -1,0 +1,695 @@
+*{
+    letter-spacing:2px;
+}
+body{
+    /*min-width:1200px;*/
+    /*overflow-x:auto ;*/
+}
+li{
+    list-style: none;
+}
+@media (max-width: 1200px) {
+    body {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 1500px) {
+ .changeNormalWidth{
+     width:50%!important;
+     margin-bottom: 10px!important;
+ }
+    #categoryLeft{
+        padding-left: 0px;
+    }
+    .normalProjectColor .line{
+        width: 93%!important;
+    }
+    .bigPlanPos{
+        margin-top: 0px!important;
+    }
+}
+@media screen and (min-width:1400px) and (max-width:1468px){
+    #uploader  #normalFile{
+        top: 23px!important;
+        left: 22px!important;
+    }
+}
+@media (max-width: 1340px){
+    .weightBig .investRmb .inputWidth .detail input{
+        width:61%!important;
+    }
+    #uploader  #normalFile{
+        top:41px;
+        left: 22px!important;
+    }
+    .screenSmall{
+        margin-bottom: 10px!important;
+    }
+}
+@media (min-width: 1500px){
+    .oaStatus{
+        margin-top: 10px!important;
+    }
+}
+@media (max-width: 1600px) {
+    .updateProjectBig .baseUpdateInfo .investProjectName{
+        width:50%!important;
+    }
+    .addLy .updateTime label{
+        left: 65%!important;
+    }
+    #uploader #zateUpload{
+        left: 4px!important;
+    }
+    .totalInvestmentMoney  .right .commonStyle .firstLine input, .totalInvestmentMoney  .right .commonStyle .firstLine select{
+        width:73%!important;
+    }
+    .totalInvestmentMoney  .right .commonStyle .secondLine .common input{
+        width:48.5%!important;
+    }
+    .totalInvestmentMoney  .right .projectAddress select{
+        width:69%!important;
+    }
+    #packTip,#categoryTip,#hyFormTip{
+        right:0%!important;
+    }
+    .my-wrapper .fixed-table-container thead th .both.asc{
+        background-image:url(/static/img/icon_changeTime2.png);
+        background-position: 140%!important;
+    }
+    .my-wrapper .fixed-table-container thead th .both{
+        background-image:url(/static/img/icon_changeTime2.png);
+        background-position: 68%!important;
+    }
+   #uploader  .btns{
+       display: block!important;
+       position: absolute!important;
+       top: 21px!important;
+       left: 23px!important;
+   }
+    #RelevantNotice .tab-content.zateDetail{
+        padding: 0 73px!important;
+
+    }
+    .myList .personInfo .info{
+        padding-right: 38px!important;
+    }
+    .zateUpdatePadding.ibox-content{
+        padding: 50px 70px!important;
+    }
+    #uploader #thelist{
+        margin-top: 40px!important;
+    }
+    .changeWidth{
+        display: block!important;
+        /*white-space: ;*/
+    }
+    .updateProjectBig .baseUpdateInfo{
+        margin-left: 50px!important;
+    }
+    .normalProjectEdit .tab-content{
+        padding-left: 50px!important;
+        padding-right:118px!important;
+    }
+    .baseList .investmentArea .positionSite:nth-of-type(2n){
+        margin-left: 5%!important;
+    }
+    .investmentArea .positionSite:nth-of-type(2) ul li.radioItem,.investmentArea .positionSite:nth-of-type(3) ul li.radioItem{
+        /*margin-left:195px;*/
+        width:32%!important;
+    }
+    .investmentArea .positionSite:nth-of-type(1) ul li.radioItem,.investmentArea .positionSite:nth-of-type(4) ul li.radioItem{
+        /*margin-left:195px;*/
+        width:48%!important;
+    }
+    .investmentArea .positionSite{
+        width:49%!important;
+    }
+    .infoProviderBig .infoProvider{
+        width:45%!important;
+    }
+    .infoProviderBig .infoProvider:last-child{
+        margin-left: 9%!important;
+    }
+    .tableGap{
+        width: 103.5%!important;
+    }
+    .totalInvestmentMoney .left .investRmb .inputWidth .detail input:not(.smallScreenWidth){
+        width:56%!important;
+    }
+    .smallScreenWidth{
+        width: 95% !important;
+    }
+    .totalInvestmentMoney  .right .zeren .firstLine input, .totalInvestmentMoney  .right .zeren .firstLine select{
+        width: 73%!important;
+    }
+    .totalInvestmentMoney  .right .zeren .secondLine .common input{
+        width:74.5%!important;
+    }
+    .smallScrenenTel{
+        width:76%!important;
+    }
+    .useArea{
+        width:63%!important;
+    }
+    .totalInvestmentMoney  .right .project .firstLine input, .totalInvestmentMoney  .right .project .firstLine select{
+        width: 73%!important;
+    }
+    .totalInvestmentMoney  .right .project .secondLine select{
+        width:68%!important;
+    }
+    .totalInvestmentMoney .left .weightBig .isNotWeightProject .inputWidth ul li{
+        width:45%!important;
+    }
+    .totalInvestmentMoney .addQt .allSiuation .positionSite .rightGap{
+        margin-left: 0px!important;
+    }
+    .totalInvestmentMoney .addQt .allSiuation textarea:nth-of-type(1), .totalInvestmentMoney .addQt .allSiuation textarea:nth-of-type(2){
+        width:95%!important;
+    }
+    .totalInvestmentMoney .addQt .allSiuation .positionSite:nth-of-type(3){
+        margin-left: 11px!important;
+    }
+    .totalInvestmentMoney .addQt .allSiuation textarea:nth-of-type(3){
+        width:90%!important;
+    }
+    .totalInvestmentMoney .addQt .allSiuation .positionSite .lastGap{
+        margin-left: -3px!important;
+    }
+    .totalInvestmentMoney .addQt .allSiuation .lastLineInfo .form-group{
+        margin-left: 11px!important;
+    }
+    .totalInvestmentMoney .addQt .allSiuation .lastLineInfo .form-group .inputWidth{
+        width:69%!important;
+    }
+    .totalInvestmentMoney .projectDecideTime .form-group{
+        margin-right: 158px!important;
+    }
+    .projectPerformance .left .item input{
+        width:50%!important;
+    }
+    .projectPerformance .right{
+        margin-left: 5%!important;
+    }
+    .projectPerformance .right .item input[type="text"]{
+        width:35%!important;
+    }
+    .projectPerformance .left{
+        width:30%!important;
+    }
+    .bottomContent .item input[type='text']{
+        width:15.5%!important;
+    }
+    .addLy .proConventionInfo textarea{
+        width:83%!important;
+    }
+    .normalProjectinput input:last-of-type{
+        width:35%!important;
+    }
+    .createTime,.updateTime{
+        margin-left: -23px!important;
+    }
+    .updateGap{
+        padding-left: 20px!important;
+    }
+    #newAddInfo,#newAddInvestmentArea,.newInfo {
+        margin-left: 60px!important;
+    }
+    .tzfName,.newAddMask,#setPlaceNoraml{
+        margin-left: 50px!important;
+    }
+    #newAddInvestmentArea .positionSite{
+        width:42%!important;
+    }
+    .newCompany{
+        width:42%!important;
+    }
+    .newInfo .detail .lastLine textarea{
+        width:87%!important;
+    }
+   #investmentCompanyForm .detail .secondLine p select{
+        width:68%!important;
+    }
+   .bigProjectName{
+       margin-left: 0px!important;
+   }
+   #weightWidth{
+       margin-left: 20px!important;
+   }
+    .weightBig .investRmb .inputWidth .detail input{
+        width:60%!important;
+    }
+    .weightBig .investRmb .inputWidth .detail #investMvRmb{
+        width:35%!important;
+    }
+    .weightBig .investRmb .inputWidth .detail #invest{
+        width:52%!important;
+    }
+    .bigGS{
+        padding-left: 0px;
+    }
+    #ownProduct label,#tzfProduct label{
+        margin-left: 13px!important;
+    }
+    .weightBig .detailService .content,.weightBig .packPosition .content{
+        margin-left: 48px!important;
+    }
+    .detailServiceLabel{
+        margin-left: 30px!important;
+    }
+    .weightBig .packPosition .content ul li input{
+        left: 15px!important;
+    }
+    .weightBig .baseInfo{
+        margin-left: 22px!important;
+    }
+    .weightBig .baseInfo .commonStyle .firstLine input{
+        width:70%!important;
+    }
+    .weightBig .packPosition .content ul li{
+        padding-left: 28px!important;
+        width: 50%!important;
+    }
+    #weightBig .singlePosition{
+        margin-left: 50px!important;
+    }
+    .weightBig .plan .content{
+        margin-left: 53px!important;
+    }
+    .weightBig .bottomContent{
+        margin-left: 65px!important;
+    }
+    .weightBig .settledIndustry{
+        margin-left: 36px!important;
+    }
+    .weightBig .settledIndustry .content ul.title .radioItem{
+        width: 33%!important;
+    }
+    .GSContent{
+        margin-left: -6px!important;
+    }
+    .weightBig  .setContent .contentSize .content textarea{
+        width:76%!important;
+    }
+    .weightBig  .setContent .contentSize .usePlace .detail{
+        margin-left: 0px!important;
+    }
+    .myUser .systemStart{
+        width:143px!important;
+    }
+    .totalInvestmentMoney  .right .commonStyle .delete{
+        right: -37px!important;
+    }
+    .normalExportContent{
+        padding: 30px 0px!important;
+    }
+    .normalExportContent .topContent .baseInfo{
+        padding: 30px 70px!important;
+        height: auto!important;
+    }
+    .bigExportContent{
+        padding: 30px 20px!important;
+    }
+}
+@media (min-width: 768px){
+    .col-sm-9 {
+        /*width: auto!important;*/
+    }
+}
+
+/*头部样式*/
+.head{
+    height: 60px;
+    width:100%;
+    background: #ffffff;
+    line-height: 60px;
+    position: fixed;
+    z-index: 9999;
+}
+.head .left{
+    float: left;
+    margin-left: 40px;
+}
+.head .right{
+    float: right;
+    margin-right: 30px;
+}
+.head .right .position{
+    float: left;
+    margin-right: 25px;
+    cursor: pointer;
+}
+.head .right .user img{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+/*左侧导航*/
+.sidebar-collapse{
+    width:230px!important;
+}
+.sidebar-collapse .navItem{
+    margin-top: 20px;
+    width:230px;
+    margin-left: 35px;
+    cursor: pointer;
+}
+.sidebar-collapse .navItem .item{
+    width:160px;
+    height:90px;
+
+    border-radius: 5px;
+    text-align: center;
+    color:#64a2bd;
+    font-size: 14px;
+    font-weight: bold;
+}
+.sidebar-collapse .navItem .item a:hover{
+    /*background: #247ba0;*/
+    /*box-shadow: 4px 8px 54px #095778;*/
+    /*border:none;*/
+    padding-top: 3px;
+}
+
+.sidebar-collapse .navItem .item a:hover p,.sidebar-collapse .navItem .item a.active p{
+    color:#fff;
+}
+.sidebar-collapse .navItem .item a:hover .old,.sidebar-collapse .navItem .item a.active .old{
+    display: none;
+}
+.sidebar-collapse .navItem .item a:hover .new,.sidebar-collapse .navItem .item a.active .new{
+    display: inline-block;
+}
+.sidebar-collapse .navItem .item a{
+    /*margin-top: 20px;*/
+    display: inline-block;
+    color:#64a2bd;
+    width:160px;
+    height:90px;
+    border:1px solid #64a2bd;
+    border-radius: 5px;
+}
+.sidebar-collapse .navItem .item a.active{
+    background: #247ba0;
+    box-shadow: 4px 8px 54px #095778;
+    border:none;
+    padding-top: 3px;
+}
+.sidebar-collapse .navItem .item a img{
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.sidebar-collapse .navItem .item a img.new{
+    display: none;
+    text-align: center;
+}
+/*.sidebar-collapse .navItem .item.active div img.new{*/
+    /*display: inline-block;*/
+/*}*/
+/*右边轮廓公共样式*/
+.my-wrapper .fixed-table-container thead th .both.asc{
+    background-image:url(/static/img/icon_changeTime3.png);
+    width:100%!important;
+}
+.my-wrapper .fixed-table-container thead th .both{
+    background-image:url(/static/img/icon_changeTime2.png);
+    background-position: 68%!important;
+}
+.my-wrapper .fixed-table-container thead th .desc{
+    background-image:url(/static/img/icon_changeTime1.png);
+    background-position: 68%!important;
+}
+.my-wrapper .fixed-table-container thead th .sortable{
+    background-position:center;
+}
+.my-wrapper{
+    background-color: #e6edf5;
+    padding: 17px 8px 0 24px;
+}
+.my-wrapper .ibox-title h3{
+    font-size: 20px;
+    color:#333;
+    margin-bottom: 0px;
+    font-weight: normal;
+}
+.my-wrapper .ibox-title span{
+    color:#666;
+    font-size: 10px;
+}
+.my-wrapper .ibox-title{
+    border: none;
+    background-color:#e6edf5 ;
+    padding:0 0 38px 0;
+}
+.my-wrapper .ibox-content{
+    background-color: #dde4ec;
+    border-top:2px solid #3294bd;
+    padding: 35px;
+}
+.my-wrapper .ibox-title h5{
+    font-size: 20px;
+}
+.my-wrapper #content-main{
+    height: 100%;
+}
+.my-wrapper .float-e-margins .btn{
+    margin-bottom: 0;
+}
+/*table样式*/
+.myTable .bootstrap-table{
+    margin-top: 100px;
+}
+.myTable .btn-primary{
+    background-color: #2781a6;
+    border-color: #2781a6;
+    padding: 12px 44px;
+    font-size: 14px;
+}
+.myTable thead th{
+    color: #7f8fa4;
+}
+.myTable tbody tr{
+    color: #666;
+}
+.myTable thead th,.myTable tbody td{
+    text-align: left!important;
+}
+.myTable .fixed-table-container thead th,.myTable .fixed-table-container tbody td{
+    border-left: none;
+    font-size: 14px;
+}
+.myTable .fixed-table-container thead th{
+    font-weight: bolder;
+    background-color: #d1d8df;
+}
+.myTable .fixed-table-container thead th .th-inner{
+    padding: 20px 0 20px 20px;
+}
+.myTable .bootstrap-table .table:not(.table-condensed)>tbody>tr>td{
+    padding: 25px 0 25px 20px;
+    cursor: pointer;
+}
+.myTable .table-hover>tbody>tr.detail-view{
+    border-left: 5px solid transparent;
+}
+.myTable .table-hover>tbody>tr.detail-view:hover{
+    border-left: 5px solid #6ec0b4;
+    background: #e0e9f0!important;
+}
+.myTable .table-hover>tbody>tr:hover{
+    background-color: #6ec0b4!important;
+    color: #fff;
+}
+.myTable .table-hover>tbody>tr .inputColor{
+    width: 100px;
+    height: 30px;
+    /*border-radius: 5px;*/
+    border: 1px solid #dcdcdc;
+}
+.myTable .table-hover>tbody>tr:hover input,.myTable .table-hover>tbody>tr:hover select{
+    color:#333!important;
+}
+.myTable .table-hover>tbody>tr.active{
+    background-color: #6ec0b4!important;
+    color: #fff;
+}
+.myTable .table-striped>tbody>tr:nth-of-type(even){
+    background-color: #f4f8fd;
+}
+.myTable .table-striped>tbody>tr:nth-of-type(odd){
+    background-color: #fff;
+}
+.myTable .pull-right{
+    display: block!important;
+
+}
+.myTable .fixed-table-container{
+    border: none;
+}
+
+
+    /*上传*/
+a#fileInfo{
+    display: inline-block;
+    padding: 10px;
+    margin-right: 10px;
+}
+/*清除浮动*/
+.clearfix:after{
+    content: "";
+    display: block;
+    visibility: hidden;
+    height: 0;
+    line-height: 0;
+    clear: both;
+}
+textarea{
+    font-size: 14px;
+}
+/*操作隐藏*/
+#managerTable thead tr th:last-child{
+    color:#d1d8df;
+}
+#roleTable thead tr th:last-child{
+    color:#d1d8df;
+}
+#DeptTable thead tr th{
+    background: #d1d8df!important;
+}
+#DeptTable thead tr th:last-child{
+    color:#d1d8df;
+}
+.systemInput .col-sm-6 div label{
+    color:#333;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.systemInput .col-sm-6 div input,.systemInput .col-sm-6 div select{
+    width:280px;
+    height:35px;
+    padding-left: 10px;
+    border:none;
+    background: #fff;
+    outline: none;
+}
+.systemInput .col-sm-12{
+margin-top: 30px;
+}
+.systemInput .col-sm-12 div textarea{
+    height: 65px;
+    width:548px;
+    padding-left: 10px;
+    background: #fff;
+    resize: none;
+    border:none;
+
+}
+.systemInput .col-sm-12 .item {
+    float: left;
+    margin-top: 10px;
+}
+.systemInput .col-sm-12 .item input{
+    width:280px;
+    height:35px;
+    padding-left: 10px;
+    border:none;
+    background: #fff;
+    outline: none;
+}
+.systemInput .col-sm-12 .left{
+    margin-right:60px;
+}
+.systemInput .col-sm-6 div.item{
+    margin-bottom: 10px;
+}
+.systemInput .btn-group-m-t div{
+    float: right;
+}
+.systemInput .btn-group-m-t div button{
+    width:100px;
+    height:35px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 23px;
+    outline: none;
+}
+.systemInput .btn-group-m-t div button:first-of-type{
+    background: #2d89b0;
+    color:#fff;
+    border:none;
+}
+.systemInput .btn-group-m-t div button:last-of-type{
+    background: #fff;
+    color:#2d89b0;
+    border:1px solid #2d89b0;
+    border-color:#2d89b0!important;
+}
+/*洽谈弹框input宽度*/
+#ProConventionTable.table-hover>tbody>tr .inputColor{
+    width:242px!important;
+}
+/*自适应宽度*/
+/*@media screen and (max-width: 1201px) {*/
+    /*body{*/
+        /*background: red;*/
+        /*!*color:red;*!*/
+    /*}*/
+    /*#track .create input{*/
+        /*width:75px!important;*/
+    /*}*/
+    /*#track .investment input{*/
+        /*width:56px!important;*/
+    /*}*/
+/*}*/
+/*系统管理*/
+.systemBtn .btn-group-m-t div button:first-of-type{
+    background: #2d89b0;
+    color: #fff;
+    border: none;
+}
+.systemBtn .btn-group-m-t .addBtn{
+    float: right;
+}
+.systemBtn .btn-group-m-t div button{
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 23px;
+    outline: none;
+}
+.systemBtn .btn-group-m-t div button#cancel{
+    background-color: #fff;
+    /*border-color: #fff;*/
+    color: #2781a6;
+    margin-left: 80px;
+    outline: none;
+    border: 1px solid #2781a6;
+}
+.systemDeptName input{
+    width:50%;
+}
+.systemDeptName textarea{
+    width:80%;
+    border:none;
+    height: 75px;
+}
+.leftRight{
+    margin-top: 20px;
+}
+.leftRight .form-group:first-of-type{
+    float: left;
+    width:50%;
+}
+.leftRight .form-group:nth-of-type(2){
+    float: left;
+    width:50%;
+    margin-left:45px ;
+}
+.textareaSize input{
+    height: 60px;
+}
+.leftGap .form-group:first-of-type{
+    margin-bottom: 60px;
+}

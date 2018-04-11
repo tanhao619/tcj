@@ -1,0 +1,24 @@
+##########################################################
+###################  测试环境test  ###################
+##########################################################
+spring:
+  profiles: test
+  datasource:
+      url: jdbc:mysql://172.16.0.241:3306/tcjdb?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: 1qaz@WSX
+      filters: log4j,wall,mergeStat
+logging:
+  level.root: info
+  level.com.stylefeng: debug
+  path: logs/
+  file: guns.log
+###################  项目启动端口  ###################
+server:
+  port: 8088
+
+###################  图片服务器   ###################
+default:
+  path: /mnt/NFS_Client/
+  server: http://172.16.0.240:80/
+  fileAddress: tcj

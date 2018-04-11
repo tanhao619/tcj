@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.DeptDao">
+
+	<select id="tree" resultType="com.stylefeng.guns.core.node.ZTreeNode">
+		select id,pid as pId,simplename as name,
+		(
+		CASE
+		WHEN (pId = 0 OR pId IS NULL) THEN
+			'true'
+		ELSE
+			'false'
+		END
+		) as isOpen from dept
+		WHERE simplename != '局长办公室'/*去掉局长办公室*/
+	</select>
+	<!--add by lgg-->
+	<select id="getDeptTree" resultType="com.stylefeng.guns.core.node.ZTreeNode">
+		select id,pid as pId,simplename as name,
+		(
+		CASE
+		WHEN (pId = 0 OR pId IS NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as isOpen from dept
+		 WHERE pId = 0
+	</select>
+
+	<select id="list" resultType="map">
+		select * from dept
+		<if test="condition != null and condition != ''">
+			where simplename like CONCAT('%',#{condition},'%') or fullname like CONCAT('%',#{condition},'%')
+		</if>
+		order by num ASC
+	</select>
+
+	<!--add by lgg-->
+	<select id="selectMaxTips" resultType="java.lang.String">
+		SELECT MAX(tips) FROM dept
+	</select>
+
+	<!--add by lgg-->
+	<select id="selectDeptsByUserId" resultType="com.stylefeng.guns.common.persistence.model.Dept" parameterType="java.lang.Integer">
+		SELECT DISTINCT
+			dept.*
+		FROM
+			dept dept,
+			role r,
+			user u
+		WHERE
+			dept.id = r.deptid
+		AND instr(
+			concat(',', u.roleid, ','),
+			concat(',', r.id, ',')
+		) > 0
+		AND u.id = #{uid} AND dept.pid != 0
+	</select>
+	<select id="selectMaxPermissByUserId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT
+			CASE
+		WHEN MIN(tips) IS NOT NULL THEN
+			MIN(tips)
+		ELSE
+			3
+		END AS mtips
+		FROM
+			(
+				SELECT DISTINCT
+					dept.tips
+				FROM
+					dept dept,
+					role r,
+					user u
+				WHERE
+					dept.id = r.deptid
+				AND instr(
+					concat(',', u.roleid, ','),
+					concat(',', r.id, ',')
+				) > 0
+				AND u.id = #{uid}
+			) dept
+	</select>
+
+	<!--通过科室 simplename、tips 确定科室-->
+	<select id="getDeptByNT" resultType="com.stylefeng.guns.common.persistence.model.Dept">
+		SELECT
+			*
+		FROM
+			dept
+		WHERE
+			simplename = #{simplename}
+		AND tips = #{tips}
+	</select>
+</mapper>

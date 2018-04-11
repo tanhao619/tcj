@@ -1,0 +1,52 @@
+.my-wrapper .ibox-title{
+    padding: 0;
+}
+.myPlatformTitle{
+    font-size: 16px;
+    position: absolute;
+    color: #333;
+    top: -30px;
+    left: 0;
+}
+.toBeAllocated{
+    display: none;
+}
+#resourcesChange.myTable{
+}
+.myPlatformWarp{
+    position: relative;
+    padding: 30px;
+    margin-top: 66px;
+    border-top:4px solid #247ba0;
+    background-color: #dde4ec;
+}
+.myPlatformWarp .selectCss{
+    height: 42px;
+    width: 344px;
+    margin-bottom: 20px;
+}
+.myPlatformWarp .bootstrap-table{
+ margin-top: 0;
+}
+.myPlatformWarp .bootstrap-table .fixed-table-toolbar{
+ display: none;
+}
+/*待处理项目总数样式*/
+.totalNum{
+    display: inline-block;
+    padding: 1px 5px;
+    background-color: #42a1ca;
+    color: #fff;
+    font-size: 12px;
+    margin-left: 15px;
+}
+/*提醒内部标题*/
+.noticeTitle{
+    color: #2781a7;
+    font-size: 14px;
+    margin-bottom: 16px;
+    display: inline-block;
+}
+.noticeTitle img{
+    margin-right: 10px;
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.oa.dao.WorkflowPropertyDao">
+    <select id="selectProByWfwId" resultType="com.stylefeng.guns.common.persistence.model.WorkflowProperty" parameterType="java.lang.Integer">
+
+        SELECT
+            *
+            FROM
+            workflow_property
+            WHERE
+            workflowId = #{workflowId}
+    </select>
+    
+    <select id="selectProByNameAndWfwId" resultType="com.stylefeng.guns.common.persistence.model.WorkflowProperty">
+        SELECT * FROM
+        workflow_property
+        WHERE
+        workflowId = #{params.workflowId} AND name = #{params.name}
+    </select>
+
+
+
+</mapper>

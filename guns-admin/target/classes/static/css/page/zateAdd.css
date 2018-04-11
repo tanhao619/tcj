@@ -1,0 +1,446 @@
+.myList.ibox-content.zateAdd{
+    padding: 0;
+}
+.my-wrapper .ibox-content.zateAdd{
+    padding: 0 0 40px 0;
+    border: none;
+}
+.myList.zateAdd .ibox-title {
+    padding: 0 0 80px 0;
+}
+#RelevantNotice .tab-content.zateDetail{
+    padding: 0 194px;
+}
+/*提交按钮和取消按钮*/
+#cancel{
+    background-color: #fff;
+    color: #2781a6;
+    margin-left: 80px;
+    border-color:#2781a6 ;
+}
+.myList .addBtn{
+    text-align: center;
+}
+/*tab切换*/
+.nav-tabs{
+    border-bottom: 4px solid #247ba0;
+
+}
+.zateAdd li{
+    border-bottom: 3px solid #247ba0;
+}
+.zateAdd li a{
+    border:none!important;
+}
+.zateAdd li.active{
+    background: #247ba0!important;
+    border-radius: 5px 5px 0px 0px;
+}
+.zateAdd li:hover,.nav-tabs > li > a:hover{
+    background-color: transparent!important;
+    border-radius: 5px 5px 0px 0px;
+    color: #257ba0;
+}
+.zateAdd li.active a,.zateAdd li.active a:hover{
+    border-bottom: 0px!important;
+    color:#fff!important;
+    border:none!important;
+}
+.nav-tabs > li > a:focus{
+    background-color: #247ba0!important;
+    color: #fff!important;
+    border:none!important;
+}
+.zateDetail{
+    margin-top: 40px;
+}
+/*撤回图标*/
+.myList .inputWidth img,.myList .divide textarea img{
+    position: absolute;
+    top:10px;
+    right: 10px;
+}
+.zateAdd #track .col-sm-3{
+    margin-bottom: 0;
+}
+.zateAdd .personInfo .fillTime .datainp{
+    margin-left: 30px;
+}
+.settledIndustry .content .radioItem{
+    position: relative;
+}
+.settledIndustry .content .building{
+    width:200px;
+    position: absolute;
+    bottom: 43px;
+    left: -17px;
+    box-shadow: 2px 3px 15px rgba(148, 136, 136, 0.48);
+    z-index: 9999;
+}
+.settledIndustry .content .building h3{
+    width:200px;
+    height: 50px;
+    margin-top: 0px;
+    text-align: center;
+    background: #fff;
+    color:#329dcb;
+    margin-bottom: 0px;
+    line-height: 50px;
+    font-weight: 100;
+}
+.settledIndustry .content .building ul{
+    padding-left: 0px;
+}
+.settledIndustry .content .building ul li{
+    width:200px;
+    height:36px;
+    line-height: 36px;
+    color:#333;
+    text-align: center;
+    background: #dde4ec;
+}
+.settledIndustry .content .secondBuildiing{
+    width:300px;
+}
+.settledIndustry .content .secondBuildiing h3{
+    width:300px;
+}
+.settledIndustry .content .secondBuildiing ul{
+    height: 267px;
+    background: #dde4ec;
+}
+.settledIndustry .content .secondBuildiing ul li{
+    float: left;
+    width:150px;
+    height: 36px;
+    border-left:none;
+}
+/*
+!*载体新增*!
+.nav-tabs{
+    border-bottom: 4px solid #247ba0;
+}
+.zateAdd li{
+    border-bottom: 3px solid #247ba0;
+}
+.zateAdd li a{
+    border:none!important;
+}
+.zateAdd li.active,.zateAdd li:hover{
+    background: #247ba0!important;
+    border-radius: 5px 5px 0px 0px;
+}
+.zateAdd li.active a,.zateAdd li.active a:hover{
+    border-bottom: 0px!important;
+    color:#fff!important;
+    border:none!important;
+}
+.nav-tabs > li > a:hover, .nav-tabs > li > a:focus{
+     background-color: #247ba0!important;
+     color: #fff!important;
+     border:none!important;
+}
+.zateDetail{
+    margin-top: 40px;
+}
+.zateDetail .control-label{
+    text-align: left!important;
+    padding-left: 40px!important;
+}
+.zateDetail .inputBr{
+    display: block;
+}
+.zateDetail .selectWidth{
+    margin-left: -112px;
+    margin-top: 10px;
+}
+.zateDetail .selectWidth select{
+    width:390px;
+    height:35px;
+    padding-left: 10px;
+}
+.zateDetail .group{
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+.zateDetail .inputWidth{
+    margin-left: -112px;
+    margin-top: 10px;
+}
+.zateDetail .inputWidth input{
+    width:520px;
+    height:35px;
+    padding-left: 10px;
+}
+.zateDetail .col-sm-12 .left{
+    float:left;
+    width:522px;
+    margin-left: 200px;
+}
+.zateDetail .col-sm-12 .right{
+    float:left;
+    width:520px;
+    margin-left: 180px;
+    margin-top: 34px;
+}
+.zateDetail .col-sm-12 .right .textareaContent{
+    margin-bottom: 60px;
+}
+.zateDetail .col-sm-12 .right .textareaContent span{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.zateDetail .col-sm-12 .right .textareaContent textarea{
+    width:520px;
+    height:195px;
+    border: none;
+    resize: none;
+    padding-left: 10px;
+}
+!*上传*!
+#uploader{
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-left: 25px;
+}
+#uploader .title{
+    position: relative;
+    width:390px;
+}
+#uploader #thelist{
+   margin-top: 10px;
+}
+#uploader .title span:first-of-type{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+}
+#uploader .title span:nth-of-type(2){
+    font-size: 13px;
+    font-weight: bold;
+    padding:3px 10px;
+    background: #d2d9e2;
+    color:#666;
+}
+#uploader .title .btns{
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: -15px;
+}
+!*填报单位及填报人信息*!
+.zateDetail .personInfo{
+    margin-left: 25px;
+}
+.zateDetail .personInfo p{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+}
+.zateDetail .personInfo .info{
+    width:520px;
+    height: 185px;
+    background: #e6edf5;
+    padding:10px 5px;
+}
+.zateDetail .personInfo .info .positionSite{
+    position: relative;
+}
+.zateDetail .personInfo .info .inputWidth{
+    position: absolute;
+    left:225px;
+    top:-8px;
+}
+.zateDetail .personInfo .info input{
+    width:385px;
+    height:35px;
+    padding-left: 10px;
+}
+.zateDetail .personInfo .info label{
+    color:#8e9fa8;
+    font-size: 13px;
+}
+.zateDetail .personInfo .info .fillTime{
+    margin-left: 26px;
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+.zateDetail .personInfo .info .fillTime span{
+    color:#8e9fa8;
+    font-size: 13px;
+    font-weight: bold;
+}
+.zateDetail .personInfo .info .fillTime input{
+    margin-left: 31px;
+}
+!*备注*!
+.zateDetail .lastModel{
+    margin-top: 60px;
+    margin-left: 226px;
+}
+.zateDetail .lastModel span{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.zateDetail .lastModel textarea{
+    width:1200px;
+    height:80px;
+    border:none;
+    padding-left: 10px;
+    resize: none;
+}
+!*产业类别*!
+.zateDetail .settledIndustry{
+    margin-top: 60px;
+    margin-left: 25px;
+}
+.zateDetail .settledIndustry p{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+    margin-bottom: 5px;
+}
+.zateDetail .settledIndustry .content{
+    width:520px;
+    height:35px;
+}
+.zateDetail .settledIndustry .content ul{
+    padding-left: 0px;
+}
+.zateDetail .settledIndustry .content ul li{
+    float:left;
+    width:160px;
+    background: #fff;
+    height:35px;
+    border-left:1px solid #dcdcdc;
+    text-align: center;
+    color:rgb(103, 106, 108);
+    list-style: none;
+    line-height: 35px;
+    cursor: pointer;
+}
+.zateDetail .settledIndustry .content ul li.active{
+    background: #6ec0b4;
+    color:#fff;
+}
+.zateDetail .settledIndustry .content ul li.active img:nth-of-type(2){
+    display: inline-block;
+}
+.zateDetail .settledIndustry .content ul li.active img:nth-of-type(1){
+    display: none;
+}
+.zateDetail .settledIndustry .content ul li img:nth-of-type(2){
+    display: none;
+}
+.zateDetail .settledIndustry .content ul li:hover{
+     background: #6ec0b4;
+}
+.zateDetail .settledIndustry .content ul li:hover img:nth-of-type(2){
+    display: inline-block;
+}
+.zateDetail .settledIndustry .content ul li:hover img:nth-of-type(1){
+    display: none;
+}
+.zateDetail .contact{
+    margin-top: 60px;
+    margin-left: 25px;
+    margin-bottom: 60px;
+}
+.zateDetail .contact p{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+    margin-bottom: 5px;
+}
+.zateDetail .contact .content{
+    width:520px;
+    height:100px;
+    background:#e6edf5;
+    padding: 10px;
+}
+.zateDetail .contact .content .first{
+    margin-bottom: 10px;
+}
+.zateDetail .contact .content .first span{
+    color: #8e9fa8;
+    font-size: 13px;
+    font-weight: bold;
+}
+.zateDetail .contact .content .first input{
+    width:370px;
+    height:35px;
+    padding-left: 10px;
+    margin-left: 60px;
+    border: none;
+}
+.zateDetail .contact .content div p{
+    display: inline-block;
+
+}
+.zateDetail .contact .content div span{
+    color: #8e9fa8;
+    font-size: 13px;
+    font-weight: bold;
+}
+.zateDetail .contact .content div p:nth-of-type(2){
+    margin-left:16px ;
+    display: inline-block;
+}
+.zateDetail .contact .content div input{
+    width:130px;
+    height:35px;
+    padding-left: 10px;
+    margin-left: 21px;
+    border: none;
+}
+.zateDetail .fillUnity p{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+    margin-bottom: 5px;
+}
+.zateDetail .fillUnity .content{
+    width:520px;
+    height:160px;
+    background:#e6edf5;
+    padding: 10px;
+}
+.zateDetail .fillUnity .content p.first{
+  margin-bottom: 10px;
+}
+.zateDetail .fillUnity .content p.first span{
+    color: #8e9fa8;
+    font-size: 13px;
+    font-weight: bold;
+}
+.zateDetail .fillUnity .content p.first input{
+    width:375px;
+    height:35px;
+    border:none;
+    padding-left: 10px;
+    margin-left: 35px;
+}
+.zateDetail .fillUnity .content .single p{
+    display: inline-block;
+}
+.zateDetail .fillUnity .content .single p span{
+    color: #8e9fa8;
+    font-size: 13px;
+    font-weight: bold;
+}
+.zateDetail .fillUnity .content .single p input{
+    width:130px;
+    height:35px;
+    border:none;
+    padding-left: 10px;
+    margin-left: 23px;
+}
+.zateDetail .fillUnity .content .single p:nth-of-type(2) span{
+    margin-left: 19px;
+}*/

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.oa.dao.WorkflowStepDao">
+    <!-- 【我审批的】列表&搜索-->
+    <select id="shenpiList" resultType="com.stylefeng.guns.modular.oa.dto.ShenPiWorkflowDTO" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        SELECT * FROM (
+            SELECT
+            wf.id AS workflowId,
+            wf.type,
+            wf.status,
+            wf.ordnum,
+            usr.name apprUserName,
+            IF(INSTR(ro.name,'分管副局长')>0,'副局长',ro.name) AS apprRoleName,
+            wf.apprTime AS faqiTime,
+            step.id AS workflowStepId,
+            if (step.apprAdvice = 0,0,1) AS isAppr,
+            step.apprTime AS apprTime,
+            step.apprAdvice apprAdvice
+            FROM workflow wf,workflow_step step,user usr,role ro
+            WHERE step.apprAdvice = 0 AND step.workflowId = wf.id AND usr.id = wf.userId AND ro.id = wf.roleId
+            AND wf.status != 6 <!-- 已撤销的审批不显示在 【我审批的】里-->
+            AND step.roleId in (
+            <foreach collection="params.ownRoleIds" item="item" index="index" separator=",">#{item}
+            </foreach>
+            )
+            UNION
+            ALL
+            SELECT
+            wf.id
+            AS workflowId,
+            wf.type,
+            wf.status,
+            wf.ordnum,
+            usr.name apprUserName,
+            ro.name apprRoleName,
+            wf.apprTime AS faqiTime,
+            step.id AS workflowStepId,
+            if (step.apprAdvice = 0,0,1) AS isAppr,
+            step.apprTime AS apprTime,
+            step.apprAdvice apprAdvice
+            FROM workflow wf,workflow_step step,user usr,role ro
+            WHERE step.userId = #{params.userId} AND step.apprAdvice != 0 AND step.workflowId = wf.id AND usr.id = wf.
+            userId AND ro.id = wf.roleId AND wf.status != 6 <!-- 已撤销的审批不显示在 【我审批的】里-->
+        ) spda WHERE 1=1
+        <if test="params.shenpiType !=null ">
+            AND spda.type = #{params.shenpiType}
+        </if>
+        <if test="params.shenpiFaqiUser !=null ">
+            AND spda.apprUserName LIKE concat('%',#{params.shenpiFaqiUser},'%')
+        </if>
+        <if test="params.isApprShenpi !=null ">
+            AND spda.isAppr = #{params.isApprShenpi}
+        </if>
+        <!--发起时间-->
+        <if test="params.shenpiFaqiTimeB !=null || params.shenpiFaqiTimeE !=null">
+            AND spda.faqiTime BETWEEN  concat(#{params.shenpiFaqiTimeB},' 00:00:00')
+            AND  concat(#{params.shenpiFaqiTimeE},' 23:59:59')
+        </if>
+        <!--审批时间-->
+        <if test="params.shenpiApprTimeB !=null || params.shenpiApprTimeE !=null">
+            AND spda.apprTime BETWEEN  concat(#{params.shenpiApprTimeB},' 00:00:00')
+            AND  concat(#{params.shenpiApprTimeE},' 23:59:59')
+        </if>
+        <!--默认以发起时间倒叙-->
+         ORDER BY faqiTime DESC
+
+     </select>
+
+
+    <!--获取【我审批的】-未审批数-->
+    <select id="getUnShenpiApprNum" resultType="java.lang.Integer" parameterType="List">
+        SELECT
+        COUNT(*)
+        FROM workflow wf,workflow_step step,user usr,role ro
+        WHERE  step.apprAdvice = 0 AND step.workflowId = wf.id AND usr.id = wf.userId AND ro.id = wf.roleId
+        AND step.roleId in (
+        <foreach collection="roles" item="item" index="index" separator="," >
+            #{item}
+        </foreach>
+        )
+    </select>
+ </mapper>

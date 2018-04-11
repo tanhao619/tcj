@@ -1,0 +1,1107 @@
+.normalProjectColor  .btn{
+    color:#333!important;
+}
+/*面包屑*/
+.breadcrumbNav{
+    margin-bottom: 30px;
+}
+.breadcrumbNav h3{
+    font-size: 20px;
+    color:#333;
+    margin-bottom: 0px;
+    font-weight: normal;
+}
+.breadcrumbNav span{
+    color:#666;
+    font-size: 10px;
+}
+.normalProjectTab li{
+    border-bottom: 3px solid #247ba0;
+}
+.normalProjectTab li a{
+    border:none!important;
+}
+.normalProjectTab li.active{
+    background: #247ba0!important;
+    border-radius: 5px 5px 0px 0px;
+}
+.normalProjectTab li.active a,.normalProjectTab li.active a:hover{
+    border-bottom: 0px!important;
+    color:#fff!important;
+    border:none!important;
+}
+/*申报项目*/
+.declarProjects{
+    float: right;
+    position: absolute;
+    right:0px;
+    top:12px;
+}
+.declarProjects button{
+    position: relative;
+    width:150px;
+    height: 40px;
+    border-radius: 5px;
+    outline: none;
+    color:#fff;
+    line-height: 40px;
+    font-size: 14px;
+    border:none;
+    background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#086e9a), to(#2781a7));
+    background: -ms-linear-gradient(left, #086e9a,  #2781a7);        /* IE 10 */
+    background:-moz-linear-gradient(left,#086e9a,#2781a7);/*火狐*/
+}
+.declarProjects button .arrow:before{
+    float: right;
+    width: 20px;
+    text-align: center;
+    display: inline;
+    font-size: 16px;
+    font-family: FontAwesome;
+    height: auto;
+    content: "\f0d7";
+    font-weight: 300;
+    text-shadow: none;
+    position: absolute;
+    top: 2px;
+    right: 14px;
+    color: #fff;
+}
+.declarProjects button .arrow.open:before{
+    content: '\f0d8';
+}
+.declarProjects .content{
+    background: #fff;
+    text-align: center;
+    display: none;
+    z-index: 999;
+}
+.declarProjects .content ul{
+    padding-left:0px;
+}
+.declarProjects .content ul li{
+    list-style: none;
+    width:150px;
+    height: 40px;
+    line-height: 40px;
+    /*margin:0px 5px;*/
+    cursor: pointer;
+
+}
+.declarProjects .content ul li:hover{
+    background: #329dcb;
+    color:#fff;
+}
+#track .create{
+    margin-top: 1px;
+    /*width: 258px;*/
+    background: #fff;
+    padding-left: 0px;
+}
+.exportDate .create{
+    margin-top: 1px;
+    width: 217px;
+    background: #fff;
+    display: inline-block;
+}
+.exportDate .create input{
+    display: inline-block;
+    width:85px;
+    border:none;
+    padding-left: 10px;
+    height: 32px;
+}
+#track .create input{
+    display: inline-block;
+    width: 41%;
+    border:none;
+    padding-left: 15px;
+    height: 32px;
+}
+#track .create input:focus,#track .create input:active,#track .create input:visited{
+    border:1px solid #fff;
+    outline:none;
+}
+#track .create span,.exportDate .create span{
+    margin-right: 2px;
+}
+#track #useType{
+    /*width:300px;*/
+}
+#track .area{
+    background: #fff;
+    /*margin-left: -15px;*/
+    height: 33px;
+    display: inline-block;
+}
+#track .area input{
+    width:42%;
+    margin-top: 5px;
+    border:none;
+    outline:none;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #b2bac5; opacity:1;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #b2bac5;opacity:1;
+}
+
+input:-ms-input-placeholder{
+    color: #b2bac5;opacity:1;
+}
+
+input::-webkit-input-placeholder{
+    color: #b2bac5;opacity:1;
+}
+#track .investment{
+    /*width:248px;*/
+    margin-right: 0px;
+    padding-left: 0px;
+    margin-left: -10px;
+}
+#track .investment input{
+    width:28%;
+}
+#track .investment input#investRmbB{
+    margin-left: 20px;
+}
+#track .investment span{
+    margin-right: 0px;
+    margin-left: 10px;
+}
+#track .col-sm-3,#track .col-sm-4,#track .col-sm-2{
+    margin-bottom: 24px;
+}
+#track .line{
+    border:1px solid #fff;
+    margin-bottom: 24px;
+    border-radius: 5px;
+    /*width: 1475px;*/
+    margin-left: 15px;
+    display: inline-block;
+    vertical-align: text-top;
+    width:95%;
+}
+#track .hideShow{
+    margin-left: 10px;
+    display: inline-block;
+}
+#track .hideContent{
+    cursor: pointer;
+    vertical-align: baseline;
+    display: none;
+}
+#track .showContent{
+
+    cursor: pointer;
+    vertical-align: baseline;
+}
+#track .operate,#protalk .operate,#proconvention .operate{
+    float:right;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+#track .operate span{
+    color:#2d89b0;
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: bottom;
+    cursor: pointer;
+}
+#track .operate button,#protalk .operate button,#proconvention .operate button{
+    width:150px;
+    height:40px;
+    color:#fff;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-left: 10px;
+    border: 1px solid #dcdcdc;
+    outline:none;
+}
+#track .operate button a{
+    color:#fff;
+}
+#track .operate button:first-of-type{
+    background: #2d89b0;
+}
+#track .operate button:last-of-type{
+    background: #7abfdd;
+}
+#track .operate button:last-of-type a{
+    width: 150px;
+    height: 40px;
+    display: inline-block;
+    vertical-align: middle;
+    padding-top: 7px;
+}
+/*常规项目添加*/
+.breadcrumbNav .firstTitle a{
+    font-size: 22px;
+    color:#333;
+    margin-bottom: 0px;
+}
+.breadcrumbNav .firstTitle span{
+    color:#666;
+    font-size: 16px;
+    margin-left: 10px;
+}
+.breadcrumbNav .secondTitle span{
+    color:#666;
+    font-size: 12px;
+    margin-left: 10px;
+}
+.breadcrumbNav .secondTitle span:first-of-type{
+    margin-left: 0px;
+}
+.normalProjectAdd .inputWidth{
+    /*margin-left: -180px;*/
+    width:520px;
+    height:35px;
+    /*margin-left: 158px;*/
+}
+#tzfName,#setPlaceNoraml,#resFollowPlatform,.infoDescParent{
+    margin-left: 110px;
+}
+.normalProjectAdd .investContent{
+    /*width:1230px;*/
+    height:150px;
+    /*margin-left: 158px;*/
+}
+.normalProjectAdd .investContent textarea{
+    width:84%;
+    height:150px;
+    resize: none;
+}
+.investmentArea{
+    margin-top: 60px;
+    margin-left: 120px;
+    height:140px;
+}
+.investmentArea .positionSite{
+    float:left;
+    /*width:520px;*/
+    width:45%;
+}
+.investmentArea .positionSite:nth-of-type(2) ul li.radioItem,.investmentArea .positionSite:nth-of-type(3) ul li.radioItem{
+    /*margin-left:195px;*/
+    width:33%;
+}
+.investmentArea .positionSite:nth-of-type(1) ul li.radioItem,.investmentArea .positionSite:nth-of-type(4) ul li.radioItem{
+    /*margin-left:195px;*/
+    width: 49.5%;
+}
+.investmentArea .settledIndustry{
+    /*margin-top: 30px;*/
+    /*margin-left: 50px;*/
+}
+.investmentArea .settledIndustry p{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+    margin-bottom: 5px;
+}
+.investmentArea .settledIndustry .content{
+    /*width:520px;*/
+    height:35px;
+}
+.investmentArea .settledIndustry .content ul{
+    padding-left: 0px;
+}
+.investmentArea .singleArea .content ul li.radioItem{
+    /*width:260px!important;*/
+    /*height: 35px!important;*/
+}
+.investmentArea .settledIndustry .content ul li.radioItem{
+    float:left;
+    /*width:173px;*/
+    background: #fff;
+    height:35px;
+    border-left:1px solid #dcdcdc;
+    text-align: center;
+    color:rgb(103, 106, 108);
+    list-style: none;
+    line-height: 35px;
+    cursor: pointer;
+    font-size: 12px;
+}
+.projectLi .settledIndustry .content ul li.radioItem{
+    width:30%;
+}
+.projectLV .settledIndustry .content ul li.radioItem{
+    width:20%
+}
+.investmentArea .settledIndustry .content ul li.radioItem.active{
+    background: #6ec0b4;
+    color:#fff;
+}
+.investmentArea .settledIndustry .content ul li.radioItem.active img:nth-of-type(2){
+    display: inline-block;
+}
+.investmentArea .settledIndustry .content ul li.radioItem.active img:nth-of-type(1){
+    display: none;
+}
+.investmentArea .settledIndustry .content ul li.radioItem img:nth-of-type(2){
+    display: none;
+}
+.investmentArea .settledIndustry .content ul li.radioItem:hover{
+    background: #6ec0b4;
+    color:#fff;
+}
+.investmentArea .settledIndustry .content ul li.radioItem:hover img:nth-of-type(2){
+    display: inline-block;
+}
+.investmentArea .settledIndustry .content ul li.radioItem:hover img:nth-of-type(1){
+    display: none;
+}
+/*信息提供者*/
+.infoProviderBig{
+    margin-top: 60px;
+    margin-left: 120px;
+    width:100%;
+}
+.newAddInfo .infoProvider{
+    width:38%!important;
+}
+.newAddInfo .infoProvider:last-child{
+    margin-left: 5.5%!important;
+}
+.infoProviderBig .infoProvider{
+    display: inline-block;
+    width:43%;
+}
+.infoProviderBig .infoProvider:last-child{
+    margin-left: 13.5%;
+}
+.infoProvider .detail{
+    /*width:520px;*/
+    height:106px;
+    background: #e6edf5;
+    line-height: 60px;
+}
+.infoProvider .detail p{
+    height: 35px;
+    padding-left: 15px;
+}
+.infoProvider .detail p:first-of-type{
+    /*margin-right: 60px;*/
+    /*padding-left: 8px;*/
+}
+.infoProvider .detail p span{
+    font-size: 14px;
+    /*color:#b3bfc8;*/
+    margin-left: 8px;
+
+}
+.infoProvider .detail p input{
+    width:79%;
+    height:35px;
+    padding-left: 10px;
+    border: none;
+    margin-left: 4px;
+}
+/*投资方公司信息*/
+.investmentCompanyInfo{
+    margin-top: 60px;
+    margin-left: 125px;
+    position: relative;
+}
+.investmentCompanyInfo label{
+
+}
+.investmentCompanyInfo .detail{
+    width:79%;
+    height:305px;
+    background: #dde4ec;
+    padding: 10px;
+    margin-bottom: 57px;
+    position: relative;
+    margin-top: -47px;
+    /*margin-left: 15px;*/
+}
+.investmentCompanyInfo .detail .firstLine{
+    margin-bottom: 10px;
+}
+.investmentCompanyInfo .detail .firstLine .detailInfo{
+    width:44%;
+    display: inline-block;
+}
+.investmentCompanyInfo .detail .firstLine .rightGap{
+    margin-right: 10%!important;
+}
+.investmentCompanyInfo .detail .firstLine .rightGap input{
+    width:65%!important;
+    height:35px;
+}
+.investmentCompanyInfo .detail .firstLine .detailInfo:last-of-type p{
+    display: inline-block;
+}
+.investmentCompanyInfo .detail .firstLine .detailInfo span{
+    margin-right: 10px;
+}
+.investmentCompanyInfo .detail .firstLine .detailInfo input{
+    width:66%!important;
+    height:35px;
+    border:none;
+    padding-left: 10px;
+}
+/*.investmentCompanyInfo .detail .firstLine .detailInfo:last-of-type input{*/
+    /*width:135px;*/
+    /*height:35px;*/
+    /*border:none;*/
+    /*padding-left: 10px;*/
+/*}*/
+.investmentCompanyInfo .detail .secondLine p{
+    width:40%;
+    display: inline-block;
+}
+.investmentCompanyInfo .detail .secondLine p input,.investmentCompanyInfo .detail .secondLine p select{
+    width:73%!important;
+    height:35px;
+    border:none;
+    padding-left: 10px;
+}
+.investmentCompanyInfo .detail .secondLine p span{
+    margin-right: 10px;
+}
+.investmentCompanyInfo .detail .secondLine p:first-of-type{
+    margin-right: 230px;
+}
+.investmentCompanyInfo .detail .lastLine span{
+    margin-right: 10px;
+}
+.investmentCompanyInfo .detail .lastLine textarea{
+    width: 89%;
+    height:95px;
+    padding-left: 10px;
+    vertical-align: top;
+    border: none;
+    resize: none;
+}
+/*负责跟踪平台*/
+.followPlatform{
+    /*margin-left: 155px;*/
+}
+.followPlatform ul{
+    padding-left: 0px;
+    width:100%;
+    clear: both;
+    height: 70px;
+}
+.followPlatform ul li{
+    height:35px;
+    width:28%;
+    border-left:1px solid #dde4ec;
+    background: #fff;
+    text-align: left;
+    line-height: 35px;
+    float: left;
+    list-style: none;
+    border-bottom: 1px solid #dde4ec;
+    padding-left: 60px;
+    cursor: pointer;
+    position: relative;
+}
+.followPlatform ul li input{
+    margin-right: 10px;
+    position: absolute;
+    left: 40px;
+    top: 7px;
+}
+.followPlatform ul li.active{
+    background: #6fc0b4;
+    color:#fff;
+}
+.infoDescParent{
+    float: left;
+    width:75%;
+}
+.infoDescParent label{
+    /*margin-left: -32px;*/
+}
+.infoDesc{
+    /*margin-left: 155px;*/
+}
+.infoDesc textarea{
+    /*width:1230px;*/
+    height:100px;
+    resize:none;
+    padding-left: 10px;
+}
+.btnSubmit button.btn {
+    background-color: #2781a6;
+    border-color: #2781a6;
+    padding: 12px 44px;
+    font-size: 14px;
+}
+.btnSubmit button.btn .fa{
+    display: none;
+}
+#cancel {
+    background-color: #fff;
+    border-color: #fff;
+    color: #2781a6;
+    margin-left: 80px;
+}
+/*继续添加*/
+.continueAdd{
+    position: absolute;
+    width: 80px;
+    height: 28px;
+    background: #fff;
+    border-radius: 30px;
+    color:#666;
+    left:73%;
+    top: -10px;
+    text-align: center;
+    line-height: 27px;
+    cursor: pointer;
+}
+.continueAdd span{
+    margin-left: 10px;
+}
+/*删除*/
+.deleteInfo{
+    position: absolute;
+    right: -36px;
+    top: 0px;
+    cursor: pointer;
+}
+/*常规项目修改页面*/
+.updateProjectBig .updateOpearte{
+    float: right;
+    position: absolute;
+    right: 0px;
+    top: 30px;
+}
+
+.updateProjectBig .btnSubmit button.btn {
+    background-color: #2781a6;
+    border-color: #2781a6;
+    padding: 12px 44px;
+    font-size: 14px;
+}
+.updateProjectBig .btnSubmit button.btn .fa{
+    display: none;
+}
+#cancel {
+    background-color: #fff;
+    border-color: #fff;
+    color: #2781a6;
+    margin-left: 80px;
+}
+.updateProjectBig .baseUpdateInfo{
+    margin-left:110px ;
+}
+.updateProjectBig .baseUpdateInfo .projectGroress{
+    margin-top: 20px;
+}
+.updateProjectBig .baseUpdateInfo .projectGroress .positionSite{
+    display: inline-block;
+    width: 350px;
+    margin-right: 30px;
+}
+.updateProjectBig .baseUpdateInfo .projectGroress .positionSite select{
+    width: 250px;
+    height: 32px;
+    padding-left: 10px;
+    border: none;
+    vertical-align: text-top;
+}
+.updateProjectBig .baseUpdateInfo .investProjectName{
+    margin-top: 35px;
+    margin-bottom: 60px;
+    margin-left: -15px;
+}
+.updateProjectBig .baseUpdateInfo .investProjectName label{
+    font-size: 14px;
+    color: #666;
+}
+.updateProjectBig .baseUpdateInfo .investProjectName input{
+    width:520px;
+    height:35px;
+    border:none;
+    padding-left: 10px;
+}
+/*投资方公司信息*/
+.updateProjectBig .updateProjectTextarea textarea{
+    width:79%;
+    height: 120px;
+    padding-left: 10px;
+    resize: none;
+}
+/*项目履约情况*/
+.projectPerformance{
+    /*margin-left: 190px;*/
+    width:1234px;
+}
+.projectPerformance .left{
+    float: left;
+    width: 45%;
+}
+.projectPerformance .right{
+    float: left;
+    width: 45%;
+    margin-left: 10%;
+}
+.projectPerformance .left .item{
+    margin-bottom: 60px;
+}
+.projectPerformance .left .item input{
+    /*width:520px;*/
+    width: 85%;
+    height:35px;
+    border:none;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+.projectPerformance .left .item .detail{
+    margin-bottom: 10px;
+}
+.projectPerformance .right .item{
+    margin-bottom: 60px;
+}
+.projectPerformance .right .item input[type="text"]{
+    /*width:350px;*/
+    width:65%;
+    height:35px;
+    padding-left: 10px;
+}
+.projectPerformance .right .item .detail{
+    margin-bottom: 10px;
+}
+.projectPerformance .right .item .detail .projectSiution{
+
+}
+.bottomContent{
+    clear: both;
+}
+.bottomContent .item{
+    margin-bottom: 10px;
+}
+.bottomContent .item input[type='text']{
+    /*width:540px;*/
+    width: 38.5%;
+    height:35px;
+    border:none;
+    padding-left: 10px;
+}
+/*情况说明*/
+.addLy{
+    width:100%;
+    height:410px;
+    background: #e6edf5;
+    margin-left:0px;
+    position: relative;
+}
+.addLy .updateTime{
+    position: relative;
+    width: 100%;
+}
+.addLy .updateTime label{
+    position: absolute;
+    left: 68%;
+}
+.addLy .updateTime input{
+    border: none;
+    background: #e6edf5;
+    margin-left: 20px;
+
+}
+.addLy .proConventionInfo{
+    margin-left: 65px;
+}
+.addLy .proConventionInfo textarea{
+    width: 90%;
+    height:170px;
+    border:none;
+    resize: none;
+    margin-left: 75px;
+    margin-top: -16px;
+}
+.addLy .addUpdate{
+    position: absolute;
+    top: -48px;
+    right: 0px;
+}
+.addLy .addUpdate button{
+    background-color: #2781a6;
+    padding: 12px 20px;
+    font-size: 14px;
+    color:#fff;
+    border-radius: 5px;
+    border: none;
+    margin-left: 15px;
+}
+/*操作日志表格*/
+.operateLogTable{
+    margin-left: 125px;
+}
+.operateLogTable table{
+    border:none;
+}
+.operateLogTable table thead tr{
+    height:60px;
+    background:#d1d8df ;
+    width:1620px;
+}
+.operateLogTable table tbody tr{
+    height:100px;
+}
+.operateLogTable table tbody tr:nth-of-type(odd){
+    background: #fff;
+}
+.operateLogTable table tbody tr:nth-of-type(even){
+    background: #f4f8fd;
+    border:1px solid #e4e9f0;
+}
+.addQtButton .addUpdate button{
+    background-color: #2781a6;
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    margin-left: 15px;
+}
+.followUserModal input{
+    width: 190px!important;
+    height: 37px!important;
+}
+.followUserModal img{
+    height: 34px;
+    cursor: pointer;
+}
+/*导出时间*/
+.exportDate{
+    margin-top: 10px;
+}
+.exportDate .filter{
+    display: none;
+}
+.selfDefine{
+
+}
+.selfDefine select{
+    width:200px;
+    height:30px;
+    padding-left: 10px;
+    border:none;
+    outline: none;
+}
+/*错误信息提示位置*/
+.positionSite .tipsWidth{
+    position: relative;
+}
+.positionSite .tipsWidth .tips{
+    position: absolute;
+    right: 0px;
+    top: -36px;
+    white-space: nowrap
+    /*background: url(/static/img/icon_prompt.png) no-repeat 6px;*/
+    /*padding-left: 27px;*/
+}
+.infoProvider .tips{
+    position: absolute;
+    right: 0px;
+    top: -36px;
+    /*background: url(/static/img/icon_prompt.png) no-repeat 6px;*/
+    /*padding-left: 27px;*/
+}
+/*项目新建页面锚点链接*/
+.anchorSkip{
+    position: fixed;
+    width:60px;
+    right: 60px;
+    top: 15%;
+    /*display: none;*/
+}
+#anchorSkip4,#anchorSkip3{
+    display: none;
+}
+.anchorSkip ul{
+    padding-left: 0px;
+}
+.anchorSkip ul li{
+    width:60px;
+    height:52px;
+    background: #fff;
+    list-style: none;
+    border-bottom: 1px solid #dde4ec;
+    text-align: center;
+    /*padding: 10px 5px;*/
+    cursor: pointer;
+
+}
+.anchorSkip ul li a{
+    width:60px;
+    height:52px;
+    padding-top: 13px;
+    display: inline-block;
+}
+.anchorSkip ul li.active a{
+    color:#2f97c3;
+}
+.anchorSkip ul li:not(.last){
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.anchorSkip ul li:first-of-type{
+    border-radius: 5px 5px 0px 0px;
+}
+.anchorSkip ul li:last-of-type{
+   border-radius: 0px 0px 5px 5px;
+    padding-top: 2px;
+}
+.anchorSkip ul li a{
+    color:#8b9ba4;
+}
+.anchorSkip ul li:hover{
+    background: #6ec0b4;
+    width:85px;
+    border-radius: 5px;
+    margin-left: -10px;
+}
+.anchorSkip ul li:hover a{
+    color:#fff;
+    background: #6ec0b4;
+    width:85px;
+    border-radius: 5px;
+    margin-left: -10px;
+}
+/*用户管理*/
+#DeptTable{
+    position: relative;
+}
+.f_wrap{
+    position: relative;
+    cursor: pointer;
+}
+.overInfo{
+    position: absolute;
+    /*left:0px;*/
+    top:30px;
+    display: none;
+    right:7px;
+    z-index: 99;
+}
+.roleInfo{
+    position: absolute;
+    /*left:0px;*/
+    top:30px;
+    display: none;
+    right:63px;
+    z-index: 99;
+}
+.deptInfo{
+    position: absolute;
+    /*left:0px;*/
+    top:30px;
+    display: none;
+    right:20px;
+    z-index: 99;
+}
+.overInfo ul{
+    padding-left: 0px;
+
+}
+.overInfo ul li{
+    width:95px;
+    height:40px;
+    list-style: none;
+    background: #fff;
+    color:#333;
+    text-align: center;
+    line-height: 40px;
+}
+.overInfo ul li:hover{
+    background: #279eb7;
+    color:#fff;
+}
+/*系统管理添加按钮*/
+.systemManger .breadcrumbNav{
+    float: left;
+}
+.systemManger .allAddBtn{
+    float:right;
+}
+.systemManger .allAddBtn button{
+    width:150px;
+    height:40px;
+    color:#fff;
+    background: #2781a7;
+    text-align: center;
+    line-height:32px;
+    border-radius: 5px;
+    border:none;
+    outline: none;
+}
+.systemManger .allAddBtn .userAdd{
+
+}
+.systemManger .allAddBtn .roleAdd{
+    display: none;
+}
+.systemManger .allAddBtn .deptAdd{
+   display: none;
+}
+/*新增创建人信息*/
+.newAddCreatePerson input:first-of-type{
+    width: 100px!important;
+    padding-right: 0px;
+    display: inline-block;
+    border-right: none;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    height: 34px!important;
+}
+.newAddCreatePerson input:first-of-type:focus,.newAddCreatePerson input:last-of-type:focus{
+    border:none;
+}
+.newAddCreatePerson input:last-of-type{
+    width: 127px!important;
+    padding-right: 0px;
+    display: inline-block;
+    border-left: none;
+    height: 34px!important;
+}
+.addUnderline{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.56);
+    width: 80%;
+    padding-bottom: 10px;
+}
+/*常规项目首页*/
+.normalProjectinput input.form-control{
+    display: inline-block!important;
+}
+/*常规编辑*/
+.myNormalEditDisabled input[disabled],.myNormalEditDisabled textarea[disabled]{
+    background: #f4f8fd;
+}
+/*历史操作日志*/
+.tableGap{
+    margin-left: -17px;
+    width:102%;
+}
+.normalProjectinput input:first-of-type{
+    border-color: rgb(229, 230, 231);
+    width: 35%;
+    display: inline-block!important;
+    float: left;
+    margin-left: 85px;
+    border-right: none;
+    background: #fff;
+}
+.normalProjectinput span{
+    color: #333;
+    /* display: inline-block; */
+    float: left;
+    background: #fff;
+    height: 32px;
+    width: 30px;
+    text-align: center;
+    line-height: 34px;
+    margin-top: 1px;
+}
+.normalProjectinput input:last-of-type{
+    width: 32%;
+    background: #fff;
+    border-left: none;
+    display: inline-block!important;
+}
+.normalCreateTime .chooseCreateTime1{
+    width: 100%;
+}
+.normalCreateTime .chooseCreateTime1 input:first-of-type{
+    width: 48%;
+    background: #fff;
+    border-right: none;
+    letter-spacing: initial;
+}
+.normalCreateTime .chooseCreateTime1 span{
+    color: #333;
+    width: 6%;
+    display: inline-block;
+    float: left;
+    background: #fff;
+    height: 32px;
+    line-height: 33px;
+    margin-top: 1px;
+}
+.normalCreateTime .chooseCreateTime1 input:last-of-type{
+    width: 46%;
+    background: #fff;
+    border-right: none;
+    border-left: none;
+    letter-spacing: initial;
+}
+.investMoneyBetw input:first-of-type{
+    display: inline-block;
+    float: left;
+    width: 16%;
+    border-right: none;
+}
+.investMoneyBetw input:last-of-type{
+    display: inline-block;
+    width: 18%;
+    border-left: none;
+}
+.investMoneyBetw span{
+    float: left;
+    width: 6%;
+    background: #fff;
+    height: 32px;
+    line-height: 30px;
+    margin-top: 1px;
+}
+/*常规新建*/
+.newAddInvestmentArea .positionSite:nth-of-type(1) ul li.radioItem, .newAddInvestmentArea .positionSite:nth-of-type(4) ul li.radioItem{
+    width:45%;
+}
+.newAddInvestmentArea .positionSite:nth-of-type(2) ul li.radioItem, .newAddInvestmentArea .positionSite:nth-of-type(3) ul li.radioItem{
+    width:30%;
+}
+.newAddInvestmentArea .positionSite:nth-of-type(2n){
+    margin-left: 2%;
+}
+.tips{
+    /*display: none;*/
+    font-weight: 100!important;
+    font-size: 12px;
+    color: #e3841b;
+    background: #fff;
+    /*padding: 5px 10px;*/
+    /*height: 30px;*/
+    /*line-height: 30px;*/
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 278px;
+    margin-bottom: 0px;
+    box-shadow: 2px 4px 20px rgba(226, 131, 28, 0.68);
+}
+#anchorSkip3,#anchorSkip4{
+    top: 11%;
+}
+
+#anchorSkip3 ul li,#anchorSkip4 ul li{
+    height: 42px;
+}
+#anchorSkip3 ul li:hover,#anchorSkip4 ul li:hover{
+    height: 53px;
+}
+.anchorSkip ul li:last-of-type a{
+    padding-top: 2px!important;
+}
+#anchorSkip1{
+    top:12%;
+}
+#anchorSkip1 ul li{
+    height: 45px;
+}
+#anchorSkip1 ul li:hover{
+    height: 53px;
+}

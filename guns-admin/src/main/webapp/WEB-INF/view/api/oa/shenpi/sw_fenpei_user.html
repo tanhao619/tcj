@@ -1,0 +1,67 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+
+        <div class="form-horizontal">
+            <input type="hidden" id="SWFPworkflowId" value="${workflowId}">
+            <input type="hidden" id="SWFPstep" value="${step}">
+            <div class="comfen">
+                <ul class="fenPeiPerson commonUser"></ul>
+                <div class="row btn-group-m-t sw_fenpei">
+                    <div class="col-sm-10 addBtn">
+                        <#button btnCss="info" name="提交" id="ensure" icon="" clickFun="WorkflowStepInfoDlg.commonSubmitSure()"/>
+                        <#button btnCss="danger" name="取消" id="cancel" icon="" clickFun="WorkflowStepInfoDlg.close()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="jzAnfjz">
+                <ul class="nav nav-tabs normalProjectTab" role="tablist">
+                    <li role="presentation" class="active juzhang">
+                        <a href="#track" class="trackTab " aria-controls="track" role="tab" data-toggle="tab">
+                            分配局长
+                        </a>
+                    </li>
+                    <li role="presentation" class="fujuzhang">
+                        <a href="#noUpdate" class="noUpdateTab " aria-controls="noUpdate" role="tab" data-toggle="tab">
+                            分配副局长
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="track">
+                        <div class="ibox-content">
+                            <div class="row row-lg normalProjectColor">
+                              <div class="jz">
+                                  <ul class="jzPerson fenPeiPerson"></ul>
+                              </div>
+                            </div>
+                            <div class="row btn-group-m-t sw_fenpei">
+                                <div class="col-sm-10 addBtn">
+                                    <#button btnCss="info" name="提交" id="ensure" icon="" clickFun="WorkflowStepInfoDlg.jzSubmitSure()"/>
+                                    <#button btnCss="danger" name="取消" id="cancel" icon="" clickFun="WorkflowStepInfoDlg.close()"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane " id="noUpdate">
+                        <div class="ibox-content">
+                            <div class="row row-lg normalProjectColor">
+                                <div class="fjz">
+                                    <ul class="fjzPerson fenPeiPerson"></ul>
+                                </div>
+                            </div>
+                            <div class="row btn-group-m-t sw_fenpei">
+                                <div class="col-sm-10 addBtn">
+                                    <#button btnCss="info" name="提交" id="ensure" icon="" clickFun="WorkflowStepInfoDlg.fjzSubmitSure()"/>
+                                    <#button btnCss="danger" name="取消" id="cancel" icon="" clickFun="WorkflowStepInfoDlg.close()"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+</div>
+<script src="${ctxPath}/static/modular/api/oa/shenpi/shenpi_info.js"></script>
+@}

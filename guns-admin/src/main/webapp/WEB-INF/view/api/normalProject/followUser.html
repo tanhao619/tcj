@@ -1,0 +1,46 @@
+@layout("/common/_container.html"){
+<style>
+    .my-wrapper{
+        background: #dde4ec;
+    }
+</style>
+<div class="my-modal-wrapper">
+    <div class="row ">
+        <div class="col-sm-12 followUserChild">
+            <div class="search">
+                <img src="${ctxPath}/static/img/icon_search1.png">
+                <input id="name" placeholder="输入跟踪人员姓名" onchange="FollowUser.search()" >
+            </div>
+        </div>
+        <div class="col-sm-12 clearfix">
+            <ul class="personInfo">
+            </ul>
+            <div class="fixed-table-pagination" style="display: block;clear:both;">
+                <div class="pull-left pagination-detail">
+                    <span class="page-list">每页显示 30 条记录</span>
+                    <span class="pagination-info">总共 <span class="total">0</span> 条记录</span>
+                </div>
+
+                <div class="pull-right pagination">
+                    <ul class="pagination pagination-outline">
+                        <!--<li class="page-pre"><a href="#">‹</a></li>
+                        <li class="page-number active"><a href="#">4</a></li>
+                        <li class="page-number"><a href="#">5</a></li>
+                        <li class="page-next"><a href="#">›</a></li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="followBtn" id="FollowUserTableToolbars" role="">
+        <div class="addBtn">
+            <#button name="确定" id="submit" icon="" clickFun="FollowUser.submit()"/>
+            <#button name="取消" icon="" clickFun="FollowUser.cancel()"/>
+        </div>
+
+    </div>
+</div>
+
+<script src="${ctxPath}/static/modular/api/normalProject/followUser.js"></script>
+@}

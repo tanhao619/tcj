@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.project.dao.ProWorkProcessDao">
+    <select id="seleMaxId" resultType="Integer" parameterType="Integer">
+        select id
+        from pro_workProcess
+        where proId = #{proId}
+        order by id desc limit 0,1
+    </select>
+    <select id="searchList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select id,proId,workProcess,userId,userName,createTime,updateTime,folType
+        from pro_workProcess
+        where proId = #{params.proId}
+        order by createTime desc
+    </select>
+
+    <insert id="insert">
+        <selectKey resultType="java.lang.Long" keyProperty="newWorkId" >
+            <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+        </selectKey>
+
+        insert into pro_workProcess(proId, workProcess, userId, userName, createTime, updateTime, folType,currentTime)
+        values (
+        #{proId},#{params.workProcess},#{params.userId},#{params.userName},now(),now(),2,#{params.currentTime}
+        )
+
+    </insert>
+</mapper>

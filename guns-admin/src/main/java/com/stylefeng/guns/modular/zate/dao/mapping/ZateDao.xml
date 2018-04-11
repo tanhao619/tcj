@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.zate.dao.ZateDao">
+
+
+    <select id="searchList" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select * FROM zate WHERE 1 = 1
+        <if test="params.name !=null ">
+            AND name like CONCAT("%",#{params.name},"%")
+        </if>
+        <if test="params.address !=null ">
+            AND address like CONCAT("%",#{params.address},"%")
+        </if>
+        <if test="params.status !=null ">
+            AND status = #{params.status}
+        </if>
+        <if test="params.type !=null ">
+            AND type = #{params.type}
+        </if>
+        <if test="isDefultSort == true">
+            ORDER BY fillTime DESC
+        </if>
+    </select>
+
+
+    <select id="searchExportList" resultType="com.stylefeng.guns.common.persistence.model.Zate">
+        select * FROM zate WHERE 1 = 1
+        <if test="params.name !=null ">
+            AND name like CONCAT("%",#{params.name},"%")
+        </if>
+        <if test="params.address !=null ">
+            AND address like CONCAT("%",#{params.address},"%")
+        </if>
+        <if test="params.status !=null ">
+            AND status = #{params.status}
+        </if>
+        <if test="params.type !=null ">
+            AND type = #{params.type}
+        </if>
+        ORDER BY  ordId ASC
+    </select>
+</mapper>

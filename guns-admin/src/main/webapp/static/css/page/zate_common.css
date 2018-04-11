@@ -1,0 +1,261 @@
+/*上传背景*/
+.webuploader-pick{
+    background-color: #2f97c3;
+}
+/*input等之间的距离*/
+.myList .divide{
+    margin-top: 60px;
+}
+.myList .form-group{
+    margin-bottom: 7px;
+}
+/*历史操作日志*/
+.note{
+    margin-top: 40px;
+}
+.note .bootstrap-table{
+    margin-top: 10px;
+}
+.note .noteTitle{
+    font-size: 16px;
+}
+/*按钮样式*/
+.myList .btn-group-m-t button.btn{
+    background-color: #2781a6;
+    border-color: #2781a6;
+    padding: 12px 44px;
+    font-size: 14px;
+}
+/*隐藏字符字体*/
+.myList .btn-group-m-t button.btn .fa{
+    display: none;
+}
+/*隐藏分割线*/
+.myList .hr-line-dashed{
+    display: none;
+}
+/*备注*/
+.myList .remark textarea{
+    display: block;
+    height: 90px;
+    width: 100%;
+}
+/*右边边框去掉*/
+.myList .b-r{
+    border: none;
+}
+.myList.ibox-content{
+    padding:50px 160px ;
+}
+.myList .left{
+    float:left;
+    width: 50%;
+    padding-right: 70px ;
+}
+.myList .right{
+    float: right;
+    width: 50%;
+    padding-left: 70px;
+}
+.myList .form-group{
+    position: relative;
+    height: 69px;
+}
+/*自适应大小*/
+.myList .control-label{
+    text-align: left;
+    width: 100%;
+}
+.myList .left .form-group .inputWidth,.myList .left .form-group .selectWidth{
+    position: absolute;
+    top: 32px;
+}
+.myList .form-control:focus,.myList textarea:focus{
+    outline: none;
+    border-color: #e5e6e7!important;
+    box-shadow:5px 5px 26px #c2cbd5;
+}
+.myList textarea{
+    border: 1px solid #e5e6e7;
+}
+
+/*填报单位及填报人信息*/
+.myList .personInfo p{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+}
+.myList .personInfo .info{
+    background: #e6edf5;
+    padding:10px 5px;
+}
+.myList .personInfo .form-group .inputWidth{
+    position: absolute;
+    top: 0;
+    left: 125px;
+}
+.myList .personInfo .form-group{
+    height: 40px;
+}
+.myList .personInfo .fillTime{
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    margin-bottom: 15px;
+    padding: 0;
+}
+.myList .personInfo .fillTime .datainp{
+    margin-left:34px;
+}
+.myList .personInfo .fillTime span{
+    font-weight: 700;
+}
+.myList .personInfo textarea{
+    height: 90px;
+}
+/*右边框*/
+.myList  textarea {
+    width: 103%;
+    height: 200px;
+    overflow-y: scroll;
+    margin-top: 10px;
+}
+.myList .right span{
+    font-weight: 700;
+}
+/*载体资源里面上传*/
+.myList #uploader{
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-left: 0px;
+}
+#uploader .title{
+    position: relative;
+    /*width:390px;*/
+    width:100%;
+}
+#uploader #thelist{
+    margin-top: 10px;
+  
+}
+#uploader #thelist div{
+    width: 60%;
+    height: 35px;
+    background: #fff;
+    line-height: 35px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+#uploader #thelist div img{
+    position: absolute;
+    right: -11%;
+    top:3px;
+}
+#uploader #thelist .handleItem{
+    padding-left: 0px;
+    position: relative;
+}
+#uploader #thelist .handleItem a{
+    padding: 0px;
+    width: 94%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#uploader #thelist .handleItem img{
+    position: absolute;
+    right: -86%;
+    top: 4px;
+
+}
+#uploader .J_menuItem{
+   padding-left: 0px;
+    width: 69%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+}
+#uploader .title span:first-of-type{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+}
+#uploader .title span:nth-of-type(2){
+    font-size: 13px;
+    font-weight: bold;
+    padding:3px 10px;
+    background: #d2d9e2;
+    color:#666;
+}
+#uploader .title .btns{
+    display: inline-block;
+    position: absolute;
+    right: 143px;
+    top: -15px;
+}
+/*产业类别*/
+ .settledIndustry p{
+    font-size: 13px;
+    font-weight: bold;
+    color:rgb(103, 106, 108);
+    margin-bottom: 5px;
+}
+ .settledIndustry .content{
+    /*width:520px;*/
+     width:100%;
+    height:35px;
+}
+.settledIndustry .content ul{
+    padding-left: 0px;
+}
+.settledIndustry .content ul li{
+    float:left;
+    /*width:160px;*/
+    width:33%;
+    font-size: 12px;
+    background: #fff;
+    height:35px;
+    border-left:1px solid #dcdcdc;
+    text-align: center;
+    color:rgb(103, 106, 108);
+    list-style: none;
+    line-height: 35px;
+    cursor: pointer;
+    border-bottom: none!important;
+}
+.settledIndustry .content ul li img{
+    width:16px;
+    height: 16px;
+}
+.settledIndustry .content ul li.active{
+    background: #6ec0b4!important;
+    color:#fff!important;
+    border-bottom: none!important;
+    border-radius: 0px!important;
+}
+ .settledIndustry .content ul li.active img:nth-of-type(2){
+    display: inline-block;
+}
+ .settledIndustry .content ul li.active img:nth-of-type(1){
+    display: none;
+}
+.settledIndustry .content ul li img:nth-of-type(2){
+    display: none;
+}
+.settledIndustry .content ul li:hover{
+    background: #6ec0b4!important;
+    color: #fff!important;
+    border-radius: 0px!important;
+}
+.settledIndustry .content ul li:hover img:nth-of-type(2){
+    display: inline-block;
+}
+.settledIndustry .content ul li:hover img:nth-of-type(1){
+    display: none;
+}
+/*只读时样式*/
+.myList .form-control[disabled],.myList .form-control[readonly], .myList textarea[readonly],.myList textarea[disabled]{
+    background-color: #f4f8fd;
+}

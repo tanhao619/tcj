@@ -1,0 +1,158 @@
+.my-modal-wrapper{
+    background: #dde4ec;
+    width:100%;
+    height: 100%;
+}
+.my-modal-wrapper .exportContent{
+    padding: 20px 20px;
+}
+.my-modal-wrapper .exportContent p{
+    color:#333;
+    font-size: 14px;
+}
+.my-modal-wrapper .exportContent p.active{
+    color:#37b673;
+}
+.my-modal-wrapper .exportContent .btn{
+    margin-top: 20px;
+    text-align: center;
+}
+.my-modal-wrapper .exportContent .btn button{
+    border-radius: 5px;
+    width:100px;
+    height:36px;
+}
+.my-modal-wrapper .exportContent .btn button:first-of-type{
+    background: #2d89b0;
+    color:#fff;
+    border:none;
+}
+.my-modal-wrapper .exportContent .btn button:last-of-type{
+    background: #fff;
+    color:#2d89b0;
+    border:1px solid #2d89b0;
+}
+.allContent{
+    margin-top: -30px;
+}
+.officeFlagModal{
+    /*background: #dde4ec;*/
+}
+.officeFlagModal .officeFlag{
+    margin-top: 20px;
+    margin-bottom: 52px;
+}
+.officeFlagModal .officeFlag span{
+    font-size: 16px;
+    color:#333;
+}
+.officeFlagModal .officeFlag .common{
+    margin-top: 10px;
+    height: 140px;
+}
+.officeFlagModal .officeFlag .common ul{
+    padding-left: 0px;
+    width:470px;
+}
+.officeFlagModal .officeFlag .common ul li{
+    width:235px;
+    height:36px;
+    float: left;
+    border-right: 1px solid #dde4ec;
+    border-bottom: 1px solid #dde4ec;
+    line-height: 40px;
+    list-style: none;
+    color:#666;
+    background: #f8fafd;
+    cursor: pointer;
+    text-align: left;
+    padding-left: 50px;
+}
+.officeFlagModal .officeFlag .common ul li label{
+    font-weight: 100!important;
+
+}
+.officeFlagModal .officeFlag .common ul li input{
+    cursor: pointer;
+    margin-right: 8px;
+    vertical-align: text-bottom;
+    border: 1px solid #c9d1db;
+}
+.officeFlagModal .officeFlag .common ul li.active{
+    background: #6dbeb3;
+    color:#fff;
+}
+.officeFlagModal .officeFlag .common ul li:hover{
+    background: #6dbeb3;
+    color:#fff!important;
+}
+.officeFlagModal .officeFlag .common ul li:hover label{
+    color:#fff!important;
+}
+#FollowUserTableToolbar .addBtn{
+    text-align: right;
+}
+#FollowUserTableToolbar button,#FollowUserTableToolbars button{
+    background-color: #2781a6;
+    border-color: #2781a6;
+    padding: 10px 42px;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+}
+#FollowUserTableToolbar button:last-child,#FollowUserTableToolbars button{
+    background:#fff;
+    border:1px solid #2781a6;
+    color:#2781a6;
+    border-radius: 5px;
+    margin-left: 16px;
+
+}
+/*跟踪人员弹框*/
+.followUserChild .search{
+    margin-top: 20px;
+    width:750px;
+    height:40px;
+    background: #fff;
+    border-radius: 5px;
+
+}
+.followUserChild .search input{
+    height:40px;
+    border:none;
+    width: 702px;
+    outline: none;
+    border-radius: 5px;
+}
+.followUserChild .search button{
+    /*margin-left:20px ;*/
+    width:150px;
+    height:40px;
+    background: #2d89b0;
+    color:#fff;
+    line-height: 40px;
+    text-align: center;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+.followUserChild .search img{
+    margin-left: 10px;
+    margin-top: 1px;
+}
+.personInfo{
+    padding-left: 0px;
+    margin-top: 30px;
+}
+.followBtn .addBtn{
+    float: right;
+    margin-top: 40px;
+}
+.followBtn button:first-of-type{
+    background: #2d89b0!important;
+    color:#fff!important;
+    border:none!important;
+    outline: none!important;
+}

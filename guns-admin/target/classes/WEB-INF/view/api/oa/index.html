@@ -1,0 +1,318 @@
+@layout("/common/_container.html"){
+<style>
+    .myTable .bootstrap-table{
+        margin-top: 0px;
+    }
+</style>
+<div class="systemManger">
+    <div class="breadcrumbNav">
+        <div class="firstTitle">
+            <a href="">OA管理</a>
+            <span>/</span>
+            <span></span>
+        </div>
+        <div class="secondTitle">
+            <span>OA MANAGEMENT</span>
+            <span>/</span>
+            <span>OA MANAGEMENT</span>
+        </div>
+    </div>
+    <div class="allAddBtn">
+        <div class="userAdd">
+            @if(!shiro.hasRole("-100Administrator") && shiro.hasRole("-100ContainAnyTCJKeShi")){
+            <#button name="发起审批" icon="" clickFun="Workflow.openAddWorkflow()"/>
+            @}
+           <!--<#button name="API" icon="" clickFun="Workflow.api()"/>-->
+    </div>
+</div>
+<div class="row clearfix" style="clear: both">
+    <ul class="nav nav-tabs normalProjectTab" role="tablist">
+        @if(!shiro.hasRole("-100Administrator") && shiro.hasRole("-100ContainAnyTCJKeShi")){
+        <li role="presentation" class="active" id="userMangner">
+            <a href="#faqi" class="trackTab " aria-controls="faqi" role="tab" data-toggle="tab">
+                我发起的
+            </a>
+        </li>
+        @}
+        <!--只有局长登陆的时候需激活我审批的-->
+        @if(!shiro.hasRole("-100Administrator") && shiro.hasRole("-100ContainAnyTCJKeShi")){
+        <li role="presentation"> @}
+            @else{
+        <li role="presentation" class="active">@}
+            <a href="#shenpiS" class=" " aria-controls="shenpiS" role="tab" data-toggle="tab">
+                我审批的
+                (<span id="noShenPiNum"></span>)
+            </a>
+        </li>
+        @if(shiro.hasRole("-100TCJKeYuan")){
+        <li role="presentation">
+            <a href="#banjie" class=" " aria-controls="banjie" role="tab" data-toggle="tab">
+                待我办结
+            </a>
+        </li>
+        @}
+        @if(shiro.hasRole("-100BGShiKeYuan")){
+        <li role="presentation">
+            <a href="#guidang" class="noUpdateTab " aria-controls="guidang" role="tab" data-toggle="tab">
+                审批归档
+            </a>
+        </li>
+        @}
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane  active baseList clearfix" id="faqi">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <!--<h5>OA管理</h5>-->
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row row-lg">
+                                <div class="col-sm-12 myTable">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                           <!-- 审批类型:1.请假审批;2.出差审批;3.接待审批;4.公务用车审批;5.驻点人员请假审批;6.发文审批;7.收文审批-->
+                                            <#SelectCon id="type" name="审批类型"  >
+                                                <option value="">审批类型</option>
+                                                <option value="1">请假审批</option>
+                                                <option value="3">出差审批</option>
+                                                <option value="4">接待审批</option>
+                                                <option value="5">公务用车审批</option>
+                                                <option value="6">驻点人员请假审批</option>
+                                                <option value="7">发文审批</option>
+                                                <option value="8">收文审批</option>
+                                            </#SelectCon>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <#SelectCon id="roleId" name="发起人角色"  >
+                                                <option value="">发起人角色</option>
+                                            </#SelectCon>
+                                        </div>
+                                        <div class="col-sm-3">
+                                           <!-- 审批状态:1.审批中;2.审批未通过;3.审批通过;4办结中;5已办结(必须通过);6.已撤销;-->
+                                            <#SelectCon id="status" name="审批状态"  >
+                                                <option value="">审批状态</option>
+                                                <option value="1">审批中</option>
+                                                <option value="2">审批未通过</option>
+                                                <option value="3">审批通过</option>
+                                                <option value="4">办结中</option>
+                                                <option value="5">已办结</option>
+                                                <option value="6">已撤销</option>
+
+                                            </#SelectCon>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="apprTimeB" name="发起时间Start" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+
+                                        <div class="col-lg-3 col-Bsm-1">
+                                            <#TimeCon id="apprTimeE" name="发起结束时间End" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="endTimeB" name="审批通过时间Start" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="endTimeE" name="审批通过时间End" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-4 ">
+                                            <div class="col-lg-12 col-sm-12 operate">
+                                                <span onclick="Workflow.resetSearch()">恢复默认值</span>
+                                                <button onclick="Workflow.search()" style="background: #2d89b0;">搜索 <img src="${ctxPath}/static/img/icon_search.png"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <#table id="FaqiTable"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        <div role="tabpanel" class="tab-pane clearfix" id="shenpiS">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <!--<h5>OA管理</h5>-->
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row row-lg">
+                                <div class="col-sm-12 myTable">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <!-- 审批类型:1.请假审批;2.出差审批;3.接待审批;4.公务用车审批;5.驻点人员请假审批;6.发文审批;7.收文审批-->
+                                            <#SelectCon id="shenpiType" name="审批类型"  >
+                                                <option value="">审批类型</option>
+                                                <option value="1">请假审批</option>
+                                                <option value="3">出差审批</option>
+                                                <option value="4">接待审批</option>
+                                                <option value="5">公务用车审批</option>
+                                                <option value="6">驻点人员请假审批</option>
+                                                <option value="7">发文审批</option>
+                                                <option value="8">收文审批</option>
+                                            </#SelectCon>
+                                        </div>
+
+                                           <#input id="shenpiFaqiUser" name="发起人:" placeholder="最长20个字"/>
+
+                                        <div class="col-sm-3">
+
+                                            <#SelectCon id="isApprShenpi" name="是否审批">
+                                                <option value="">是否审批</option>
+                                                <option value="0">未审批</option>
+                                                <option value="1">已审批</option>
+                                            </#SelectCon>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="shenpiFaqiTimeB" name="发起时间Start" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+
+                                        <div class="col-lg-3 col-Bsm-1">
+                                            <#TimeCon id="shenpiFaqiTimeE" name="发起结束时间End" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="shenpiApprTimeB" name="审批时间Start" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="shenpiApprTimeE" name="审批时间End" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-4 ">
+                                            <div class="col-lg-12 col-sm-12 operate">
+                                                <span onclick="ShenpiStep.resetSearch()">恢复默认值</span>
+                                                <button onclick="ShenpiStep.search()" style="background: #2d89b0;">搜索 <img src="${ctxPath}/static/img/icon_search.png"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <#table id="ShenpiStepTable"/>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane  baseList clearfix" id="banjie">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row row-lg">
+                                <div class="col-sm-12 myTable">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <#SelectCon id="status" name="办结状态"  >
+                                                <option value="">办结状态</option>
+                                                <option value="1">已办结</option>
+                                                <option value="3">办结失败</option>
+                                            </#SelectCon>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <#NameCon id="condition" name="办公室发起人" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <#SelectCon id="status" name="指派科室"  >
+                                                <option value="">指派科室</option>
+                                                <option value="1">已办结</option>
+                                                <option value="3">办结失败</option>
+                                            </#SelectCon>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <#NameCon id="condition" name="指派科长" />
+                                        </div>
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="apprTimeB" name="发起时间" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="apprTimeB" name="指派时间" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="apprTimeB" name="办结时间" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <span onclick="Workflow.resetSearch()">恢复默认值</span>
+                                            <#button name="搜索" icon="fa-search" clickFun="WorkflowStep.search()"/>
+                                        </div>
+                                    </div>
+                                    <#table id="BanjieStepTable"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane totalInvestmentMoney" id="guidang">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <!--<h5>OA管理</h5>-->
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row row-lg">
+                                <div class="col-sm-12 myTable">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <!-- 审批类型:1.请假审批;2.出差审批;3.接待审批;4.公务用车审批;5.驻点人员请假审批;6.发文审批;7.收文审批-->
+                                            <#SelectCon id="guidangtype" name="审批类型"  >
+                                                <option value="">审批类型</option>
+                                                <option value="1">请假审批</option>
+                                                <option value="3">出差审批</option>
+                                                <option value="4">接待审批</option>
+                                                <option value="5">公务用车审批</option>
+                                                <option value="6">驻点人员请假审批</option>
+                                                <option value="7">发文审批</option>
+                                                <option value="8">收文审批</option>
+                                            </#SelectCon>
+                                        </div>
+
+                                        <#input id="guidangapprMan" name="发起人:" placeholder="最长20个字"/>
+
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="guidangTimeB" name="发起时间Start" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+
+                                        <div class="col-lg-3 col-Bsm-1">
+                                            <#TimeCon id="guidangTimeE" name="发起结束时间End" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="guidangendTimeB" name="审批时间Start" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-1">
+                                            <#TimeCon id="guidangendTimeE" name="审批时间End" isTime="false" pattern="YYYY-MM-DD"/>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-4 ">
+                                            <div class="col-lg-12 col-sm-12 operate">
+                                                <span onclick="GuiDangStep.resetSearch()">恢复默认值</span>
+                                                <button onclick="GuiDangStep.search()" style="background: #2d89b0;">搜索 <img src="${ctxPath}/static/img/icon_search.png"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <#table id="GuidangStepTable"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="${ctxPath}/static/modular/api/oa/faqi/faqi.js"></script>
+<script src="${ctxPath}/static/modular/api/oa/faqi/faqi_info.js"></script>
+<script src="${ctxPath}/static/modular/api/oa/banjie/banjie.js"></script>
+<script src="${ctxPath}/static/modular/api/oa/banjie/banjie_info.js"></script>
+<script src="${ctxPath}/static/modular/api/oa/guidang/guidang.js"></script>
+<script src="${ctxPath}/static/modular/api/oa/guidang/guidang_info.js"></script>
+<script src="${ctxPath}/static/modular/api/oa/shenpi/shenpi.js"></script>
+<script src="${ctxPath}/static/modular/api/oa/shenpi/shenpi_info.js"></script>
+@}

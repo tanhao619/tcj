@@ -1,0 +1,120 @@
+/*载体首页按钮*/
+.zateIndex{
+    position: relative;
+}
+.zateIndex .searchBtn,.zateIndex .declarProjects{
+    top:20px!important;
+}
+.zateIndex .searchBtn button{
+    padding: 8px 30px!important;
+    /* background: -webkit-gradient(linear, 0% 0%, 0% 100%,from(#086e9a), to(#2781a7)); */
+}
+/*新增资源btn的位置*/
+.my-wrapper .ibox .fixed-table-toolbar{
+    position: absolute;
+    top: -107px;
+    right: -19px!important;
+}
+.myTable .searchBtn{
+    position: absolute;
+    padding: 0 15px;
+    top: 62px;
+    right: 200px;
+}
+.searchBtn .fa{
+    position: absolute;
+    right: 35px;
+    top: 17px;
+}
+.addBtn .fa{
+    display: none;
+}
+.myTable .dropdown-toggle,.myTable .form-control{
+    height: 40px;
+}
+.myTable .dropdown-toggle{
+    font-weight: bold;
+}
+/*导出excle*/
+.declarProjects{
+    float: right;
+    position: absolute;
+    right:0px;
+    top:62px;
+    z-index:200;
+}
+.declarProjects button{
+    position: relative;
+    width:150px;
+    height: 40px;
+    border-radius: 5px;
+    outline: none;
+    color:#fff;
+    line-height: 40px;
+    font-size: 14px;
+    background: #7abfdd;
+  /*  background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#086e9a), to(#2781a7));*/
+   /* background: -ms-linear-gradient(left, #086e9a,  #2781a7); */       /* IE 10 */
+   /* background:-moz-linear-gradient(left,#086e9a,#2781a7);*//*火狐*/
+}
+.declarProjects button .arrow:before{
+    float: right;
+    width: 20px;
+    text-align: center;
+    display: inline;
+    font-size: 16px;
+    font-family: FontAwesome;
+    height: auto;
+    content: "\f0d7";
+    font-weight: 300;
+    text-shadow: none;
+    position: absolute;
+    top: 2px;
+    right: 14px;
+    color: #fff;
+}
+.declarProjects button .arrow.open:before{
+    content: '\f0d8';
+}
+.declarProjects .content{
+    background: #fff;
+    text-align: center;
+    display: none;
+    z-index: 999;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+.declarProjects .content ul{
+   padding: 5px;
+}
+.declarProjects .content ul li{
+    list-style: none;
+    width:140px;
+    height: 40px;
+    line-height: 40px;
+    /*margin:0px 5px;*/
+    cursor: pointer;
+
+}
+.declarProjects .content ul li:hover{
+    background: #329dcb;
+    color:#fff;
+}
+/*搜索换图标*/
+.fa-search{
+    display: none;
+}
+/*弹出框头部*/
+.my-wrapper .layui-layer-title{
+    line-height: 50px;
+    height: 50px;
+    font-size: 16px;
+}
+/*恢复默认值*/
+.searchBtn span{
+    color: #2d89b0;
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: bottom;
+    cursor: pointer;
+}

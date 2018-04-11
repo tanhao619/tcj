@@ -1,0 +1,87 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h3>载体资源总页</h3>
+                <span>CARRIER RESOURCES</span>
+            </div>
+            <div class="myTable ibox-content">
+                <div class="row row-lg">
+                    <div class=" col-lg-12 col-sm-12">
+                        <div class="row">
+                            <div class=" col-lg-3 col-sm-6" style="margin-bottom: 10px">
+                                <#NameCon id="name" name="资源名称" placeholder="请输入查找的资源名称" />
+                            </div>
+                            <div class=" col-lg-3 col-sm-6" style="margin-bottom: 10px">
+                                <#NameCon id="address" name="资源地点" placeholder="请输入查找的资源地址" />
+                            </div>
+                            <div class=" changeWidth col-lg-3 col-sm-6" >
+                                <!--载体状态：1未使用 2已使用  3已停用-->
+                                <#SelectCon id="status" name="资源状态"  >
+                                    <option value="">所有状态</option>
+                                    <option value="1">未使用</option>
+                                    <option value="2">已使用</option>
+                                    <option value="3">已停用</option>
+                                </#SelectCon>
+                            </div>
+                            <div class=" col-lg-3 col-sm-6">
+                                <!--载体类型：1土地资源类 2楼宇或闲置厂房类 -->
+                                <#SelectCon id="type" name="资源类型" >
+                                    <option value="">所有类型</option>
+                                    <option value="1">土地资源类</option>
+                                    <option value="2">楼宇或标准厂房类</option>
+                                </#SelectCon>
+                            </div>
+                            <!--<div class="col-sm-4">-->
+                                <!--<div class="date input-group">-->
+                                    <!--&lt;!&ndash;<div class="filter">&ndash;&gt;-->
+                                    <!--<div class="input-group-btn">-->
+                                        <!--<button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">时段</button>-->
+                                    <!--</div>-->
+                                        <!--&lt;!&ndash;<label class="col-sm-3 control-label">时段:</label>&ndash;&gt;-->
+                                        <!--<div class="form-control">-->
+                                            <!--<input class="datainp wicon" id="inpstart" type="text" placeholder="开始日期" value=""  readonly >-->
+                                            <!--<span>一</span>-->
+                                            <!--<input class="datainp wicon" id="inpend" type="text" placeholder="结束日期"   readonly >-->
+                                        <!--</div>-->
+
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        </div>
+                        <div class="row zateIndex">
+                            <div class="searchBtn">
+                                <span onclick="Zate.resetSearch()">恢复默认值</span>
+                                <!--<#button name="恢复默认值" icon="" clickFun="Zate.resetSearch()" space="true"/>-->
+                                <#button name="搜索" id="search" icon="fa-search" clickFun="Zate.search()"/>
+                            </div>
+                            <div class="declarProjects">
+                                <button type="button" class="declar">
+                                    导出 Excel
+                                    <img src="/static/img/icon_export.png" alt="">
+                                </button>
+                                <div class="content">
+                                    <ul>
+                                        <li onclick="Zate.exportExcelNum(1)" class="addPro">土地资源类</li>
+                                        <li onclick="Zate.exportExcelNum(2)" class="addPro">楼宇或标准厂房</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-xs addBtn" id="ZateTableToolbar" role="group">
+                                <#button name="新增资源" icon="fa-plus" clickFun="Zate.openAddZate()"/>
+                                <!--<#button name="删除" icon="fa-plus" clickFun="Zate.delete()" space="true"/>-->
+                               <!-- <button class='btn btn-danger'  onclick='Zate.delete()'><i class='fa fa-trash-o'></i> 删除</button>-->
+                        </div>
+                        <#table id="ZateTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="${ctxPath}/static/css/page/zate.css" rel="stylesheet">
+<script src="${ctxPath}/static/modular/api/zate/zate.js"></script>
+@}

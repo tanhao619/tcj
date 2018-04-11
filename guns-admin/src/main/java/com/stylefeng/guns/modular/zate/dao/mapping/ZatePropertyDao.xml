@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.zate.dao.ZatePropertyDao">
+    <select id="selectOneByTypeZateId" resultType="com.stylefeng.guns.common.persistence.model.ZateProperty">
+        SELECT * FROM zate_property  WHERE zateId = #{zateId} AND type = #{type}
+    </select>
+
+    <select id="selectDelZproperty" resultType="com.stylefeng.guns.common.persistence.model.ZateProperty">
+      SELECT * FROM zate_property  WHERE zateId = #{zateId}
+        <if test="ids == null">
+            AND type   IN (1,2,3)
+        </if>
+        <if test="ids != null and ids.size > 0">
+            AND type  NOT IN
+            <foreach collection="ids" item="properId" open="(" close=")" separator=",">
+                #{properId}
+            </foreach>
+        </if>
+
+    </select>
+
+</mapper>

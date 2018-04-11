@@ -1,0 +1,240 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h3>载体资源总页/楼宇或标准厂房类载体资源修改</h3>
+        <span>CARRIER RESOURCES / BUILDING OR IDLE PLANT CLASS CARRIER RESOURCE MODIFICATION</span>
+    </div>
+    <div class="myList ibox-content zateUpdatePadding">
+        <div class="form-horizontal" id="zateInfoForm">
+
+            <input type="hidden" id="id" value="${zateBuilding.id}">
+            <input type="hidden" id="type" value="2">
+            <input type="hidden" id="status2Value" value="${zateBuilding.status}">
+            <input type="hidden" id="property2Value" value="${zateBuilding.property}">
+            <div class="row">
+
+                <div class="col-sm-12 b-r">
+                    <div class="l-r clearfix">
+                    <div class="left">
+                    <!--id与实体属性相同-->
+                    <#input id="name2" name="载体资源名称" underline="true" value="${zateBuilding.name}" disabled="disabled"/>
+                    <div class="divide">
+                        <#input id="address2" name="资源具体地址" underline="true" value="${zateBuilding.address}" disabled="disabled"/>
+                        <#input id="area2" name="建筑面积 (平方米)" underline="true" value="${zateBuilding.area}" disabled="disabled"/>
+                    </div>
+                    <div class="divide">
+                        <#select id="status2" name="资源状态" underline="true" disabled="disabled">
+                            <option value="1">未使用</option>
+                            <option value="2">已使用</option>
+                            <option value="3">已停用</option>
+                        </#select>
+                        <#select id="property2" name="产权性质" underline="true" disabled="disabled">
+                            <option value="1">出租</option>
+                            <option value="2">出售</option>
+                            <option value="3">租售一体</option>
+                        </#select>
+                    </div>
+                    <div class="settledIndustry divide">
+                        <p>入驻产业类别</p>
+                        <div class="content">
+                            <ul>
+                                <li class="radioItem">
+                                    <input type="checkbox" value="1" name="induType" class="induType" disabled="disabled"/>
+                                    <span>第一产业</span>
+                                    <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                    <img src="${ctxPath}/static/img/icon_help.png"  class="helpImg">
+                                    <div class="building" style="display: none">
+                                        <h3>第一产业类型</h3>
+                                        <ul>
+                                            <li>设施产业</li>
+                                            <li>规模化种养殖</li>
+                                            <li>农业加工</li>
+                                            <li>农业物流</li>
+                                            <li>新农村建设</li>
+                                            <li>其他</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="radioItem">
+                                    <input type="checkbox" value="2" name="induType" class="induType" disabled="disabled"/>
+                                    <span> 第二产业</span>
+                                    <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                    <img src="${ctxPath}/static/img/icon_help.png"  class="helpImg">
+                                    <div class="building secondBuildiing" style="display: none">
+                                        <h3>第二产业类型</h3>
+                                        <ul>
+                                            <li>电子信息</li>
+                                            <li>物联网</li>
+                                            <li>电子信息配套</li>
+                                            <li>食品饮料</li>
+                                            <li>节能环保</li>
+                                            <li>生物医药</li>
+                                            <li>冶金建材</li>
+                                            <li>航空航天</li>
+                                            <li>机械</li>
+                                            <li>新能源</li>
+                                            <li>印务包装</li>
+                                            <li>新材料</li>
+                                            <li>其他</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="radioItem">
+                                    <input type="checkbox" value="3" name="induType" class="induType" disabled="disabled"/>
+                                    <span>第三产业</span>
+                                    <img src="${ctxPath}/static/img/icon_help_unsel.png">
+                                    <img src="${ctxPath}/static/img/icon_help.png"  class="helpImg">
+                                    <div class="building secondBuildiing" style="display: none">
+                                        <h3>第三产业类型</h3>
+                                        <ul>
+                                            <li>研发设计</li>
+                                            <li>地产</li>
+                                            <li>总部</li>
+                                            <li>信息服务</li>
+                                            <li>软件业务</li>
+                                            <li>旅游</li>
+                                            <li>生物医药</li>
+                                            <li>冶金建材</li>
+                                            <li>物流</li>
+                                            <li>创业孵化</li>
+                                            <li>金融</li>
+                                            <li>商贸</li>
+                                            <li>基础设施</li>
+                                            <li>工业设计</li>
+                                            <li>文化创意</li>
+                                            <li>教育</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <!--<input type="hidden" id="induTypeValue" value="${zateBuilding.induType}">-->
+                            </ul>
+                        </div>
+                    </div>
+                        <div class="personInfo divide">
+                            <p>权属及权属联系人信息</p>
+                            <div class="info col-sm-12">
+                                <div class="form-group positionSite col-sm-12">
+                                    <label class="col-sm-3 control-label inputBr">权属</label>
+                                   <br>
+                                   <div class="col-sm-9 inputWidth">
+                                      <input class="form-control" id="owne2" name="权属" value="${zateBuilding.owne}"  disabled="disabled">
+                                   </div>
+                                </div>
+                                <div class="form-group positionSite col-sm-12">
+                                    <label class="col-sm-3 control-label inputBr">权属联系人</label>
+                                    <br>
+                                    <div class="col-sm-9 inputWidth">
+                                        <input class="form-control" id="owneContacter2" name="权属联系人" value="${zateBuilding.owneContacter}"  disabled="disabled">
+                                    </div>
+                                </div>
+                                <div class="form-group positionSite col-sm-12">
+                                    <label class="col-sm-3 control-label inputBr">权属联系人电话</label>
+                                    <br>
+                                    <div class="col-sm-9 inputWidth">
+                                        <input class="form-control" id="owneTel2" name="权属联系人电话" value="${zateBuilding.owneTel}"  disabled="disabled">
+                                    </div>
+                                </div>
+                    <!--<#input id="owne2" name="权属" underline="true" value="${zateBuilding.owne}" disabled="disabled"/>-->
+                    <!--<#input id="owneContacter2" name="权属联系人" underline="true" value="${zateBuilding.owneContacter}" disabled="disabled"/>-->
+                    <!--<#input id="owneTel2" name="权属联系人电话" underline="true" value="${zateBuilding.owneTel}" disabled="disabled"/>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                    <div class="divide"><span>入驻条件</span><textarea class="changeable" id="condition2" name="condition2" disabled="disabled" placeholder="可输入文本500字以内">${zateBuilding.condition}</textarea><div id="condition2_error"></div></div>
+                        <div class="personInfo divide">
+                            <p>填报单位及填报人信息</p>
+                            <div class="info col-sm-12">
+                                <div class="form-group positionSite col-sm-12">
+                                    <label class="col-sm-3 control-label inputBr">填报单位</label>
+                                    <br>
+                                    <div class="col-sm-9 inputWidth">
+                                        <input class="form-control" id="unit2" name="填报单位" value="${zateBuilding.unit}"  disabled="disabled">
+                                    </div>
+                                </div>
+                                <!--<#input id="unit2" name="填报单位" underline="true" value="${zateBuilding.unit}" disabled="disabled"/>-->
+                                <div class="form-group positionSite col-sm-12" style="margin-bottom: 12px;">
+                                    <label class="col-sm-3 control-label inputBr"><img src="/static/img/icon_must1.png">填报时间</label>
+                                    <br>
+                                    <div class="col-sm-9 inputWidth">
+                                        <input class="form-control wicon" id="fillTime2" name="填报时间" value="${zateBuilding.fillTime}"  disabled="disabled" readonly>
+                                    </div>
+                                </div>
+                                <!--<div class="form-control fillTime">-->
+                                    <!--<span>填报时间</span><input class="datainp wicon" id="fillTime2" type="text" value="${zateBuilding.fillTime}"  readonly disabled="disabled">-->
+                                <!--</div>-->
+                                <div class="form-group positionSite col-sm-12">
+                                    <label class="col-sm-3 control-label inputBr">填报人姓名</label>
+                                    <br>
+                                    <div class="col-sm-9 inputWidth">
+                                        <input class="form-control" id="fillContacter2" name="填报人姓名" value="${zateBuilding.fillContacter}"  disabled="disabled">
+                                    </div>
+                                </div>
+                                <div class="form-group positionSite col-sm-12">
+                                    <label class="col-sm-3 control-label inputBr">填报人电话</label>
+                                    <br>
+                                    <div class="col-sm-9 inputWidth">
+                                        <input class="form-control" id="fillTel2" name="填报人电话" value="${zateBuilding.fillTel}"  disabled="disabled">
+                                    </div>
+                                </div>
+                                <!--<#input id="fillContacter2" name="填报人姓名" underline="true" value="${zateBuilding.fillContacter}" disabled="disabled"/>-->
+                                <!--<#input id="fillTel2" name="填报人电话" underline="true" value="${zateBuilding.fillTel}" disabled="disabled"/>-->
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+                    <div class="remark divide">
+                        <span>备注</span>
+                        <textarea class="changeable" id="remark2" name="remark2" disabled="disabled" placeholder="可输入文本100字以内">${zateBuilding.remark}</textarea>
+                        <div id="remark2_error"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="row btn-group-m-t">-->
+                <!--<div class="col-sm-10">-->
+                    <!--<#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ZateInfoDlg.editSubmit()"/>-->
+                    <!--<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ZateInfoDlg.close()"/>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="note myTable">
+        <img src="/static/img/icon_project-1.png" alt="">
+        <span class="noteTitle">历史操作日志</span>
+        <#table id="ZateLogTable" />
+    </div>
+    @for(item in proIndustryTypesListMap){
+    <input type="hidden" name="indusTypeList" value="${item.name}"/>
+    @}
+</div>
+</div>
+<div class="updateOpearte" style="position: fixed;top: 25px; right: 14px;">
+    <div class="row btn-group-m-t">
+        <div class="col-sm-10 btnSubmit">
+            <#button btnCss="info" name="确认" id="ensure" icon="" clickFun="ZateInfoDlg.editSubmit()" style="display:none"/>
+            <#button btnCss="danger" name="修改" id="change" icon="" />
+        </div>
+    </div>
+</div>
+
+<link href="${ctxPath}/static/css/page/zate_common.css" rel="stylesheet">
+<link href="${ctxPath}/static/css/page/zate_building_edit.css" rel="stylesheet">
+<script>
+    $("#status2").val($("#status2Value").val());
+    $("#property2").val($("#property2Value").val());
+    $("input[type='hidden'][name='indusTypeList']").each(function (index, element) {
+        var Name = $(element).val();
+        $("input[type='checkbox'][name='induType']")[Name-1].checked=true;
+        $("input[type='checkbox'][name='induType']")[Name - 1].parentNode.classList.add("active");
+    });
+//    if($("#induTypeValue").val()==1){
+//        $(".induType:eq(0)").attr('checked',true);
+//    }else if($("#induTypeValue").val()==2){
+//        $(".induType:eq(1)").attr('checked',true);
+//    }else if($("#induTypeValue").val()==3){
+//        $(".induType:eq(2)").attr('checked',true);
+//    }
+</script>
+<script src="${ctxPath}/static/modular/api/zate/zate_info.js"></script>
+@}

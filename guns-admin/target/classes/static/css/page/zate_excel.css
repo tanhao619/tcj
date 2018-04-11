@@ -1,0 +1,40 @@
+
+.excel .ibox-content{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+.excel .ibox-content .row{
+    margin-top: -13px;
+}
+.excel .ibox-content .row .b-r{
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+    margin-left: 65px;
+}
+.excel .ibox-content .row .b-r input{
+    margin-right: 8px;
+}
+.btns{
+    text-align: center;
+    margin-top: 32px;
+}
+.confirmationBtn{
+    background-color: #2781a6;
+    padding: 7px 30px;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+}
+.cancelBtn{
+    background: #fff;
+    padding: 7px 30px;
+    border: 1px solid #2781a6;
+    color: #2781a6;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-left: 12px;
+}

@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="allContent my-modal-wrapper">
+    <div class="officeFlagModal">
+        <input type="hidden" name="type" value="${normalProjectId}">
+        <div class="">
+            <div id="officeFlag" class="officeFlag">
+                <span>跟踪科室：</span>
+                <div class="officeFlagContent common" id="officeFlagContent">
+                     <ul></ul>
+                </div>
+            </div>
+            <div id="platFlag" class="officeFlag">
+                <span>跟踪平台：</span>
+                <div class="platFlagContent common" id="platFlagContent">
+                    <ul></ul>
+                </div>
+            </div>
+            <div id="streetFlag" class="officeFlag">
+                <span>跟踪街道办：</span>
+                <div class="streetFlagContent common" id="streetFlagContent">
+                    <ul></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="myList" id="FollowUserTableToolbar" role="group">
+        <div class="addBtn">
+            <button name="确定" icon="fa-plus" onclick="FollowOfficeAndPlat.submit()">确定</button>
+            <button name="取消" icon="fa-plus" onclick="FollowOfficeAndPlat.cancel()">取消</button>
+        </div>
+
+    </div>
+
+
+</div>
+<link href="${ctxPath}/static/css/page/normalProjectTab.css" rel="stylesheet">
+<script src="${ctxPath}/static/modular/api/normalProject/followOfficeAndPlat.js"></script>
+@}

@@ -1,0 +1,44 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <!--id与实体属性相同-->
+                    <#input id="name" name="载体资源名称:" underline="true"/>
+                    <#input id="address" name="资源地点:" underline="true"/>
+                    <#input id="area" name="面积（单位亩）:" underline="true"/>
+                    <#select id="property" name="用地性质:" underline="true">
+                        <option>国有</option>
+                        <option>农用地</option>
+                        <option>建设用地</option>
+                    </#select>
+
+                    <div><span>规划产业定位:</span><textarea id="induPosition"></textarea></div>
+                    <div><span>地块现状:</span><textarea id="situation"></textarea></div>
+                    <div><span>规划设计条件:</span><textarea id="condition"></textarea></div>
+                    <#input id="unit" name="填报单位:" underline="true"/>
+                    <#input id="fillTime" name="填报时间:" underline="true" type="date"
+                            clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+                    <#input id="fillContacter" name="填报联系人姓名:" underline="true"/>
+                    <#input id="fillTel" name="填报联系人电话:" underline="true"/>
+                    <div><span>备注:</span><textarea id="remark"></textarea></div>
+                </div>
+
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ZateLandInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ZateLandInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/api/zateLand/zateLand_info.js"></script>
+@}

@@ -1,0 +1,54 @@
+ @layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+	<!--<div class="ibox-content">-->
+		<div class="form-horizontal systemBtn" id="roleInfoForm">
+		
+			<input type="hidden" id="id" value="${role.id}">
+			<input type="hidden" id="detyValue" value="${role.duty}">
+
+			<div class="row">
+				<div class="col-sm-6 b-r">
+					<#input id="name" name="角色名称"  value="${role.name}" disabled="disabled"/>
+					<#select id="duty" name="职位"   value="${role.duty}">
+						<option value="1">科员</option>
+						<option value="2">科长</option>
+						<option value="3">分管副局长</option>
+					</#select>
+
+				</div>
+				<div class="col-sm-6">
+
+					<#input id="deptName" name="所在科室" hidden="deptid" hiddenValue="${role.deptid}" readonly="readonly" value="${deptName}"
+							clickFun="RolInfoDlg.showDeptSelectTree(); return false;"
+							style="background-color: #ffffff !important;"/>
+					<#input id="remark" name="备注"  value="${role.remark}"/>
+					<!--<#input id="tips" name="备注" underline="true" value="${role.tips}"/>-->
+				</div>
+			</div>
+
+			<!-- 这是部门下拉框 -->
+			<div id="deptContent" class="menuContent"
+				style="display: none; position: absolute; z-index: 200;left: 497.754px; top: 72px">
+				<ul id="deptTree" class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+			
+			<!-- 这是父级菜单下拉框 -->
+			<div id="pNameContent" class="menuContent"
+				style="display: none; position: absolute; z-index: 200;">
+				<ul id="pNameTree" class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+
+			<div class="row btn-group-m-t">
+				<div class="col-sm-10 addBtn" style="text-align: right">
+					<button  name="提交" id="ensure"  onclick="RolInfoDlg.editSubmit()">提交</button>
+					<button  name="取消" id="cancel" onclick="RolInfoDlg.close()" style="margin-left: 10px;">取消</button>
+					<!--<#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="RolInfoDlg.editSubmit()"/>-->
+					<!--<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="RolInfoDlg.close()"/>-->
+				</div>
+			</div>
+		<!--</div>-->
+
+	</div>
+</div>
+<script src="${ctxPath}/static/modular/system/role/role_info.js"></script>
+@}

@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.oa.dao.WorkflowStepDao">
+    <!-- 【我审批的】列表&搜索-->
+    <select id="shenpiList" resultType="com.stylefeng.guns.modular.oa.dto.ShenPiWorkflowDTO" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        SELECT * FROM (
+            SELECT
+            wf.id AS workflowId,
+            wf.type,
+            wf.status,
+            wf.ordnum,
+            usr.name apprUserName,
+            IF(INSTR(ro.name,'分管副局长')>0,'副局长',ro.name) AS apprRoleName,
+            wf.apprTime AS faqiTime,
+            step.id AS workflowStepId,
+            if (step.apprAdvice = 0,0,1) AS isAppr,
+            step.apprTime AS apprTime,
+            step.apprAdvice apprAdvice
+            FROM workflow wf,workflow_step step,user usr,role ro
+            WHERE step.apprAdvice = 0 AND step.workflowId = wf.id AND usr.id = wf.userId AND ro.id = wf.roleId
+            AND wf.status != 6 <!-- 已撤销的审批不显示在 【我审批的】里-->
+            AND step.roleId in (
+            <foreach collection="params.ownRoleIds" item="item" index="index" separator=",">#{item}
+            </foreach>
+            )
+            UNION
+            ALL
+            SELECT
+            wf.id
+            AS workflowId,
+            wf.type,
+            wf.status,
+            wf.ordnum,
+            usr.name apprUserName,
+            ro.name apprRoleName,
+            wf.apprTime AS faqiTime,
+            step.id AS workflowStepId,
+            if (step.apprAdvice = 0,0,1) AS isAppr,
+            step.apprTime AS apprTime,
+            step.apprAdvice apprAdvice
+            FROM workflow wf,workflow_step step,user usr,role ro
+            WHERE step.userId = #{params.userId} <!-- AND step.apprAdvice != 0--> AND step.workflowId = wf.id AND usr.id = wf.
+            userId AND ro.id = wf.roleId AND wf.status != 6 <!-- 已撤销的审批不显示在 【我审批的】里-->
+        ) spda WHERE 1=1
+        <if test="params.shenpiType !=null ">
+            AND spda.type = #{params.shenpiType}
+        </if>
+        <if test="params.shenpiFaqiUser !=null ">
+            AND spda.apprUserName LIKE concat('%',#{params.shenpiFaqiUser},'%')
+        </if>
+        <if test="params.isApprShenpi !=null ">
+            AND spda.isAppr = #{params.isApprShenpi}
+        </if>
+        <!--发起时间-->
+        <if test="params.shenpiFaqiTimeB !=null || params.shenpiFaqiTimeE !=null">
+            AND spda.faqiTime BETWEEN  concat(#{params.shenpiFaqiTimeB},' 00:00:00')
+            AND  concat(#{params.shenpiFaqiTimeE},' 23:59:59')
+        </if>
+        <!--审批时间-->
+        <if test="params.shenpiApprTimeB !=null || params.shenpiApprTimeE !=null">
+            AND spda.apprTime BETWEEN  concat(#{params.shenpiApprTimeB},' 00:00:00')
+            AND  concat(#{params.shenpiApprTimeE},' 23:59:59')
+        </if>
+        <!--默认以发起时间倒叙-->
+         ORDER BY faqiTime DESC
+
+     </select>
+
+
+    <!--获取【我审批的】-未审批数-->
+    <select id="getUnShenpiApprNum" resultType="java.lang.Integer" parameterType="List">
+<!--        SELECT
+        COUNT(*)
+        FROM workflow wf,workflow_step step,user usr,role ro
+        WHERE  step.apprAdvice = 0 AND step.workflowId = wf.id AND usr.id = wf.userId AND ro.id = wf.roleId
+        AND step.roleId in (
+        <foreach collection="roles" item="item" index="index" separator="," >
+            #{item}
+        </foreach>
+        )-->
+
+
+        SELECT COUNT(*) FROM (
+            SELECT
+            step.id
+            FROM workflow wf,workflow_step step,user usr,role ro
+            WHERE  step.apprAdvice = 0 AND step.workflowId = wf.id AND usr.id = wf.userId AND ro.id = wf.roleId
+            AND wf.status != 6<!--排除已撤销的审批-->
+            AND step.roleId in (
+                <foreach collection="params.roles" item="item" index="index" separator="," >
+                    #{item}
+                </foreach>
+            )
+            UNION ALL
+            SELECT
+            step.id
+
+            FROM workflow wf,workflow_step step,user usr,role ro
+            WHERE step.apprAdvice = 0 AND step.userId = #{params.userId} AND step.workflowId = wf.id AND usr.id = wf.
+            userId AND ro.id = wf.roleId AND wf.status != 6
+        )cou
+    </select>
+
+
+    <!--一般审批-->
+    <select id="selectNormalFlowByWfwId" resultType="com.stylefeng.guns.modular.oa.dto.NormalFlowDTO" parameterType="java.lang.Integer">
+        SELECT
+         1 AS step,
+        concat("发起",
+        CASE
+        WHEN ro.duty = '1' THEN '科员'
+        WHEN ro.duty = '2' THEN '科长'
+        WHEN ro.duty = '3' THEN '副局长'
+        ELSE ''
+        END,concat("##",usr.name,"##1")) AS faqiUser,
+
+        IF(ro.duty = '3','',concat("所属科室##",dept.simplename,"##2")) AS faqiDept,
+        concat("提交时间##",wf.apprTime,"##3") AS faqiTime,
+        "" AS spUser,
+        "" AS spDept,
+        "" AS spAdvice,
+        "" AS spTime
+
+        FROM workflow wf,user usr,role ro,dept dept
+        WHERE wf.id = #{workflowId}  AND usr.id = wf.userId AND ro.id = wf.roleId AND dept.id = wf.deptId
+
+        UNION ALL
+        <!--步骤流-->
+
+        SELECT
+        <!--step步骤需加1-->
+        cast(step.step as SIGNED) + 1 AS step,
+        "" AS faqiUser,
+        "" AS faqiDept,
+        "" AS faqiTime,
+        <!--审批人-->
+        concat("审批",
+        CASE
+        WHEN step.duty = '1' THEN '科员'
+        WHEN step.duty = '2' THEN '科长'
+        WHEN step.duty = '3' THEN '副局长'
+        WHEN step.duty = '4' THEN '局长'
+        ELSE ''
+        END,concat("##",
+            CASE
+            WHEN step.userId is NULL
+            THEN '——'
+            WHEN step.userId is NOT NULL
+            THEN (SELECT usr.name FROM user usr WHERE usr.id =  step.userId)
+            END
+        ,"##1")) AS spUser,
+        <!--审批科室-->
+        IF(step.duty = '3' or step.duty = '4','',
+        concat("审批科室##",
+        CASE
+            WHEN step.deptId is NULL
+            THEN '——'
+            WHEN step.deptId is NOT NULL
+            THEN (SELECT de.simplename FROM dept de WHERE de.id =  step.deptId)
+            END
+
+        ,"##2")) AS spDept,
+
+        <!--审批意见-->
+        <!--审批意见:0.未审批;1.不同意;2.同意; 3.收文办结;-->
+        concat("审批意见##",
+        CASE
+        WHEN step.apprAdvice = '0' THEN '0'
+        WHEN step.apprAdvice = '1' THEN '不同意'
+        WHEN step.apprAdvice = '2' THEN '同意'
+        ELSE '——'
+        END
+        ,"##3") AS spAdvice,
+        <!--提交时间(审批时间)-->
+        IF(step.apprAdvice = '0','',
+            concat("提交时间##",
+            IF(step.apprAdvice = '0','',IF(step.apprTime is null,"——",step.apprTime))
+
+            ,"##4")
+        ) AS spTime
+        FROM workflow_step step where step.workflowId = #{workflowId}
+    </select>
+
+
+
+    <!--一般审批 切入权限-->
+    <select id="selectAuthNormalFlowByWfwId" resultType="com.stylefeng.guns.modular.oa.dto.NormalFlowDTO">
+
+      SELECT
+         1 AS step,
+        concat("发起",
+        CASE
+        WHEN ro.duty = '1' THEN '科员'
+        WHEN ro.duty = '2' THEN '科长'
+        WHEN ro.duty = '3' THEN '副局长'
+        ELSE ''
+        END,concat("##",usr.name,"##1")) AS faqiUser,
+
+        IF(ro.duty = '3','',concat("所属科室##",dept.simplename,"##2")) AS faqiDept,
+        concat("提交时间##",wf.apprTime,"##3") AS faqiTime,
+        "" AS spUser,
+        "" AS spDept,
+        "" AS spAdvice,
+        "" AS spTime
+
+        FROM workflow wf,user usr,role ro,dept dept
+        WHERE wf.id = #{params.workflowId}  AND usr.id = wf.userId AND ro.id = wf.roleId AND dept.id = wf.deptId
+
+        UNION ALL
+        <!--步骤流-->
+
+        SELECT
+        <!--step步骤需加1-->
+        cast(step.step as SIGNED) + 1 AS step,
+        "" AS faqiUser,
+        "" AS faqiDept,
+        "" AS faqiTime,
+        <!--审批人-->
+        concat("审批",
+        CASE
+        WHEN step.duty = '1' THEN '科员'
+        WHEN step.duty = '2' THEN '科长'
+        WHEN step.duty = '3' THEN '副局长'
+        WHEN step.duty = '4' THEN '局长'
+        ELSE ''
+        END,concat("##",
+            CASE
+            WHEN step.userId is NULL
+            THEN '——'
+            WHEN step.userId is NOT NULL
+            THEN (SELECT usr.name FROM user usr WHERE usr.id =  step.userId)
+            END
+        ,"##1")) AS spUser,
+
+        <!--审批科室-->
+        IF(step.duty = '3' or step.duty = '4','',
+        concat("审批科室##",
+        CASE
+            WHEN step.deptId is NULL
+            THEN '——'
+            WHEN step.deptId is NOT NULL
+            THEN (SELECT de.simplename FROM dept de WHERE de.id =  step.deptId)
+            END
+
+        ,"##2")) AS spDept,
+
+        <!--审批意见-->
+        <!--审批意见:0.未审批;1.不同意;2.同意; 3.收文办结;-->
+        <!--切入权限-->
+        IF (#{params.isCanAppr},
+        concat("审批意见##",
+        CASE
+        WHEN step.apprAdvice = '0' THEN '0'
+        WHEN step.apprAdvice = '1' THEN '不同意'
+        WHEN step.apprAdvice = '2' THEN '同意'
+        ELSE '——'
+        END,"##3")
+        ,
+        concat("审批意见##",
+        CASE
+        WHEN step.apprAdvice = '0' THEN '——'
+        WHEN step.apprAdvice = '1' THEN '不同意'
+        WHEN step.apprAdvice = '2' THEN '同意'
+        ELSE '——'
+        END,"##3")
+
+        )
+         AS spAdvice,
+        <!--提交时间(审批时间)-->
+        <!--切入权限-->
+        IF(step.apprAdvice = '0' AND #{params.isCanAppr},'',
+            concat("提交时间##",
+            IF(step.apprAdvice = '0' AND #{params.isCanAppr},'',IF(step.apprTime is null,"——",step.apprTime))
+
+            ,"##4")
+        ) AS spTime
+        FROM workflow_step step where step.workflowId = #{params.workflowId}
+</select>
+
+
+<select id="selectStepByWfwIdStep" resultType="com.stylefeng.guns.common.persistence.model.WorkflowStep">
+    SELECT * FROM workflow_step WHERE workflowId = #{params.workflowId} AND step = #{params.step}
+</select>
+
+<!--根据流程查询最大的step 需加1-->
+    <select id="selectMaxStepByWfwId" resultType="java.lang.String" parameterType="java.lang.Integer">
+      SELECT MAX(step) AS maxStep FROM workflow_step WHERE workflowId = #{workflowId}
+    </select>
+
+
+    <!--根据workflowId与确定发起的撤销状态，来确定撤销按钮-->
+    <select id="selectRevokeStatusByWfwId" parameterType="java.lang.Integer" resultType="java.lang.String">
+        <!--发起的销假按钮-->
+        SELECT
+        CASE
+        WHEN (SELECT wf.status FROM workflow wf WHERE wf.id = #{workflowId}) = "6"
+        THEN '2'
+        WHEN
+        (SELECT COUNT(*) FROM workflow_step step WHERE step.workflowId =  #{workflowId} AND step.apprAdvice in("1","2","3")) = 0
+        THEN '0'
+        WHEN
+        (SELECT COUNT(*) FROM workflow_step step WHERE step.workflowId = #{workflowId} AND step.apprAdvice in("1","2","3")) >0
+        THEN '1'
+        ELSE ''
+        END AS revokeStatus
+    </select>
+
+
+
+    <!--收文审批 切入权限-->
+    <select id="selectAuthShowWenFlowByWfwId" resultType="com.stylefeng.guns.modular.oa.dto.SWFlowDTO">
+
+        SELECT
+             1 AS step,
+            concat("发起科员##",usr.name,"##1") AS faqiUser,
+
+            IF(ro.duty = '3','',concat("所属科室##",dept.simplename,"##2")) AS faqiDept,
+        <!--收文编号-->
+            concat("收文编号##",(SELECT pro.value FROM workflow_property pro WHERE pro.workflowId =wf.id),"##3") AS ordnumSW,
+            concat("提交时间##",wf.apprTime,"##4") AS faqiTime,
+            "" AS spUser,
+            "" AS spDepts,
+            "" AS spAdvice,
+            "" AS fenPeiUsers,
+            "" AS spTime,
+
+            "" AS bjKeYuan,
+            "" AS bjDept,
+            "" AS bjDetail,
+            "" AS isBanjie,
+            "" AS bjTime
+
+            FROM workflow wf,user usr,role ro,dept dept
+            WHERE wf.id = #{params.workflowId}   AND usr.id = wf.userId AND ro.id = wf.roleId AND dept.id = wf.deptId
+
+            UNION ALL
+        <!--步骤流-->
+
+            SELECT
+        <!--step步骤需加1-->
+            cast(step.step as SIGNED) + 1 AS step,
+            "" AS faqiUser,
+            "" AS faqiDept,
+            "" AS ordnumSW,
+            "" AS faqiTime,
+        <!--审批人-->
+            concat("审批",
+            CASE
+            WHEN step.duty = '1' THEN '科员'
+            WHEN step.duty = '2' THEN '科长'
+            WHEN step.duty = '3' THEN '副局长'
+            WHEN step.duty = '4' THEN '局长'
+            ELSE ''
+            END,concat("##",
+                GROUP_CONCAT(CASE
+                WHEN step.userId is NULL
+                THEN '——'
+                WHEN step.userId is NOT NULL
+                THEN (SELECT usr.name FROM user usr WHERE usr.id =  step.userId)
+                END separator '/')
+            ,"##1")) AS spUser,
+        <!--审批科室-->
+            IF(step.duty = '3' or step.duty = '4','',
+            concat("审批科室##",
+
+            GROUP_CONCAT(CASE
+                WHEN step.deptId is NULL
+                THEN '——'
+                WHEN step.deptId is NOT NULL
+                THEN (SELECT de.simplename FROM dept de WHERE de.id =  step.deptId)
+                END separator '/')
+
+            ,"##2")) AS spDepts,
+
+        <!--审批意见-->
+        <!--审批意见:0.未审批;1.不同意;2.同意; 3.收文办结-->
+        <!--切入权限-->
+            IF (#{params.isCanAppr},
+            concat("审批意见##",
+            CASE
+            WHEN step.apprAdvice = '0' THEN '0'
+            WHEN step.apprAdvice = '2' THEN '同意'
+            ELSE '——'
+            END,"##3")
+            ,
+            concat("审批意见##",
+            CASE
+            WHEN step.apprAdvice = '0' THEN '——'
+            WHEN step.apprAdvice = '1' THEN '不同意'
+            WHEN step.apprAdvice = '2' THEN '同意'
+            ELSE '——'
+            END,"##3")
+
+            )
+             AS spAdvice,
+        <!--分配人-->
+            CONCAT("分配给##",
+            CASE
+            WHEN step.fenPeiUsers IS NULL OR step.fenPeiUsers = ""
+            THEN '——'
+
+            WHEN step.fenPeiUsers IS NOT NULL
+            AND step.fenPeiUsers != ""  AND #{params.ownFlowPos} = 'isKZ' AND step.step = "3" THEN
+            (SELECT usr.name FROM user usr WHERE usr.id = #{params.userId})
+
+            WHEN step.fenPeiUsers IS NOT NULL AND step.fenPeiUsers != ""
+            THEN (SELECT GROUP_CONCAT(usr.name separator '/') FROM user usr WHERE FIND_IN_SET(usr.id,GROUP_CONCAT(step.fenPeiUsers separator ',')) > 0)
+            ELSE '——'
+            END
+
+            ,"##4") AS fenPeiUsers,
+
+        <!--提交时间(审批时间)-->
+        <!--切入权限-->
+            IF(step.apprAdvice = '0' AND #{params.isCanAppr},'',
+                concat("提交时间##",
+                IF(step.apprAdvice = '0' AND #{params.isCanAppr},'',IF(step.apprTime is null,"——",
+                SUBSTRING_INDEX(concat(GROUP_CONCAT(DISTINCT step.apprTime ORDER BY step.apprTime DESC),",") ,",",1)
+                ))
+
+                ,"##5")
+            ) AS spTime,
+            "" AS bjKeYuan,
+            "" AS bjDept,
+            "" AS bjDetail,
+            "" AS isBanjie,
+            "" AS bjTime
+        <!--是其他：发起人、办公室主任、局长-->
+        FROM workflow_step step where step.workflowId = #{params.workflowId}  AND duty != "1"
+        <if test="params.ownFlowPos != 'isFJZ' and params.ownFlowPos != 'isKZ'">
+            <if test="params.hasAnyKZflowsExsit == 'true'">
+                AND step.swGpSn IS NOT NULL
+            </if>
+        </if>
+        <!--是副局长-->
+        <if test="params.ownFlowPos == 'isFJZ' ">
+            <if test="params.FJZhasAnyKZflowsExsit == 'true' ">
+                AND (step.swGpSn = "-1"  or instr(concat(",",step.swGpSn,","),CONCAT(",",#{params.FJZswGpSn},",")) > 0)
+            </if>
+            <if test="params.FJZhasAnyKZflowsExsit != 'true' ">
+                AND (step.swGpSn = "-1" or step.swGpSn IS NULL or instr(concat(",",step.swGpSn,","),CONCAT(",",#{params.FJZswGpSn},",")) > 0)
+            </if>
+        </if>
+        <!--是科长-->
+        <!--<if test="params.ownFlowPos == 'isKZ' ">
+            AND (step.swGpSn = "-1" or step.swGpSn IS NULL or step.swGpSn=#{params.FJZswGpSn} or instr(concat(",",step.swGpSn,","),CONCAT(",",#{params.KZswGpSn},",")) > 0)
+        </if>-->
+        <if test="params.ownFlowPos == 'isKZ' and params.KZswGpSn != null  ">
+            AND (step.swGpSn = "-1"  or step.swGpSn=#{params.FJZswGpSn} or instr(concat(",",step.swGpSn,","),CONCAT(",",#{params.KZswGpSn},",")) > 0)
+        </if>
+        <if test="params.ownFlowPos == 'isKZ' and params.KZswGpSn == null  ">
+            AND (step.swGpSn = "-1" or step.swGpSn IS NULL or step.swGpSn=#{params.FJZswGpSn}) > 0)
+        </if>
+        GROUP BY step
+    </select>
+
+
+    <select id="selectWfwStepByWfwIdAUid" resultType="com.stylefeng.guns.common.persistence.model.WorkflowStep">
+        SELECT * FROM workflow_step WHERE workflowId = #{params.workflowId} AND userId = #{params.userId}
+    </select>
+
+    <!--获取一个收文流程中所有已分配的userId-->
+    <select id="selectOneSWExsitUserIds" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT DISTINCT step.userId
+        FROM workflow_step step
+        WHERE step.workflowId = #{workflowId} AND step.userId is NOT NULL
+    </select>
+
+
+    <select id="selectSWswGpSnNullOrFUYIStepByWfwIdStep" resultType="com.stylefeng.guns.common.persistence.model.WorkflowStep">
+        SELECT * FROM workflow_step WHERE workflowId = #{params.workflowId} AND step = #{params.step}
+        <if test="params.step == 2">
+            AND swGpSn = '-1'
+        </if>
+        <if test="params.step != 2">
+            AND swGpSn IS NULL
+        </if>
+    </select>
+
+    <select id="getBanjieDetail" resultType="com.stylefeng.guns.modular.oa.dto.BJDetailDTO">
+      SELECT u.name bjUser,
+        de.simplename bjDept,
+        CASE
+        WHEN step.apprAdvice = "0" THEN "待办结"
+        WHEN step.apprAdvice = "3" THEN "已办结"
+        else ""
+        END AS bjResult,
+        step.apprTime AS bjTime
+      FROM workflow_step step,user u,dept de WHERE u.id = step.userId AND de.id = step.deptId AND
+        step.workflowId = #{params.workflowId} AND step.duty = "1"
+        <if test="params.swGpSn != '-1'">
+            AND <![CDATA[  instr(CONCAT(",",step.swGpSn,","),CONCAT(",",#{params.swGpSn},",")) >  0 ]]>
+        </if>
+
+    </select>
+
+
+
+    <!--办结详情s-->
+    <select id="selectAuthBanjieFlowByWfwId" resultType="com.stylefeng.guns.modular.oa.dto.SWFlowDTO">
+        SELECT
+        1 AS step,
+        concat("发起科员##",usr.name,"##1") AS faqiUser,
+
+        IF(ro.duty = '3','',concat("所属科室##",dept.simplename,"##2")) AS faqiDept,
+        <!--收文编号-->
+        concat("收文编号##",(SELECT pro.value FROM workflow_property pro WHERE pro.workflowId =wf.id),"##3") AS ordnumSW,
+        concat("提交时间##",wf.apprTime,"##4") AS faqiTime,
+        "" AS spUser,
+        "" AS spDepts,
+        "" AS spAdvice,
+        "" AS fenPeiUsers,
+        "" AS spTime,
+
+        "" AS bjKeYuan,
+        "" AS bjDept,
+        "" AS bjDetail,
+        "" AS isBanjie,
+        "" AS bjTime
+
+        FROM workflow wf,user usr,role ro,dept dept
+        WHERE wf.id = #{params.workflowId}   AND usr.id = wf.userId AND ro.id = wf.roleId AND dept.id = wf.deptId
+
+        UNION ALL
+        <!--步骤流-->
+
+        SELECT
+        <!--step步骤需加1-->
+        cast(step.step as SIGNED) + 1 AS step,
+        "" AS faqiUser,
+        "" AS faqiDept,
+        "" AS ordnumSW,
+        "" AS faqiTime,
+        <!--审批人-->
+        concat("审批",
+        CASE
+        WHEN step.duty = '1' THEN '科员'
+        WHEN step.duty = '2' THEN '科长'
+        WHEN step.duty = '3' THEN '副局长'
+        WHEN step.duty = '4' THEN '局长'
+        ELSE ''
+        END,concat("##",
+        GROUP_CONCAT(CASE
+        WHEN step.userId is NULL
+        THEN '——'
+        WHEN step.userId is NOT NULL
+        THEN (SELECT usr.name FROM user usr WHERE usr.id =  step.userId)
+        END separator '/')
+        ,"##1")) AS spUser,
+        <!--审批科室-->
+        IF(step.duty = '3' or step.duty = '4','',
+        concat("审批科室##",
+
+        GROUP_CONCAT(CASE
+        WHEN step.deptId is NULL
+        THEN '——'
+        WHEN step.deptId is NOT NULL
+        THEN (SELECT de.simplename FROM dept de WHERE de.id =  step.deptId)
+        END separator '/')
+
+        ,"##2")) AS spDepts,
+
+        <!--审批意见-->
+        <!--审批意见:0.未审批;1.不同意;2.同意; 3.收文办结-->
+        <!--切入权限-->
+        IF (false,
+        concat("审批意见##",
+        CASE
+        WHEN step.apprAdvice = '0' THEN '0'
+        WHEN step.apprAdvice = '2' THEN '同意'
+        ELSE '——'
+        END,"##3")
+        ,
+        concat("审批意见##",
+        CASE
+        WHEN step.apprAdvice = '0' THEN '——'
+        WHEN step.apprAdvice = '1' THEN '不同意'
+        WHEN step.apprAdvice = '2' THEN '同意'
+        ELSE '——'
+        END,"##3")
+
+        )
+        AS spAdvice,
+        <!--分配人-->
+        CONCAT("分配给##",
+        CASE
+        WHEN step.fenPeiUsers IS NULL OR step.fenPeiUsers = ""
+        THEN '——'
+
+        WHEN step.fenPeiUsers IS NOT NULL
+        AND step.fenPeiUsers != ""  AND 'isKZ' = 'isKZ' AND (step.step = "3") THEN
+        (SELECT usr.name FROM user usr WHERE usr.id = #{params.KZUserId})
+
+        WHEN step.fenPeiUsers IS NOT NULL
+        AND step.fenPeiUsers != ""  AND 'isKZ' = 'isKZ' AND (step.step = "4") THEN
+        (SELECT usr.name FROM user usr WHERE usr.id = #{params.ownUserId})
+
+
+        WHEN step.fenPeiUsers IS NOT NULL AND step.fenPeiUsers != ""
+        THEN (SELECT GROUP_CONCAT(usr.name separator '/') FROM user usr WHERE FIND_IN_SET(usr.id,GROUP_CONCAT(step.fenPeiUsers separator ',')) > 0)
+        ELSE '——'
+        END
+
+        ,"##4") AS fenPeiUsers,
+
+        #<!--提交时间(审批时间)-->
+        #<!--切入权限-->
+        IF(step.apprAdvice = '0' AND false,'',
+        concat("提交时间##",
+        IF(step.apprAdvice = '0' AND false,'',IF(step.apprTime is null,"——",
+        SUBSTRING_INDEX(concat(GROUP_CONCAT(DISTINCT step.apprTime ORDER BY step.apprTime DESC),",") ,",",1)
+        ))
+
+        ,"##5")
+        ) AS spTime,
+        "" AS bjKeYuan,
+        "" AS bjDept,
+        "" AS bjDetail,
+        "" AS isBanjie,
+        "" AS bjTime
+        #<!--是其他：发起人、办公室主任、局长-->
+        FROM workflow_step step where step.workflowId = #{params.workflowId}  AND duty != "1"
+        AND (step.swGpSn = "-1"  or step.swGpSn=#{params.FJZswGpSn} or instr(concat(",",step.swGpSn,","),CONCAT(",",#{params.KZswGpSn},",")) > 0)
+
+        GROUP BY step
+
+
+        UNION ALL
+        SELECT
+        6 AS step,
+        "" AS faqiUser,
+
+        "" AS faqiDept,
+        "" AS ordnumSW,
+        "" AS faqiTime,
+        "" AS spUser,
+        "" AS spDepts,
+        "" AS spAdvice,
+        "" AS fenPeiUsers,
+        "" AS spTime,
+
+        CONCAT("办结科员##",u.name,"##1") AS bjKeYuan,
+        CONCAT("办结科室##",de.simplename,"##2") AS bjDept,
+        "" AS bjDetail,
+
+        case WHEN step.apprAdvice = "0"
+        THEN  "o待办结o"
+        WHEN step.apprAdvice = "3"
+        THEN  CONCAT("是否办结##","已办结","##4")
+        ELSE ''
+        END AS isBanjie,
+
+        case WHEN step.apprAdvice = "0"
+        THEN ''
+        WHEN step.apprAdvice = "3"
+        THEN  CONCAT("办结时间##",step.apprTime,"##5")
+        ELSE ''
+        END AS bjTime
+        FROM workflow_step step,user u,dept de WHERE u.id = step.userId AND de.id = step.deptId AND
+        step.workflowId = #{params.workflowId} AND step.duty = "1" AND step.userId = #{params.ownUserId}
+    </select>
+    
+    <select id="selectBanjieKZByKYidAWfwId" resultType="java.lang.Integer">
+        SELECT step.userId FROM workflow_step step,
+        (SELECT * FROM workflow_step where  workflowId = #{params.workflowId} AND userId = #{params.ownUserId}) stepKY
+        WHERE step.deptId = stepKY.deptId AND step.workflowId = stepKY.workflowId
+        AND step.swGpsn = stepKY.swGpsn AND step.step = "4"
+    </select>
+
+    <select id="selectHaveAnyShouWenWeiBJ" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM workflow_step WHERE workflowId = #{workflowId} AND userId is NOT NULL AND apprAdvice = "0"
+    </select>
+ </mapper>

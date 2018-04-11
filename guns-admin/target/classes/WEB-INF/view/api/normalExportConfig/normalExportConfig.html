@@ -1,0 +1,299 @@
+@layout("/common/_container.html"){
+<link href="${ctxPath}/static/css/page/exportConfig.css" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>导出配置</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <!--<div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="condition" name="名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="ExportConfig.search()"/>
+                            </div>
+                        </div>-->
+                       <!-- <div class="hidden-xs" id="ExportConfigTableToolbar" role="group">
+                                <#button name="添加" icon="fa-plus" clickFun="ExportConfig.openAddExportConfig()"/>
+                                &lt;!&ndash;<#button name="删除" icon="fa-plus" clickFun="ExportConfig.delete()" space="true"/>&ndash;&gt;
+                                <button class='btn btn-danger'  onclick='ExportConfig.delete()'><i class='fa fa-trash-o'></i> 删除</button>
+                        </div>-->
+                        <!--<#table id="ExportConfigTable"/>-->
+                        <div>
+                            <div class="head">
+                                <h3><input type="checkbox" class="allCheckbox">全选</h3>
+                            </div>
+                            <h3 style="display: none"><input type="checkbox" name="normal_project.id as id" checked>序号id</h3>
+                            <div class="content normalExportContent">
+                                <div class="topContent clearfix">
+                                    <div class="baseInfo">
+                                        <div class="detailHead">
+                                            <h3><input type="checkbox"  class="chkAll"> 项目基本信息</h3>
+                                        </div>
+                                        <div class="info">
+                                            <div class="detail">
+                                                <h3><input type="checkbox" class="selcted"> 投资方公司信息</h3>
+                                                <div class="con">
+                                                    <p><input type="checkbox" name="pro_company.name as comName"> 公司名称</p>
+                                                    <p><input type="checkbox" name="pro_company.addr as comAddr"> 公司地址</p>
+                                                    <p><input type="checkbox" name="pro_company.content as comContent"> 公司简介</p>
+                                                    <p><input type="checkbox" name="pro_company.comType as comComType"> 公司情况</p>
+                                                    <p><input type="checkbox" name="pro_company.author as comAuthor,pro_company.tel as comTel"> 投资方联系人姓名及电话</p>
+                                                    <!--<p><input type="checkbox" name="chk_list"> 公司简介</p>-->
+                                                    <!--<p>-->
+                                                        <!--<#SelectCon id="isDeleted" name="" >-->
+                                                            <!--&lt;!&ndash;<option value="">全部</option>&ndash;&gt;-->
+                                                            <!--<option value="0">7天</option>-->
+                                                            <!--<option value="1">15天</option>-->
+                                                            <!--<option value="2">30天</option>-->
+                                                            <!--&lt;!&ndash;<option value="3" id="test1">自定义时间段 </option>&ndash;&gt;-->
+                                                            <!--<option value="3"  class="form-control layer-date" onclick="laydate({istime: false, format: 'YYYY-MM-DD'})" id="beginTime">时间</option>-->
+                                                        <!--</#SelectCon>-->
+                                                    <!--</p>-->
+
+                                                </div>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.name as norName"> 投资项目名称</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.content as norContent"> 项目建设内容</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.fromArea as norFromArea"> 投资来源地归属</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.investType as norInvestType"> 投资类型</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.category as norCategory"> 项目归属产业</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.leadCategory as norLeadCategory">是否主导产业</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.enterOfferName as norEnterOfferName,normal_project.enterOfferTel as norEnterOfferTel"> 企业联系者姓名及联系电话</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.author as norAuthor,normal_project.tel as norTel"> 信息提供者姓名及联系电话</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="baseInfo" style="float:right">
+                                        <div class="detailHead">
+                                            <h3><input type="checkbox"  class="chkAll"> 项目履约信息</h3>
+                                        </div>
+                                        <div class="info">
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.controlCom as norControlCom"> 项目履约监管单位</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.proContractTime as norProContractTime"> 项目合同备案时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.proRegTime as norProRegTime"> 项目移交注册时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.proType as norProType"> 项目交办情况</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.regBigProTime as norRegBigProTime"> 项目申报市重大项目时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.regedBigProTime as norRegedBigProTime"> 项目认定市重大项目时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" class="selcted" name="normal_project.proConcatCom as norProConcatCom"> 项目牵头单位</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.regComName as norRegComName"> 注册公司名称</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.regComTime as norRegComTime"> 注册公司时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.regInvest as norRegInvest"> 注册资金(万元)</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.regNo as norRegNo"> 注册号</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox"> 项目履约情况</h3>
+                                                <div class="con">
+                                                    <p><input type="checkbox" name="normal_project.proConventionType as norProConventionType"> 是否正常履约</p>
+                                                    <p><input type="checkbox" name="pro_convention.proConventionInfo as conProConventionInfo"> 情况说明</p>
+                                                    <p><input type="checkbox" name="pro_convention.nextAdvise as conNextAdvise"> 下一步工作建议</p>
+                                                    <div class="exportDate">
+                                                        <div class="filter filter1">
+                                                            <label>时间:</label>
+                                                            <div class="create">
+                                                                <input type="text" class="form" id="exportStart" placeholder="开始时间" />
+                                                                <span style="color:#333;">至</span>
+                                                                <input type="text" class="form" id="exportEnd" placeholder="结束时间" />
+                                                            </div>
+                                                            <!--<input class="datainp wicon" id="" type="text" placeholder="开始日期" value=""  readonly style="width:100px;">-->
+                                                            <!--<span>-&#45;&#45;</span>-->
+                                                            <!--<input class="datainp wicon" id="" type="text" placeholder="结束日期"   readonly style="width:100px;">-->
+                                                        </div>
+                                                        <div class="selfDefine selfDefine1">
+                                                            <label>时间：</label>
+                                                            <select id="conTime" onchange="ExportConfig.changeDate1(this.options[this.options.selectedIndex].value)">
+                                                                <option value="7">最近7天</option>
+                                                                <option value="15">最近15天</option>
+                                                                <option value="30">最近30天</option>
+                                                                <option value="4">自定义时间段</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                   <div class="baseInfo">
+                                    <div class="detailHead">
+                                        <h3><input type="checkbox" class="chkAll"> 项目洽谈信息跟踪</h3>
+                                    </div>
+                                    <div class="info talkMessage">
+                                        <div class="infoItems">
+                                            <div class="detail">
+                                                <h3><input type="checkbox"> 投促局跟踪基本信息</h3>
+                                                <div class="con">
+                                                    <p><input type="checkbox" name="follow_project.deptId as folDeptId"> 投促局跟进科室</p>
+                                                </div>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.followName as norFollowName,normal_project.followTel as norFollowTel"> 投促局跟踪人员信息</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox"> 项目地址及用地</h3>
+                                                <div class="con">
+                                                    <p><input type="checkbox" name="pro_area.addr as proAddr"> 项目地址</p>
+                                                    <p><input type="checkbox" name="pro_area.useArea as proUseArea">用地/房面积（亩、平方米）</p>
+                                                </div>
+                                            </div>
+                                            <div class="detail">
+                                                <input id="moneyy" type="checkbox">
+                                                <select id="sel">
+                                                    <option name="normal_project.countRmb as norInvestRmb">总投资额(人民币：亿元)</option>
+                                                    <option name="normal_project.investDollar as norInvestDollar">总投资额(美元：万元)</option>
+                                                </select>
+                                                <!--<h3> 总投资额</h3>-->
+                                                <!--<div class="con">-->
+                                                <!--<p><input type="radio" name="normal_project.investRmb as norInvestRmb" > 人民币</p>-->
+                                                <!--<p><input type="radio" name="normal_project.investDollar as norInvestDollar"> 美元</p>-->
+                                                <!--<p style="display: none"><input type="hidden" name="normal_project.investRatio as norInvestRatio">汇率</p>-->
+                                                <!--</div>-->
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.isBigPro as norIsBigPro"> 是否重大项目</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.leader as norLeader"> 联系区领导</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox"> 责任单位及相关责任人信息</h3>
+                                                <div class="con">
+                                                    <p><input type="checkbox" name="unit_liable.liable as uniLiable"> 责任单位</p>
+                                                    <p><input type="checkbox" name="unit_liable.name as uniName,unit_liable.tel as uniTel"> 责任人姓名及联系电话</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="infoItems">
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.bigProCom as norBigProCom"> 重大项目备案单位</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.bigProTime as norBigProTime"> 重大项目备案时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.status as norStatus"> 项目阶段</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.firstTalkTime as norFirstTalkTime"> 项目初次洽谈时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox"> 项目洽谈进展情况</h3>
+                                                <div class="con">
+                                                    <p><input type="checkbox" name="pro_talk.progress as talkProgress"> 项目进展情况</p>
+                                                    <p><input type="checkbox" name="pro_talk.question as talkQuestion"> 存在问题</p>
+                                                    <p><input type="checkbox" name="pro_talk.nextStep as talkNextStep"> 下一步举措</p>
+                                                    <p><input type="checkbox" name="pro_talk.isVisit as talkIsvisit"> 是否需要拜访</p>
+                                                    <p><input type="checkbox" name="pro_talk.visitLv as talkVisitLv"> 拜访所需领导层级</p>
+                                                    <div class="exportDate">
+                                                        <div class="filter filter2">
+                                                            <label>时间:</label>
+                                                            <div class="create">
+                                                                <input type="text" class="form" id="inpstart1" placeholder="开始时间" />
+                                                                <span style="color:#333;">至</span>
+                                                                <input type="text" class="form" id="inpend1" placeholder="结束时间" />
+                                                            </div>
+                                                            <!--<input class="datainp wicon" id="inpstart1" type="text" placeholder="开始日期" value=""  readonly style="width:100px;">-->
+                                                            <!--<span>-&#45;&#45;</span>-->
+                                                            <!--<input class="datainp wicon" id="inpend1" type="text" placeholder="结束日期"   readonly style="width:100px;">-->
+                                                        </div>
+                                                        <div class="selfDefine selfDefine2">
+                                                            <label>时间：</label>
+                                                            <select id="talkTime" onchange="ExportConfig.changeDate2(this.options[this.options.selectedIndex].value)">
+                                                                <option value="7">最近7天</option>
+                                                                <option value="15">最近15天</option>
+                                                                <option value="30">最近30天</option>
+                                                                <option value="4">自定义时间段</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="infoItems">
+                                            <!--<div class="detail">-->
+                                                <!--<h3><input type="checkbox"> 项目备案表（附件）</h3>-->
+                                            <!--</div>-->
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.proMeetTime as norProMeetTime"> 项目初审过会时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.proViewTime as norProViewTime"> 项目审定过会时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.contractTime as norContractTime"> 项目合同签约时间</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="pro_contractType.name as conContractType"> 合同类型</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="pro_adviseOpeType.name as advName"> 建议实施方式</h3>
+                                            </div>
+                                            <div class="detail">
+                                                <h3><input type="checkbox" name="normal_project.infoDesc as norInfoDesc"> 备注</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btnGroup">
+                <!--<button>导出</button>-->
+                <!--clickFun="ExportConfig.search()-->
+                <a id="excelExp"><#button name="导出" icon="fa-check" clickFun="ExportConfig.sureExport()"/></a>
+                <a href="${ctxPath}/normalProject"><#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser"/></a>
+                <!--<button>取消</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/api/exportConfig/exportConfig.js"></script>
+<script src="${ctxPath}/static/js/plugins/layer/laydate/laydate.js"></script>
+@}
